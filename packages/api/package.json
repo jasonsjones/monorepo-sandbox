@@ -1,0 +1,10 @@
+{
+    "name": "api",
+    "version": "1.0.0",
+    "main": "index.js",
+    "scripts": {
+        "dev": "echo 'running dev script from api'",
+        "test": "echo 'running test script from api'"
+    },
+    "license": "MIT"
+}
