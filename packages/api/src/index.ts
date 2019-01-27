@@ -1,18 +1,14 @@
-import * as express from 'express';
+import * as debug from 'debug';
+import AppProvider from './config/AppProvider';
+
+const log = debug('app');
+
+const PORT = process.env.PORT || 3000;
 
 const startServer = () => {
-    const app = express();
-
-    app.get('/api', (req, res) => {
-        res.json({
-            success: true,
-            message: 'Hello from TypeScript...',
-            payload: null
-        });
-    });
-
-    app.listen(3000, () => {
-        console.log('App running at https://localhost:3000');
+    const app = AppProvider.getInstance();
+    app.listen(PORT, () => {
+        log(`App is running on http://localhost:${PORT}/api`);
     });
 };
 
