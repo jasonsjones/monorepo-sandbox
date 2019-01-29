@@ -1,4 +1,4 @@
-import * as debug from 'debug';
+import debug from 'debug';
 import AppProvider from './config/AppProvider';
 
 const log = debug('app');

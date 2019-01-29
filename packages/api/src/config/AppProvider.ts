@@ -1,14 +1,14 @@
-import * as express from 'express';
+import Express from 'express';
 
 import RouterConfig from './RouterConfig';
 
 class AppProvider {
-    public static getInstance(): express.Application {
+    public static getInstance(): Express.Application {
         this.configureRoutes();
         return AppProvider.app;
     }
 
-    private static app: express.Application = express();
+    private static app: Express.Application = Express();
 
     private static configureRoutes(): void {
         RouterConfig.configRoutes(this.app);
