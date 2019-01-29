@@ -3,8 +3,13 @@
     "version": "1.0.0",
     "main": "index.js",
     "scripts": {
-        "dev": "echo 'running dev script from app'",
+        "dev": "next -p 4200",
         "test": "echo 'running test script from app'"
     },
-    "license": "MIT"
+    "license": "MIT",
+    "dependencies": {
+        "next": "^7.0.2",
+        "react": "^16.7.0",
+        "react-dom": "^16.7.0"
+    }
 }
