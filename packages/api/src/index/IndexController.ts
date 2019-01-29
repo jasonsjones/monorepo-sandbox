@@ -1,8 +1,4 @@
-interface IJSONResponse {
-    success: boolean;
-    message: string;
-    payload?: object;
-}
+import { IJSONResponse } from '../types/';
 
 class IndexController {
     public static getRootAPIRoute = (): Promise<IJSONResponse> => {
