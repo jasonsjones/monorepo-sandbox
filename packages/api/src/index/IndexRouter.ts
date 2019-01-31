@@ -1,21 +1,20 @@
-import Express from 'express';
+import { Request, Response, Router } from 'express';
 import IndexController from './IndexController';
 
 class IndexRouter {
-    public static getInstance = (): Express.Router => {
+    public static getInstance = (): Router => {
         IndexRouter.configureRoutes();
         return IndexRouter.router;
     };
 
-    private static router = Express.Router();
+    private static router = Router();
 
     private static configureRoutes = (): void => {
         IndexRouter.router.get(
             '/api',
-            (req: Express.Request, res: Express.Response): void => {
-                IndexController.getRootAPIRoute().then(result => {
-                    res.json(result);
-                });
+            async (req: Request, res: Response): Promise<Response> => {
+                const result = await IndexController.getRootAPIRoute();
+                return res.json(result);
             }
         );
     };
