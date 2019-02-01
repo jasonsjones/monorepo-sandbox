@@ -1,10 +1,11 @@
+import { index } from '../shared/response-messages';
 import { IJSONResponse } from '../types/';
 
 class IndexController {
     public static getRootAPIRoute = (): Promise<IJSONResponse> => {
         const response: IJSONResponse = {
             success: true,
-            message: 'Hello from TypeScript...',
+            message: index.ROOT,
             payload: null
         };
         return Promise.resolve(response);
