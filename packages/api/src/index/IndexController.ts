@@ -2,7 +2,7 @@ import { index } from '../shared/response-messages';
 import { IJSONResponse } from '../types/';
 
 class IndexController {
-    public static getRootAPIRoute = (): Promise<IJSONResponse> => {
+    public static getAPIRoot = (): Promise<IJSONResponse> => {
         const response: IJSONResponse = {
             success: true,
             message: index.ROOT,

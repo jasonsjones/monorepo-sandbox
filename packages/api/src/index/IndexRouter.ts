@@ -13,7 +13,7 @@ class IndexRouter {
         IndexRouter.router.get(
             '/api',
             async (req: Request, res: Response): Promise<Response> => {
-                const result = await IndexController.getRootAPIRoute();
+                const result = await IndexController.getAPIRoot();
                 return res.json(result);
             }
         );
