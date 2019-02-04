@@ -19,4 +19,20 @@ describe('Index controller', () => {
             expect(result.message).to.equal(index.ROOT);
         });
     });
+
+    describe('getAPIVersion()', () => {
+        it('returns a Promise', () => {
+            const promise = IndexController.getAPIVersion();
+            expect(promise).to.be.a('Promise');
+        });
+
+        it('resolves to a IJSONResponse with the version in the payload', async () => {
+            const result = await IndexController.getAPIVersion();
+            expect(result).to.have.property('success');
+            expect(result).to.have.property('message');
+            expect(result).to.have.property('payload');
+            expect(result.message).to.equal(index.VERSION);
+            expect(/\d.\d.\d/.exec(result.payload.version)).to.be.an('array');
+        });
+    });
 });

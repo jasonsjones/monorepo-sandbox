@@ -17,6 +17,14 @@ class IndexRouter {
                 return res.json(result);
             }
         );
+
+        IndexRouter.router.get(
+            '/api/version',
+            async (req: Request, res: Response): Promise<Response> => {
+                const result = await IndexController.getAPIVersion();
+                return res.json(result);
+            }
+        );
     };
 }
 
