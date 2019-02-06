@@ -4,6 +4,7 @@
     "main": "index.js",
     "scripts": {
         "dev": "next -p 4200",
+        "lint": "echo 'running lint script from app'",
         "test": "echo 'running test script from app'"
     },
     "license": "MIT",
