@@ -5,7 +5,7 @@
     "scripts": {
         "clean": "rm -rf dis",
         "build": "tsc",
-        "dev": "DEBUG=app nodemon --exec ts-node src/index.ts",
+        "dev": "DEBUG=app,db* nodemon --exec ts-node src/index.ts",
         "lint": "tslint -c tslint.json src/**/*.ts",
         "test": "mocha -r ts-node/register src/**/*.ts"
     },
