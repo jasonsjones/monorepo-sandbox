@@ -7,3 +7,8 @@ export interface IJSONResponse {
     message: string;
     payload: IPayload | null;
 }
+
+export interface IUser {
+    email: string;
+    password: string;
+}
