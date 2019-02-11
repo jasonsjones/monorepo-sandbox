@@ -5,7 +5,7 @@
     "scripts": {
         "clean": "rm -rf dis",
         "build": "tsc",
-        "dev": "DEBUG=app,db* nodemon --exec ts-node src/index.ts",
+        "dev": "DEBUG=app,db* ts-node-dev src/index.ts",
         "lint": "tslint -c tslint.json src/**/*.ts",
         "test": "mocha -r ts-node/register src/**/*.ts"
     },
@@ -23,6 +23,7 @@
         "mocha": "^5.2.0",
         "nodemon": "^1.18.9",
         "ts-node": "^8.0.2",
+        "ts-node-dev": "^1.0.0-pre.32",
         "tslint": "^5.12.1",
         "tslint-config-prettier": "^1.17.0",
         "typescript": "^3.2.4"
