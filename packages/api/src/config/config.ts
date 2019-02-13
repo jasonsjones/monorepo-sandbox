@@ -5,16 +5,14 @@ const {
     NODE_ENV: env = 'development',
     DB_USER: dbUser,
     DB_PASSWORD: dbPassword,
-    DB_NAME: dbName,
-    DB_HOST1: dbHost1,
-    DB_HOST2: dbHost2,
-    DB_HOST3: dbHost3,
-    DB_OPTIONS: dbOptions
+    DB_HOST1: dbHost1 = 'dev-cluster-shard-00-00-vqlo1.gcp.mongodb.net:27017',
+    DB_HOST2: dbHost2 = 'dev-cluster-shard-00-01-vqlo1.gcp.mongodb.net:27017',
+    DB_HOST3: dbHost3 = 'dev-cluster-shard-00-02-vqlo1.gcp.mongodb.net:27017',
+    DB_OPTIONS: dbOptions = 'ssl=true&replicaSet=dev-cluster-shard-0&authSource=admin&retryWrites=true'
 } = process.env;
 
 const db = {
     baseUri: `mongodb://${dbUser}:${dbPassword}@${dbHost1},${dbHost2},${dbHost3}`,
-    name: dbName,
     options: dbOptions
 };
 
