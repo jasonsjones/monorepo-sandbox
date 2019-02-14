@@ -32,7 +32,8 @@ describe('Index controller', () => {
             expect(result).to.have.property('message');
             expect(result).to.have.property('payload');
             expect(result.message).to.equal(index.VERSION);
-            expect(/\d.\d.\d/.exec(result.payload.version)).to.be.an('array');
+            // tslint:disable-next-line
+            expect(/\d.\d.\d/.test(result.payload.version)).to.be.true;
         });
     });
 });
