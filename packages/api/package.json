@@ -7,7 +7,7 @@
         "build": "tsc",
         "dev": "DEBUG=app,db* ts-node-dev src/index.ts",
         "lint": "tslint -c tslint.json src/**/*.ts",
-        "test": "mocha -r ts-node/register src/**/*.ts"
+        "test": "NODE_ENV=testing mocha -r ts-node/register src/**/*.ts"
     },
     "license": "MIT",
     "devDependencies": {

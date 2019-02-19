@@ -1,5 +1,6 @@
 import debug from 'debug';
 import AppProvider from './config/AppProvider';
+import store from './user/UserStore';
 
 const log = debug('app');
 
@@ -9,6 +10,9 @@ const startServer = async () => {
     const app = await AppProvider.getInstance();
     app.listen(PORT, () => {
         log(`App is running on http://localhost:${PORT}/api`);
+        store.initData().then(users => {
+            log('Users seeded: %o', users);
+        });
     });
 };
 
