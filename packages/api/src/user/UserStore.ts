@@ -24,7 +24,7 @@ class UserStore {
     };
 
     public static getUsers = (): Promise<UserType[]> => {
-        if (UserStore.isEmpty) {
+        if (UserStore.isEmpty()) {
             return UserStore.initData().then(() => UserStore.users);
         } else {
             return Promise.resolve(UserStore.users);
