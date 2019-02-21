@@ -12,6 +12,10 @@ class UserController {
     public static getUsers = (): Promise<UserType[]> => {
         return UserStore.getUsers();
     };
+
+    public static getUser = (id: string): Promise<UserType> => {
+        return UserStore.getUserById(id);
+    };
 }
 
 export default UserController;

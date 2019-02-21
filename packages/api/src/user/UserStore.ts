@@ -31,6 +31,11 @@ class UserStore {
         }
     };
 
+    public static getUserById = (id: string): Promise<UserType> => {
+        const foundUser = UserStore.users.find(user => user.id === id);
+        return foundUser ? Promise.resolve(foundUser) : Promise.resolve(null);
+    };
+
     public static isEmpty = (): boolean => {
         return UserStore.users.length === 0;
     };
