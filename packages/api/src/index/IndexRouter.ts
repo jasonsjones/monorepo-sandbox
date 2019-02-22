@@ -1,4 +1,6 @@
 import { Request, Response, Router } from 'express';
+import { index } from '../shared/response-messages';
+import { IJSONResponse } from '../types/';
 import IndexController from './IndexController';
 
 class IndexRouter {
@@ -11,18 +13,30 @@ class IndexRouter {
 
     private static configureRoutes = (): void => {
         IndexRouter.router.get(
-            '/api',
+            '/',
             async (req: Request, res: Response): Promise<Response> => {
                 const result = await IndexController.getAPIRoot();
-                return res.json(result);
+                const response: IJSONResponse = {
+                    success: true,
+                    message: index.ROOT,
+                    payload: result
+                };
+                return res.json(response);
             }
         );
 
         IndexRouter.router.get(
-            '/api/version',
+            '/version',
             async (req: Request, res: Response): Promise<Response> => {
-                const result = await IndexController.getAPIVersion();
-                return res.json(result);
+                const version = await IndexController.getAPIVersion();
+                const response: IJSONResponse = {
+                    success: true,
+                    message: index.VERSION,
+                    payload: {
+                        version
+                    }
+                };
+                return res.json(response);
             }
         );
     };
