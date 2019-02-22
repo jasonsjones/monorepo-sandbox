@@ -1,13 +1,11 @@
 import fs from 'fs';
 import { Document } from 'mongoose';
 import config from '../config/config';
-import { IUser } from '../types';
+import { IUser, UserModelType } from '../types';
 import User from './User';
 
-type UserType = IUser & Document;
-
 class UserStore {
-    public static addUser = (user: IUser): Promise<UserType | null> => {
+    public static addUser = (user: IUser): Promise<UserModelType | null> => {
         return new Promise((resolve, reject) => {
             if (!UserStore.isUserInStore(user.email)) {
                 const newUser = new User(user);
@@ -23,7 +21,7 @@ class UserStore {
         });
     };
 
-    public static getUsers = (): Promise<UserType[]> => {
+    public static getUsers = (): Promise<UserModelType[]> => {
         if (UserStore.isEmpty()) {
             return UserStore.initData().then(() => UserStore.users);
         } else {
@@ -31,7 +29,7 @@ class UserStore {
         }
     };
 
-    public static getUserById = (id: string): Promise<UserType> => {
+    public static getUserById = (id: string): Promise<UserModelType> => {
         const foundUser = UserStore.users.find(user => user.id === id);
         return foundUser ? Promise.resolve(foundUser) : Promise.resolve(null);
     };
@@ -44,7 +42,7 @@ class UserStore {
         UserStore.users = [];
     };
 
-    public static initData = (): Promise<UserType[]> => {
+    public static initData = (): Promise<UserModelType[]> => {
         return new Promise((resolve, reject) => {
             fs.exists(UserStore.userDataFile, exists => {
                 if (exists) {
@@ -63,14 +61,14 @@ class UserStore {
         });
     };
 
-    private static users: UserType[] = [];
+    private static users: UserModelType[] = [];
     private static userDataFile = `${__dirname}/user-data.json`;
 
     private static isUserInStore = (email: string): boolean => {
         return UserStore.users.some(user => user.email === email);
     };
 
-    private static seedUsers = (): Promise<UserType[]> => {
+    private static seedUsers = (): Promise<UserModelType[]> => {
         return UserStore.addUser({ email: 'oliver@qc.com', password: 'test1234' })
             .then(() => UserStore.addUser({ email: 'barry@starlabs.com', password: '1234test' }))
             .then(() => {
@@ -78,7 +76,10 @@ class UserStore {
             });
     };
 
-    private static persistUser = (user: UserType, resolve: (user: UserType) => void): void => {
+    private static persistUser = (
+        user: UserModelType,
+        resolve: (user: UserModelType) => void
+    ): void => {
         fs.writeFile(UserStore.userDataFile, JSON.stringify({ users: UserStore.users }), () => {
             return resolve(user);
         });
