@@ -4,5 +4,6 @@ build/
 tmp/
 temp/
 dist
+packages/api/src/**/*.json
 .next
 .env
