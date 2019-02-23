@@ -24,6 +24,21 @@ class UserRouter {
                 return res.json(response);
             }
         );
+
+        UserRouter.router.get(
+            '/:id',
+            async (req: Request, res: Response): Promise<Response> => {
+                const user = await UserController.getUser(req.params.id);
+                const response: IJSONResponse = {
+                    success: true,
+                    message: 'single user fetched by id',
+                    payload: {
+                        user
+                    }
+                };
+                return res.json(response);
+            }
+        );
     };
 }
 

@@ -30,7 +30,7 @@ class UserStore {
     };
 
     public static getUserById = (id: string): Promise<UserModelType> => {
-        const foundUser = UserStore.users.find(user => user.id === id);
+        const foundUser = UserStore.users.find(user => user._id.toString() === id);
         return foundUser ? Promise.resolve(foundUser) : Promise.resolve(null);
     };
 

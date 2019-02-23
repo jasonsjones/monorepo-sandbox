@@ -9,6 +9,7 @@ export interface IUser {
 
 interface IPayload {
     version?: string;
+    user?: UserModelType;
     users?: UserModelType[];
 }
 
