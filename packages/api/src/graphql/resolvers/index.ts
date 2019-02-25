@@ -1,7 +1,7 @@
-import helloResolver from './hello';
+import userResolver from './user';
 
 export default {
     Query: {
-        ...helloResolver
+        ...userResolver
     }
 };
