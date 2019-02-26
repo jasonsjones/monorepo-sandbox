@@ -11,6 +11,7 @@
     },
     "license": "MIT",
     "devDependencies": {
+        "@types/bcrypt-nodejs": "^0.0.30",
         "@types/body-parser": "^1.17.0",
         "@types/chai": "^4.1.7",
         "@types/debug": "^0.0.31",
@@ -30,6 +31,7 @@
     },
     "dependencies": {
         "apollo-server-express": "^2.4.6",
+        "bcrypt-nodejs": "^0.0.3",
         "body-parser": "^1.18.3",
         "dotenv": "^6.2.0",
         "express": "^4.16.4",

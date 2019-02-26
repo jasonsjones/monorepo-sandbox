@@ -1,20 +1,39 @@
+import { genSalt, hash } from 'bcrypt-nodejs';
 import fs from 'fs';
-import { Document } from 'mongoose';
 import config from '../config/config';
 import { IUser, UserModelType } from '../types';
 import User from './User';
+
+const hashPassword = (password: string): Promise<string> => {
+    return new Promise((resolve, reject) => {
+        genSalt(10, (error: any, salt: string) => {
+            if (error) {
+                throw error;
+            }
+            hash(password, salt, null, (err: any, hashPwd: string) => {
+                if (err) {
+                    throw err;
+                }
+                resolve(hashPwd);
+            });
+        });
+    });
+};
 
 class UserStore {
     public static addUser = (user: IUser): Promise<UserModelType | null> => {
         return new Promise((resolve, reject) => {
             if (!UserStore.isUserInStore(user.email)) {
                 const newUser = new User(user);
-                UserStore.users.push(new User(newUser));
-                if (config.env !== 'testing') {
-                    return UserStore.persistUser(newUser, resolve);
-                } else {
-                    return resolve(newUser);
-                }
+                hashPassword(user.password).then((hp: string) => {
+                    newUser.password = hp;
+                    UserStore.users.push(newUser);
+                    if (config.env !== 'testing') {
+                        return UserStore.persistUser(newUser, resolve);
+                    } else {
+                        return resolve(newUser);
+                    }
+                });
             } else {
                 return resolve(null);
             }
