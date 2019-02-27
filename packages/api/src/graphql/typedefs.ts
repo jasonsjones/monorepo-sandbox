@@ -7,6 +7,13 @@ export default gql`
 
         "Fetch a single user with the given id"
         user(id: String): User
+
+        "Simple hello world"
+        hello: String
+    }
+
+    type Mutation {
+        createUser(email: String, password: String): User
     }
 
     "A simple User type"
