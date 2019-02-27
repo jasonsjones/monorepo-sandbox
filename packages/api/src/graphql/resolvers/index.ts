@@ -1,21 +1,17 @@
 import { hello } from './hello';
 import { createUser, user, users } from './user';
 
-const RootQuery = {
-    Query: {
-        hello,
-        user,
-        users
-    }
+const rootQuery = {
+    hello,
+    user,
+    users
 };
 
-const RootMutation = {
-    Mutation: {
-        createUser
-    }
+const rootMutation = {
+    createUser
 };
 
 export default {
-    RootQuery,
-    RootMutation
+    Query: rootQuery,
+    Mutation: rootMutation
 };
