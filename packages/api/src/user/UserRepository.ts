@@ -14,6 +14,10 @@ class UserRepository {
     public static getUserById = (id: string): Promise<UserModelType> => {
         return User.findById(id).exec();
     };
+
+    public static deleteUser = (id: string): Promise<UserModelType> => {
+        return User.findByIdAndRemove(id).exec();
+    };
 }
 
 export default UserRepository;

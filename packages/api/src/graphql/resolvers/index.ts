@@ -1,5 +1,5 @@
 import { hello } from './hello';
-import { createUser, user, users } from './user';
+import { createUser, deleteUser, user, users } from './user';
 
 const rootQuery = {
     hello,
@@ -8,7 +8,8 @@ const rootQuery = {
 };
 
 const rootMutation = {
-    createUser
+    createUser,
+    deleteUser
 };
 
 export default {

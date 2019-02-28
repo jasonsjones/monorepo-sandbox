@@ -14,6 +14,7 @@ export default gql`
 
     type Mutation {
         createUser(email: String, password: String): User
+        deleteUser(id: String): User
     }
 
     "A simple User type"

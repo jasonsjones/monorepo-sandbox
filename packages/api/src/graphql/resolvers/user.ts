@@ -10,3 +10,7 @@ export const createUser = (parent: any, args: any) => {
     };
     return UserRepository.createUser(newUser);
 };
+
+export const deleteUser = (parent: any, args: any) => {
+    return UserRepository.deleteUser(args.id);
+};

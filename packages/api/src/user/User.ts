@@ -8,7 +8,7 @@ const userSchema = new Schema({
 });
 
 // tslint:disable next-line
-userSchema.pre('save', function(next /*: (e: any, user?: UserModelType) => void */) {
+userSchema.pre('save', function(next) {
     const user: UserModelType = this as UserModelType;
 
     genSalt(10, (saltErr: any, salt: string) => {
@@ -24,6 +24,15 @@ userSchema.pre('save', function(next /*: (e: any, user?: UserModelType) => void 
         });
     });
 });
+
+/*
+This is the middleware we will need to add to if we need to
+do any clean up after a user is deleted.
+
+// tslint:disable next-line
+userSchema.post('findOneAndRemove', function(doc) {
+});
+*/
 
 const User = mongoose.model<UserModelType>('User', userSchema);
 
