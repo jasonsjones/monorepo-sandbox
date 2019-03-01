@@ -2,10 +2,13 @@ import { genSalt, hash } from 'bcrypt-nodejs';
 import mongoose, { Schema } from 'mongoose';
 import { UserModelType } from '../types';
 
-const userSchema = new Schema({
-    email: String,
-    password: String
-});
+const userSchema = new Schema(
+    {
+        email: String,
+        password: String
+    },
+    { timestamps: true }
+);
 
 // tslint:disable next-line
 userSchema.pre('save', function(next) {

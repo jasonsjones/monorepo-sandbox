@@ -27,5 +27,8 @@ export default gql`
 
         "The user's password; this will be hashed very soon :-)"
         password: String
+
+        createdAt: String
+        updatedAt: String
     }
 `;

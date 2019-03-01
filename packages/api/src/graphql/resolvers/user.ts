@@ -14,3 +14,8 @@ export const createUser = (parent: any, args: any) => {
 export const deleteUser = (parent: any, args: any) => {
     return UserRepository.deleteUser(args.id);
 };
+
+export const UserTypeResolvers = {
+    createdAt: (parent: any) => new Date(parent.createdAt).toISOString(),
+    updatedAt: (parent: any) => new Date(parent.updatedAt).toISOString()
+};
