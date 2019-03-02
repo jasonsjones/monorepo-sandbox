@@ -1,6 +1,6 @@
 import { ApolloServer, gql } from 'apollo-server-express';
 import resolvers from '../graphql/resolvers';
-import typeDefs from '../graphql/typedefs';
+import typeDefs from '../graphql/schema';
 
 export class GraphqlServerProvider {
     public static getInstance = (): ApolloServer => {
