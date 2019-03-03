@@ -88,8 +88,18 @@ class UserStore {
     };
 
     private static seedUsers = (): Promise<UserModelType[]> => {
-        return UserStore.addUser({ email: 'oliver@qc.com', password: 'test1234' })
-            .then(() => UserStore.addUser({ email: 'barry@starlabs.com', password: '1234test' }))
+        return UserStore.addUser({
+            name: { first: 'Oliver', last: 'Queen' },
+            email: 'oliver@qc.com',
+            password: 'test1234'
+        })
+            .then(() =>
+                UserStore.addUser({
+                    name: { first: 'Barry', last: 'Allen' },
+                    email: 'barry@starlabs.com',
+                    password: '1234test'
+                })
+            )
             .then(() => {
                 return UserStore.users;
             });

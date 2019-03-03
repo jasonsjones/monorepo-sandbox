@@ -4,6 +4,10 @@ import { UserModelType } from '../types';
 
 const userSchema = new Schema(
     {
+        name: {
+            first: String,
+            last: String
+        },
         email: String,
         password: String
     },

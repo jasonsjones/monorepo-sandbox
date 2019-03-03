@@ -3,6 +3,10 @@ import { Document } from 'mongoose';
 export type UserModelType = IUser & Document;
 
 export interface IUser {
+    name: {
+        first: string;
+        last: string;
+    };
     email: string;
     password: string;
 }
