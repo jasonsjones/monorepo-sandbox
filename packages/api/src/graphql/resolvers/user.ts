@@ -6,8 +6,8 @@ export const users = () => UserRepository.getUsers();
 export const createUser = (parent: any, args: any) => {
     const newUser = {
         name: {
-            first: args.name.first,
-            last: args.name.last
+            first: args.firstName,
+            last: args.lastName
         },
         email: args.email,
         password: args.password

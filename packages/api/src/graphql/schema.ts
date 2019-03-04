@@ -13,7 +13,7 @@ export default gql`
     }
 
     type Mutation {
-        createUser(email: String, password: String): User
+        createUser(firstName: String, lastName: String, email: String, password: String): User
         deleteUser(id: String): User
     }
 
