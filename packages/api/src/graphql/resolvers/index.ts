@@ -1,8 +1,8 @@
-import { hello } from './hello';
 import { createUser, deleteUser, user, users, UserTypeResolvers } from './user';
+import { version } from './version';
 
 const rootQuery = {
-    hello,
+    version,
     user,
     users
 };

@@ -8,8 +8,8 @@ export default gql`
         "Fetch a single user with the given id"
         user(id: String): User
 
-        "Simple hello world"
-        hello: String
+        "Fetch the version of the API"
+        version: String
     }
 
     type Mutation {
