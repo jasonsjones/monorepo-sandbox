@@ -8,6 +8,8 @@ export default gql`
         "Fetch a single user with the given id"
         user(id: String): User
 
+        login(email: String, password: String): LoginResponse
+
         "Fetch the version of the API"
         version: String
     }
@@ -38,5 +40,10 @@ export default gql`
     type Name {
         first: String
         last: String
+    }
+
+    type LoginResponse {
+        authUser: User
+        token: String
     }
 `;

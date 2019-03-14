@@ -3,6 +3,7 @@ dotenv.config();
 
 const {
     NODE_ENV: env = 'development',
+    JWT_SECRET: jwtSecret = '$$jwtTokenSecret%%',
     DB_USER: dbUser,
     DB_PASSWORD: dbPassword,
     DB_HOST1: dbHost1 = 'dev-cluster-shard-00-00-vqlo1.gcp.mongodb.net:27017',
@@ -18,5 +19,6 @@ const db = {
 
 export default {
     env,
-    db
+    db,
+    jwtSecret
 };

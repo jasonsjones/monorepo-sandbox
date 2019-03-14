@@ -15,6 +15,10 @@ class UserRepository {
         return User.findById(id).exec();
     };
 
+    public static getUserByEmail = (email: string): Promise<UserModelType> => {
+        return User.findOne({ email }).exec();
+    };
+
     public static deleteUser = (id: string): Promise<UserModelType> => {
         return User.findByIdAndRemove(id).exec();
     };
