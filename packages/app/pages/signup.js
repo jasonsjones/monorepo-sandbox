@@ -34,7 +34,15 @@ const Signup = () => {
             body: JSON.stringify({ query })
         })
             .then(res => res.json())
-            .then(res => console.log(res))
+            .then(res => console.log(res.data))
+            .then(() =>
+                setValues({
+                    firstName: '',
+                    lastName: '',
+                    email: '',
+                    password: ''
+                })
+            )
             .catch(err => console.log(err));
     };
 
@@ -51,14 +59,19 @@ const Signup = () => {
             <h2>Signup for an Account</h2>
             <form onSubmit={handleSubmit}>
                 <label htmlFor="firstName">First Name:</label>
-                <input type="text" name="firstName" onChange={updateField} />
+                <input type="text" name="firstName" onChange={updateField} value={form.firstName} />
                 <label htmlFor="lastName">Last Name:</label>
-                <input type="text" name="lastName" onChange={updateField} />
+                <input type="text" name="lastName" onChange={updateField} value={form.lastName} />
                 <br />
                 <label htmlFor="email">Email:</label>
-                <input type="email" name="email" onChange={updateField} />
+                <input type="email" name="email" onChange={updateField} value={form.email} />
                 <label htmlFor="password">Password:</label>
-                <input type="password" name="password" onChange={updateField} />
+                <input
+                    type="password"
+                    name="password"
+                    onChange={updateField}
+                    value={form.password}
+                />
                 <button type="submit">Submit</button>
             </form>
         </React.Fragment>
