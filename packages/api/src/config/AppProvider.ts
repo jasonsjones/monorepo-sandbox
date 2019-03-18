@@ -1,6 +1,6 @@
 import Express, { Application } from 'express';
-
 import DatabaseManager from './DatabaseManager';
+import { GraphqlServerProvider } from './GraphqlServer';
 import MiddlewareConfig from './MiddlewareConfig';
 import RouterConfig from './RouterConfig';
 
@@ -14,6 +14,7 @@ class AppProvider {
         Promise.resolve().then(() => {
             DatabaseManager.connect();
             MiddlewareConfig.configMiddleware(AppProvider.app);
+            GraphqlServerProvider.getInstance().applyMiddleware({ app: AppProvider.app });
             RouterConfig.configRoutes(AppProvider.app);
         });
 }
