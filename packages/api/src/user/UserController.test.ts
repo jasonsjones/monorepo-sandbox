@@ -11,6 +11,10 @@ describe('User controller', () => {
 
         it('returns a promise', () => {
             const promise = UserController.createUser({
+                name: {
+                    first: 'Scott',
+                    last: 'Smith'
+                },
                 email: 'me@email.com',
                 password: 'test1234'
             });
@@ -19,6 +23,10 @@ describe('User controller', () => {
 
         it('returns a promise that resolves to a user', () => {
             const promise = UserController.createUser({
+                name: {
+                    first: 'Scott',
+                    last: 'Smith'
+                },
                 email: 'me@email.com',
                 password: 'test1234'
             });
@@ -31,10 +39,18 @@ describe('User controller', () => {
 
         it('returns a promise that resolves to null if email already exists', () => {
             const promise = UserController.createUser({
+                name: {
+                    first: 'Scott',
+                    last: 'Smith'
+                },
                 email: 'me2@email.com',
                 password: 'test1234'
             }).then(() =>
                 UserController.createUser({
+                    name: {
+                        first: 'Scott',
+                        last: 'Smith'
+                    },
                     email: 'me2@email.com',
                     password: '1234test'
                 })
@@ -51,10 +67,18 @@ describe('User controller', () => {
         beforeEach(() => {
             UserStore.clear();
             return UserController.createUser({
+                name: {
+                    first: 'Oliver',
+                    last: 'Queen'
+                },
                 email: 'oliver@qc.com',
                 password: 'test1234'
             }).then(() =>
                 UserController.createUser({
+                    name: {
+                        first: 'Barry',
+                        last: 'Allen'
+                    },
                     email: 'barry@starlabs.com',
                     password: '1234test'
                 })
@@ -82,11 +106,19 @@ describe('User controller', () => {
         beforeEach(() => {
             UserStore.clear();
             return UserController.createUser({
+                name: {
+                    first: 'Olive',
+                    last: 'Quenn'
+                },
                 email: 'oliver@qc.com',
                 password: 'test1234'
             }).then(ollie => {
                 ollieId = ollie.id;
                 return UserController.createUser({
+                    name: {
+                        first: 'Barry',
+                        last: 'Allen'
+                    },
                     email: 'barry@starlabs.com',
                     password: '1234test'
                 });
