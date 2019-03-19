@@ -4,7 +4,7 @@ import request from 'supertest';
 
 import AppProvider from '../config/AppProvider';
 
-describe.only('Index E2E tests', () => {
+describe('Index E2E tests', () => {
     let app: Application;
 
     before(async () => {
