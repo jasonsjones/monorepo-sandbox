@@ -16,6 +16,7 @@ class DatabaseManager {
 
     private static instance: DatabaseManager;
     private dbName: string;
+    private dbConnection: Connection;
 
     private constructor() {
         log('creating new DatabaseManager instance...');
@@ -28,8 +29,12 @@ class DatabaseManager {
             useNewUrlParser: true
         });
 
-        this.attachHandlers(mongoose.connection);
+        this.dbConnection = mongoose.connection;
+
+        this.attachHandlers(this.dbConnection);
     };
+
+    public getDbConnection = (): Connection => this.dbConnection;
 
     private buildConnectionString = (): string => {
         this.dbName = config.env !== 'testing' ? 'sandbox-dev' : 'sandbox-test';
