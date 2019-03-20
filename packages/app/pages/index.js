@@ -1,8 +1,5 @@
-import Nav from '../components/Nav';
-
 const Home = () => (
     <React.Fragment>
-        <Nav />
         <h1>Hello from Next.js</h1>
 
         <style jsx>{`

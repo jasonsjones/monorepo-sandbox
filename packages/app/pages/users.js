@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import Nav from '../components/Nav';
 
 const Users = () => {
     const [users, setUsers] = useState([]);
@@ -18,7 +17,6 @@ const Users = () => {
 
     return (
         <React.Fragment>
-            <Nav />
             <h1>Users</h1>
             {users.length > 0 && users.map(user => <p key={user._id}>{user.email}</p>)}
             <style jsx>{`

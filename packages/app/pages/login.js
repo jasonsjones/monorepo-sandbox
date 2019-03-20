@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import Nav from '../components/Nav';
 
 const Signup = () => {
     const [form, setValues] = useState({
@@ -49,7 +48,6 @@ const Signup = () => {
 
     return (
         <React.Fragment>
-            <Nav />
             <h2>Login</h2>
             <form onSubmit={handleSubmit}>
                 <label htmlFor="email">Email:</label>
