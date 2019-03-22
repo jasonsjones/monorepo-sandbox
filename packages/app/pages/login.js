@@ -1,5 +1,15 @@
 import { useState } from 'react';
 
+const login = query => {
+    return fetch('http://localhost:3000/graphql', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ query })
+    })
+        .then(res => res.json())
+        .then(payload => payload.data);
+};
+
 const Signup = () => {
     const [form, setValues] = useState({
         email: '',
@@ -25,18 +35,10 @@ const Signup = () => {
         }
         `;
 
-        fetch('http://localhost:3000/graphql', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ query })
-        })
-            .then(res => res.json())
-            .then(res => console.log(res.data))
-            .then(() => {
-                console.log('resetting state...');
-                setValues({ email: '', password: '' });
-            })
-            .catch(err => console.log(err));
+        login(query).then(data => {
+            setValues({ email: '', password: '' });
+            console.log(data);
+        });
     };
 
     const updateField = e => {
