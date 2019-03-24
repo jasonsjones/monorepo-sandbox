@@ -1,6 +1,8 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 
-const login = query => {
+import AuthContext from '../context/AuthContext';
+
+const doLogin = query => {
     return fetch('http://localhost:3000/graphql', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -10,7 +12,9 @@ const login = query => {
         .then(payload => payload.data);
 };
 
-const Signup = () => {
+const Login = () => {
+    const authCtx = useContext(AuthContext);
+
     const [form, setValues] = useState({
         email: '',
         password: ''
@@ -35,9 +39,10 @@ const Signup = () => {
         }
         `;
 
-        login(query).then(data => {
+        doLogin(query).then(data => {
             setValues({ email: '', password: '' });
             console.log(data);
+            authCtx.login(data.login.authUser, data.login.token);
         });
     };
 
@@ -67,4 +72,4 @@ const Signup = () => {
     );
 };
 
-export default Signup;
+export default Login;
