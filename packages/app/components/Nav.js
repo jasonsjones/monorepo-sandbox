@@ -16,7 +16,7 @@ const Nav = () => {
                     <Link href="/signup">
                         <a>
                             Signup
-                            <img src="https:icon.now.sh/plus/10" alt="plus icon" />
+                            <img src="https:icon.now.sh/plus/10/cccccc" alt="plus icon" />
                         </a>
                     </Link>
 
@@ -35,7 +35,7 @@ const Nav = () => {
             </nav>
             <style jsx>{`
                 nav {
-                    background-color: #f7b633;
+                    background-color: #022c43;
                     height: 50px;
                     display: flex;
                     justify-content: space-between;
@@ -59,7 +59,7 @@ const Nav = () => {
                 .nav-links a {
                     margin-right: 15px;
                     text-decoration: none;
-                    color: #070d59;
+                    color: #ccc;
                 }
             `}</style>
         </React.Fragment>

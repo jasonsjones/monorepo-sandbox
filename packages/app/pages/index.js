@@ -6,7 +6,7 @@ const Home = () => (
             h1 {
                 margin: 0;
                 padding: 0;
-                color: #1f3c88;
+                color: #053f5e;
             }
         `}</style>
     </React.Fragment>
