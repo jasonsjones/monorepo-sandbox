@@ -13,10 +13,19 @@ const Layout = ({ children }) => {
     };
 
     return (
-        <AuthContext.Provider value={{ authUser, token, login }}>
-            <Nav />
-            {children}
-        </AuthContext.Provider>
+        <React.Fragment>
+            <AuthContext.Provider value={{ authUser, token, login }}>
+                <Nav />
+                {children}
+            </AuthContext.Provider>
+            <style jsx global>{`
+                body {
+                    font-family: 'Arial';
+                    margin: 0;
+                    padding: 0;
+                }
+            `}</style>
+        </React.Fragment>
     );
 };
 

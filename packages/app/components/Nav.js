@@ -62,13 +62,6 @@ const Nav = () => {
                     color: #070d59;
                 }
             `}</style>
-            <style jsx global>{`
-                body {
-                    font-family: 'Arial';
-                    margin: 0;
-                    padding: 0;
-                }
-            `}</style>
         </React.Fragment>
     );
 };

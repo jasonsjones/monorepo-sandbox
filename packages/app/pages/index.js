@@ -9,13 +9,6 @@ const Home = () => (
                 color: #1f3c88;
             }
         `}</style>
-        <style jsx global>{`
-            body {
-                font-family: 'Arial';
-                margin: 0;
-                padding: 0;
-            }
-        `}</style>
     </React.Fragment>
 );
 
