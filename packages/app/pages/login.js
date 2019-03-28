@@ -1,4 +1,5 @@
 import { useContext, useState } from 'react';
+import Router from 'next/router';
 
 import AuthContext from '../context/AuthContext';
 
@@ -41,8 +42,8 @@ const Login = () => {
 
         doLogin(query).then(data => {
             setValues({ email: '', password: '' });
-            console.log(data);
             authCtx.login(data.login.authUser, data.login.token);
+            Router.push('/');
         });
     };
 
