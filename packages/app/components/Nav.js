@@ -13,12 +13,14 @@ const Nav = () => {
                     </Link>
                 </div>
                 <div className="nav-links">
-                    <Link href="/signup">
-                        <a>
-                            Signup
-                            <img src="https:icon.now.sh/plus/10/cccccc" alt="plus icon" />
-                        </a>
-                    </Link>
+                    {!authCtx.token && (
+                        <Link href="/signup">
+                            <a>
+                                Signup
+                                {/* <img src="https:icon.now.sh/plus/10/cccccc" alt="plus icon" /> */}
+                            </a>
+                        </Link>
+                    )}
 
                     {!authCtx.token && (
                         <Link href="/login">
