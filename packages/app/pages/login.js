@@ -3,11 +3,11 @@ import Router from 'next/router';
 
 import AuthContext from '../context/AuthContext';
 
-const doLogin = query => {
+const doLogin = (query, variables) => {
     return fetch('http://localhost:3000/graphql', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ query })
+        body: JSON.stringify({ query, variables })
     })
         .then(res => res.json())
         .then(payload => payload.data);
@@ -23,24 +23,27 @@ const Login = () => {
 
     const handleSubmit = e => {
         e.preventDefault();
-        const query = `query {
-            login(
-                email: "${form.email}",
-                password:"${form.password}"
-                ) {
-                    authUser {
-                        name {
-                            first
-                            last
+        const query = `
+            query Login($email: String!, $password: String!) {
+                login(email: $email, password: $password) {
+                        authUser {
+                            name {
+                                first
+                                last
+                            }
+                            email
                         }
-                        email
-                    }
-                    token
+                        token
+                }
             }
-        }
         `;
 
-        doLogin(query).then(data => {
+        const variables = {
+            email: form.email,
+            password: form.password
+        };
+
+        doLogin(query, variables).then(data => {
             setValues({ email: '', password: '' });
             authCtx.login(data.login.authUser, data.login.token);
             Router.push('/');
