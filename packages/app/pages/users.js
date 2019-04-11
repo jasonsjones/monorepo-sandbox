@@ -19,14 +19,6 @@ const Users = () => {
         <React.Fragment>
             <h1>Users</h1>
             {users.length > 0 && users.map(user => <p key={user._id}>{user.email}</p>)}
-            <style jsx>{`
-                h1 {
-                    font-family: 'Arial';
-                    margin: 0;
-                    padding: 0;
-                    color: #1f3c88;
-                }
-            `}</style>
         </React.Fragment>
     );
 };
