@@ -2,6 +2,7 @@ import { useState } from 'react';
 
 import Nav from './Nav';
 import AuthContext from '../context/AuthContext';
+import './Layout.css';
 
 const Layout = ({ children }) => {
     const [authUser, setAuthUser] = useState(null);
@@ -19,26 +20,6 @@ const Layout = ({ children }) => {
                 <Nav />
                 <div className="container">{children}</div>
             </AuthContext.Provider>
-
-            <style jsx global>{`
-                body {
-                    font-family: 'Arial';
-                    margin: 0;
-                    padding: 0;
-                }
-
-                h1,
-                h2 {
-                    margin: 0;
-                    padding: 0;
-                    color: #1f3c88;
-                }
-
-                .container {
-                    width: 960px;
-                    margin: 0 auto;
-                }
-            `}</style>
         </React.Fragment>
     );
 };
