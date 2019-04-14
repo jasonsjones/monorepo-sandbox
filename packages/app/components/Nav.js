@@ -1,9 +1,10 @@
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import Link from 'next/link';
 import AuthContext from '../context/AuthContext';
 
 const Nav = () => {
     const authCtx = useContext(AuthContext);
+    const [showProfileMenu, setShowProfileMenu] = useState(false);
     return (
         <React.Fragment>
             <nav>
@@ -15,10 +16,7 @@ const Nav = () => {
                 <div className="nav-links">
                     {!authCtx.token && (
                         <Link href="/signup">
-                            <a>
-                                Signup
-                                {/* <img src="https:icon.now.sh/plus/10/cccccc" alt="plus icon" /> */}
-                            </a>
+                            <a>Signup</a>
                         </Link>
                     )}
 
@@ -32,6 +30,29 @@ const Nav = () => {
                         <Link href="/users">
                             <a>Users</a>
                         </Link>
+                    )}
+
+                    {authCtx.token && (
+                        <div
+                            className="user-profile"
+                            onClick={() => setShowProfileMenu(!showProfileMenu)}
+                        >
+                            <img
+                                src="https:icon.now.sh/account_circle/24/cccccc"
+                                alt="user account icon"
+                            />
+                            <span>
+                                {authCtx.authUser.name.first} {authCtx.authUser.name.last}
+                            </span>
+                            {showProfileMenu && (
+                                <div className="panel-container">
+                                    <div className="panel">
+                                        <p>My Account</p>
+                                        <p>Logout</p>
+                                    </div>
+                                </div>
+                            )}
+                        </div>
                     )}
                 </div>
             </nav>
@@ -50,11 +71,14 @@ const Nav = () => {
                 }
 
                 .nav-links {
+                    display: flex;
+                    align-items: center;
                     margin-right: 50px;
+                    color: #ccc;
                 }
 
-                .nav-links a img {
-                    margin-left: 5px;
+                img {
+                    margin-right: 5px;
                 }
 
                 .nav-logo a,
@@ -62,6 +86,37 @@ const Nav = () => {
                     margin-right: 15px;
                     text-decoration: none;
                     color: #ccc;
+                }
+
+                .user-profile {
+                    position: relative;
+                    display: flex;
+                    align-items: center;
+                    color: #ccc;
+                }
+
+                .user-profile span {
+                    cursor: pointer;
+                }
+
+                .panel-container {
+                    font-family: 'Arial';
+                    color: #022c43;
+                    position: relative;
+                }
+
+                .panel {
+                    position: absolute;
+                    top: 28px;
+                    right: -30px;
+                    border: 1px solid #ddd;
+                    width: 150px;
+                    box-shadow: 5px 5px 8px #ccc;
+                    border-radius: 8px;
+                }
+
+                .panel p {
+                    margin-left: 25px;
                 }
             `}</style>
         </React.Fragment>
