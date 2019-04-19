@@ -1,13 +1,18 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
+import AuthContext from '../context/AuthContext';
 
 const Users = () => {
     const [users, setUsers] = useState([]);
+    const authCtx = useContext(AuthContext);
 
     useEffect(() => {
         const query = `{users { _id email } }`;
         fetch('http://localhost:3000/graphql', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${authCtx.token}`
+            },
             body: JSON.stringify({ query })
         })
             .then(res => res.json())
