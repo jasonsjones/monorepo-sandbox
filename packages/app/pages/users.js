@@ -16,7 +16,14 @@ const Users = () => {
             body: JSON.stringify({ query })
         })
             .then(res => res.json())
-            .then(res => setUsers(res.data.users))
+            .then(res => {
+                const { users } = res.data;
+                if (users) {
+                    setUsers(users);
+                } else {
+                    setUsers([]);
+                }
+            })
             .catch(err => console.log(err));
     }, []);
 

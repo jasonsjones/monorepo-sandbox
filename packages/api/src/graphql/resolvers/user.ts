@@ -1,7 +1,12 @@
 import UserRepository from '../../user/UserRepository';
 
-export const user = (parent: any, args: any) => UserRepository.getUserById(args.id);
-export const users = () => UserRepository.getUsers();
+export const user = (_: any, args: any) => UserRepository.getUserById(args.id);
+export const users = (_: any, __: any, context: any) => {
+    if (context.user) {
+        return UserRepository.getUsers();
+    }
+    return null;
+};
 
 export const createUser = (parent: any, args: any) => {
     const newUser = {

@@ -1,3 +1,4 @@
+import { Request } from 'express';
 import { Document } from 'mongoose';
 
 export type UserModelType = IUser & Document;
@@ -21,4 +22,8 @@ export interface IJSONResponse {
     success: boolean;
     message: string;
     payload: IPayload | null;
+}
+
+export interface IAuthRequest extends Request {
+    user?: any;
 }
