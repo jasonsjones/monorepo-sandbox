@@ -1,10 +1,10 @@
 import jwt from 'jsonwebtoken';
 import config from '../config/config';
 
-import { UserModelType } from '../types';
+import { IUserModel } from '../types';
 
 class AuthUtils {
-    public static generateToken = (user: UserModelType): string => {
+    public static generateToken = (user: IUserModel): string => {
         if (!user) {
             throw new Error('user is required to generate token');
         }

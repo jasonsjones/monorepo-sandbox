@@ -1,7 +1,7 @@
 import { Request } from 'express';
 import { Document } from 'mongoose';
 
-export type UserModelType = IUser & Document;
+export type IUserModel = IUser & Document;
 
 export interface IUser {
     name: {
@@ -14,8 +14,8 @@ export interface IUser {
 
 interface IPayload {
     version?: string;
-    user?: UserModelType;
-    users?: UserModelType[];
+    user?: IUserModel;
+    users?: IUserModel[];
 }
 
 export interface IJSONResponse {

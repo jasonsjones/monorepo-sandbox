@@ -1,7 +1,7 @@
 import { genSalt, hash } from 'bcrypt-nodejs';
 import fs from 'fs';
 import config from '../config/config';
-import { IUser, UserModelType } from '../types';
+import { IUser, IUserModel } from '../types';
 import User from './User';
 
 const hashPassword = (password: string): Promise<string> => {
@@ -21,7 +21,7 @@ const hashPassword = (password: string): Promise<string> => {
 };
 
 class UserStore {
-    public static addUser = (user: IUser): Promise<UserModelType | null> => {
+    public static addUser = (user: IUser): Promise<IUserModel | null> => {
         return new Promise((resolve, reject) => {
             if (!UserStore.isUserInStore(user.email)) {
                 const newUser = new User(user);
@@ -40,7 +40,7 @@ class UserStore {
         });
     };
 
-    public static getUsers = (): Promise<UserModelType[]> => {
+    public static getUsers = (): Promise<IUserModel[]> => {
         if (UserStore.isEmpty()) {
             return UserStore.initData().then(() => UserStore.users);
         } else {
@@ -48,7 +48,7 @@ class UserStore {
         }
     };
 
-    public static getUserById = (id: string): Promise<UserModelType> => {
+    public static getUserById = (id: string): Promise<IUserModel> => {
         const foundUser = UserStore.users.find(user => user._id.toString() === id);
         return foundUser ? Promise.resolve(foundUser) : Promise.resolve(null);
     };
@@ -61,7 +61,7 @@ class UserStore {
         UserStore.users = [];
     };
 
-    public static initData = (): Promise<UserModelType[]> => {
+    public static initData = (): Promise<IUserModel[]> => {
         return new Promise((resolve, reject) => {
             fs.exists(UserStore.userDataFile, exists => {
                 if (exists) {
@@ -80,14 +80,14 @@ class UserStore {
         });
     };
 
-    private static users: UserModelType[] = [];
+    private static users: IUserModel[] = [];
     private static userDataFile = `${__dirname}/user-data.json`;
 
     private static isUserInStore = (email: string): boolean => {
         return UserStore.users.some(user => user.email === email);
     };
 
-    private static seedUsers = (): Promise<UserModelType[]> => {
+    private static seedUsers = (): Promise<IUserModel[]> => {
         return UserStore.addUser({
             name: { first: 'Oliver', last: 'Queen' },
             email: 'oliver@qc.com',
@@ -105,10 +105,7 @@ class UserStore {
             });
     };
 
-    private static persistUser = (
-        user: UserModelType,
-        resolve: (user: UserModelType) => void
-    ): void => {
+    private static persistUser = (user: IUserModel, resolve: (user: IUserModel) => void): void => {
         fs.writeFile(UserStore.userDataFile, JSON.stringify({ users: UserStore.users }), () => {
             return resolve(user);
         });

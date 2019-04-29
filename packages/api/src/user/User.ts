@@ -1,7 +1,7 @@
 /* tslint:disable:only-arrow-functions */
 import { genSalt, hash } from 'bcrypt-nodejs';
 import mongoose, { Schema } from 'mongoose';
-import { UserModelType } from '../types';
+import { IUserModel } from '../types';
 
 const userSchema = new Schema(
     {
@@ -16,7 +16,7 @@ const userSchema = new Schema(
 );
 
 userSchema.pre('save', function(next) {
-    const user: UserModelType = this as UserModelType;
+    const user: IUserModel = this as IUserModel;
 
     genSalt(10, (saltErr: any, salt: string) => {
         if (saltErr) {
@@ -48,6 +48,6 @@ userSchema.post('findOneAndRemove', function(doc) {
 });
 */
 
-const User = mongoose.model<UserModelType>('User', userSchema);
+const User = mongoose.model<IUserModel>('User', userSchema);
 
 export default User;
