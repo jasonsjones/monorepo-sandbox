@@ -1,13 +1,12 @@
 import Express, { Application } from 'express';
-
+import addRoutes from './addRoutes';
 import applyMiddleware from './applyMiddleware';
-import { GraphqlServerProvider } from './GraphqlServer';
-import RouterConfig from './RouterConfig';
+import server from './graphqlServer';
 
 const configureApp = (expressApp: Application): void => {
     applyMiddleware(expressApp);
-    GraphqlServerProvider.getInstance().applyMiddleware({ app: expressApp });
-    RouterConfig.configRoutes(expressApp);
+    server.applyMiddleware({ app: expressApp });
+    addRoutes(expressApp);
 };
 
 const app: Application = Express();
