@@ -2,7 +2,7 @@ import { genSalt, hash } from 'bcrypt-nodejs';
 import fs from 'fs';
 import config from '../config/config';
 import { IUser, IUserModel } from '../types';
-import User from './User';
+import User from './userModel';
 
 const hashPassword = (password: string): Promise<string> => {
     return new Promise((resolve, reject) => {

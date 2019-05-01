@@ -1,4 +1,4 @@
-import UserRepository from '../../user/UserRepository';
+import * as UserRepository from '../../user/userRepository';
 
 export const user = (_: any, args: any) => UserRepository.getUserById(args.id);
 export const users = (_: any, __: any, context: any) => {

@@ -1,27 +1,23 @@
 import { IUser, IUserModel } from '../types';
-import User from './User';
+import User from './userModel';
 
-class UserRepository {
-    public static createUser = (user: IUser): Promise<IUserModel | null> => {
-        const newUser = new User(user);
-        return newUser.save();
-    };
+export const createUser = (user: IUser): Promise<IUserModel | null> => {
+    const newUser = new User(user);
+    return newUser.save();
+};
 
-    public static getUsers = (): Promise<IUserModel[]> => {
-        return User.find({}).exec();
-    };
+export const getUsers = (): Promise<IUserModel[]> => {
+    return User.find({}).exec();
+};
 
-    public static getUserById = (id: string): Promise<IUserModel> => {
-        return User.findById(id).exec();
-    };
+export const getUserById = (id: string): Promise<IUserModel> => {
+    return User.findById(id).exec();
+};
 
-    public static getUserByEmail = (email: string): Promise<IUserModel> => {
-        return User.findOne({ email }).exec();
-    };
+export const getUserByEmail = (email: string): Promise<IUserModel> => {
+    return User.findOne({ email }).exec();
+};
 
-    public static deleteUser = (id: string): Promise<IUserModel> => {
-        return User.findByIdAndRemove(id).exec();
-    };
-}
-
-export default UserRepository;
+export const deleteUser = (id: string): Promise<IUserModel> => {
+    return User.findByIdAndRemove(id).exec();
+};

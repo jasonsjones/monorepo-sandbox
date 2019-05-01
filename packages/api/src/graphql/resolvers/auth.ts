@@ -1,6 +1,6 @@
 import { compareSync } from 'bcrypt-nodejs';
 import { generateToken } from '../../auth/authUtils';
-import UserRepository from '../../user/UserRepository';
+import * as UserRepository from '../../user/userRepository';
 
 export const login = (parent: any, args: any) => {
     return UserRepository.getUserByEmail(args.email).then(user => {

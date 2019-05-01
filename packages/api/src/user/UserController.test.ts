@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 
-import UserController from './UserController';
+import * as UserController from './userController';
 import UserStore from './UserStore';
 
 describe('User controller', () => {

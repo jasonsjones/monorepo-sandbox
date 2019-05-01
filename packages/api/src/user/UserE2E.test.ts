@@ -1,17 +1,11 @@
 import { expect } from 'chai';
-import { Application } from 'express';
 import request from 'supertest';
-import AppProvider from '../config/AppProvider';
+import app from '../config/app';
 import DatabaseManager from '../config/DatabaseManager';
 
 describe('User E2E tests', () => {
     const ollie =
         'firstName: "Oliver", lastName: "Queen", email: "oliver@qc.com", password: "123456"';
-    let app: Application;
-
-    before(async () => {
-        app = await AppProvider.getInstance();
-    });
 
     afterEach(async () => {
         await DatabaseManager.getDbConnection().dropCollection('users');
