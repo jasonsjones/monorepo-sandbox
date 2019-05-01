@@ -1,5 +1,5 @@
 import { compareSync } from 'bcrypt-nodejs';
-import AuthUtils from '../../auth/AuthUtils';
+import { generateToken } from '../../auth/authUtils';
 import UserRepository from '../../user/UserRepository';
 
 export const login = (parent: any, args: any) => {
@@ -8,7 +8,7 @@ export const login = (parent: any, args: any) => {
         if (isAuth) {
             return {
                 authUser: user,
-                token: AuthUtils.generateToken(user)
+                token: generateToken(user)
             };
         } else {
             return null;
