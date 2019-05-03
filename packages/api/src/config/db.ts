@@ -5,6 +5,8 @@ import config from './config';
 const log = debug('db');
 const error = debug('db:error');
 
+let dbConnection: Connection;
+
 const getDbName = (): string => {
     return config.env !== 'testing' ? 'sandbox-dev' : 'sandbox-test';
 };
@@ -48,8 +50,15 @@ export const dbConnect = (): Connection => {
         useNewUrlParser: true
     });
 
-    const connection = mongoose.connection;
-    attachHandlers(connection);
+    dbConnection = mongoose.connection;
+    attachHandlers(dbConnection);
 
-    return connection;
+    return dbConnection;
+};
+
+export const getDbConnection = (): Connection => {
+    if (dbConnection) {
+        return dbConnection;
+    }
+    return null;
 };

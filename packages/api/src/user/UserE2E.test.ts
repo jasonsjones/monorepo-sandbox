@@ -1,14 +1,18 @@
 import { expect } from 'chai';
 import request from 'supertest';
 import app from '../config/app';
-import DatabaseManager from '../config/DatabaseManager';
+import { dbConnect, getDbConnection } from '../config/db';
 
 describe('User E2E tests', () => {
     const ollie =
         'firstName: "Oliver", lastName: "Queen", email: "oliver@qc.com", password: "123456"';
 
+    before(() => {
+        dbConnect();
+    });
+
     afterEach(async () => {
-        await DatabaseManager.getDbConnection().dropCollection('users');
+        await getDbConnection().dropCollection('users');
     });
 
     it('creates a user', () => {
