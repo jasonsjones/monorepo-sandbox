@@ -1,16 +1,8 @@
 import { expect } from 'chai';
-import { Application } from 'express';
 import request from 'supertest';
-
-import AppProvider from '../config/AppProvider';
+import app from '../config/app';
 
 describe('Index E2E tests', () => {
-    let app: Application;
-
-    before(async () => {
-        app = await AppProvider.getInstance();
-    });
-
     it('gets the root API route (GET /api)', () => {
         return request(app)
             .get('/api')
