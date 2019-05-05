@@ -24,6 +24,13 @@ export const deleteUser = (parent: any, args: any) => {
     return UserRepository.deleteUser(args.id);
 };
 
+export const me = (_: any, __: any, context: any) => {
+    if (context.user) {
+        return UserRepository.getUserById(context.user.id);
+    }
+    return null;
+};
+
 export const UserTypeResolvers = {
     createdAt: (parent: any) => new Date(parent.createdAt).toISOString(),
     updatedAt: (parent: any) => new Date(parent.updatedAt).toISOString()

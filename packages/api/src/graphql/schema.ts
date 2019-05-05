@@ -8,6 +8,9 @@ export default gql`
         "Fetch a single user with the given id"
         user(id: String): User
 
+        "Fetch the context user"
+        me: User
+
         login(email: String, password: String): LoginResponse
 
         "Fetch the version of the API"
