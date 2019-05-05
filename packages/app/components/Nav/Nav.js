@@ -1,6 +1,6 @@
 import { useContext, useState } from 'react';
 import Link from 'next/link';
-import AuthContext from '../context/AuthContext';
+import AuthContext from '../../context/AuthContext';
 import './Nav.css';
 
 const Nav = () => {

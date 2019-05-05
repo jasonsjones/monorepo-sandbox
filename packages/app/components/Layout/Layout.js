@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
-import Nav from './Nav';
-import AuthContext from '../context/AuthContext';
+import Nav from '../Nav/Nav';
+import AuthContext from '../../context/AuthContext';
 import './Layout.css';
 
 const Layout = ({ children }) => {
