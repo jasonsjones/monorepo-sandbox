@@ -3,7 +3,8 @@ import Router from 'next/router';
 import { useContext, useState } from 'react';
 
 import AuthContext from '../../context/AuthContext';
-import './LoginForm.css';
+import TextField from '../Common/TextField';
+import Button from '../Common/Button';
 
 const doLogin = (query, variables) => {
     return fetch('http://localhost:3000/graphql', {
@@ -60,20 +61,21 @@ const LoginForm = () => {
     return (
         <React.Fragment>
             <form onSubmit={handleSubmit}>
-                <div className="form-control">
-                    <label htmlFor="email">Email</label>
-                    <input type="email" name="email" onChange={updateField} value={form.email} />
-                </div>
-                <div className="form-control">
-                    <label htmlFor="password">Password</label>
-                    <input
-                        type="password"
-                        name="password"
-                        onChange={updateField}
-                        value={form.password}
-                    />
-                </div>
-                <button type="submit">Login</button>
+                <TextField
+                    type="text"
+                    name="email"
+                    label="Email"
+                    value={form.email}
+                    handleChange={updateField}
+                />
+                <TextField
+                    type="password"
+                    name="password"
+                    label="Password"
+                    value={form.password}
+                    handleChange={updateField}
+                />
+                <Button text="Login" />
             </form>
         </React.Fragment>
     );

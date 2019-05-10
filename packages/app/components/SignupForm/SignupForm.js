@@ -1,6 +1,7 @@
 import { useState } from 'react';
 
-import './SignupForm.css';
+import TextField from '../Common/TextField';
+import Button from '../Common/Button';
 
 const SignupForm = () => {
     const [form, setValues] = useState({
@@ -67,38 +68,35 @@ const SignupForm = () => {
     return (
         <React.Fragment>
             <form onSubmit={handleSubmit}>
-                <div className="form-control">
-                    <label htmlFor="firstName">First Name</label>
-                    <input
-                        type="text"
-                        name="firstName"
-                        onChange={updateField}
-                        value={form.firstName}
-                    />
-                </div>
-                <div className="form-control">
-                    <label htmlFor="lastName">Last Name</label>
-                    <input
-                        type="text"
-                        name="lastName"
-                        onChange={updateField}
-                        value={form.lastName}
-                    />
-                </div>
-                <div className="form-control">
-                    <label htmlFor="email">Email</label>
-                    <input type="email" name="email" onChange={updateField} value={form.email} />
-                </div>
-                <div className="form-control">
-                    <label htmlFor="password">Password</label>
-                    <input
-                        type="password"
-                        name="password"
-                        onChange={updateField}
-                        value={form.password}
-                    />
-                </div>
-                <button type="submit">Submit</button>
+                <TextField
+                    type="text"
+                    name="firstName"
+                    label="First Name"
+                    value={form.firstName}
+                    handleChange={updateField}
+                />
+                <TextField
+                    type="text"
+                    name="lastName"
+                    label="Last Name"
+                    value={form.lastName}
+                    handleChange={updateField}
+                />
+                <TextField
+                    type="text"
+                    name="email"
+                    label="Email"
+                    value={form.email}
+                    handleChange={updateField}
+                />
+                <TextField
+                    type="password"
+                    name="password"
+                    label="Password"
+                    value={form.password}
+                    handleChange={updateField}
+                />
+                <Button text="Submit" />
             </form>
         </React.Fragment>
     );

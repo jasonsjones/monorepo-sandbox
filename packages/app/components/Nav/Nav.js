@@ -3,9 +3,21 @@ import Link from 'next/link';
 import AuthContext from '../../context/AuthContext';
 import './Nav.css';
 
+const ProfileMenu = () => {
+    return (
+        <div className="panel-container">
+            <div className="panel">
+                <p>My Account</p>
+                <p>Logout</p>
+            </div>
+        </div>
+    );
+};
+
 const Nav = () => {
     const authCtx = useContext(AuthContext);
     const [showProfileMenu, setShowProfileMenu] = useState(false);
+
     return (
         <React.Fragment>
             <nav>
@@ -45,14 +57,7 @@ const Nav = () => {
                             <span>
                                 {authCtx.authUser.name.first} {authCtx.authUser.name.last}
                             </span>
-                            {showProfileMenu && (
-                                <div className="panel-container">
-                                    <div className="panel">
-                                        <p>My Account</p>
-                                        <p>Logout</p>
-                                    </div>
-                                </div>
-                            )}
+                            {showProfileMenu && <ProfileMenu />}
                         </div>
                     )}
                 </div>

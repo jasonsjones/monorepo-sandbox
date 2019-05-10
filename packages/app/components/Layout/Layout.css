@@ -15,3 +15,17 @@ h2 {
     width: 960px;
     margin: 0 auto;
 }
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-control {
+    display: flex;
+    flex-direction: column;
+}
+
+form button {
+    margin-top: 1rem;
+}
