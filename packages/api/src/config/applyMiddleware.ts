@@ -10,12 +10,16 @@ const addUserToRequest = (req: IAuthRequest, res: Response, next: NextFunction) 
     if (req.headers.authorization) {
         const token = req.headers.authorization.split(' ')[1];
         if (token) {
-            const decoded: any = verifyToken(token);
-            if (decoded) {
-                req.user = {
-                    id: decoded.sub,
-                    email: decoded.email
-                };
+            try {
+                const decoded: any = verifyToken(token);
+                if (decoded) {
+                    req.user = {
+                        id: decoded.id,
+                        email: decoded.email
+                    };
+                }
+            } catch (e) {
+                req.user = null;
             }
         } else {
             req.user = null;

@@ -8,7 +8,7 @@ export const generateToken = (user: IUserModel): string => {
     }
     const token = jwt.sign(
         {
-            sub: user._id,
+            id: user._id,
             email: user.email
         },
         config.jwtSecret,
