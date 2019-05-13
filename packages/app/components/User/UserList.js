@@ -32,7 +32,7 @@ const UserList = () => {
                 }
                 setErrMsg(null);
             })
-            .catch(err => setErrMsg(err));
+            .catch(err => setErrMsg(err.message));
     }, []);
 
     return (
