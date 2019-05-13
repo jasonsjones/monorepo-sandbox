@@ -1,6 +1,6 @@
 nav {
     background-color: #022c43;
-    height: 50px;
+    height: 60px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -68,4 +68,10 @@ img {
 
 .panel p {
     margin-left: 25px;
+}
+
+@media only screen and (min-device-width: 375px) and (max-device-width: 667px) {
+    .nav-links {
+        margin-right: 0;
+    }
 }
