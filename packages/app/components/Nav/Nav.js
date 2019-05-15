@@ -55,7 +55,7 @@ const Nav = () => {
                         </Link>
                     )}
 
-                    {authCtx.token && (
+                    {authCtx.authUser && authCtx.token && (
                         <div
                             className="user-profile"
                             onClick={() => setShowProfileMenu(!showProfileMenu)}
