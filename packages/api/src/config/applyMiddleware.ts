@@ -18,8 +18,9 @@ const addUserToRequest = (req: IAuthRequest, res: Response, next: NextFunction) 
                         email: decoded.email
                     };
                 }
-            } catch (e) {
+            } catch (err) {
                 req.user = null;
+                req.authError = err;
             }
         } else {
             req.user = null;

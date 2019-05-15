@@ -26,4 +26,5 @@ export interface IJSONResponse {
 
 export interface IAuthRequest extends Request {
     user?: any;
+    authError?: any;
 }

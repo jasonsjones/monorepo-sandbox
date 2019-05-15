@@ -12,7 +12,7 @@ const fetchUsers = (query, token) => {
         body: JSON.stringify({ query })
     })
         .then(res => res.json())
-        .then(payload => payload.data);
+        .then(payload => payload);
 };
 
 const UserList = () => {
@@ -23,14 +23,23 @@ const UserList = () => {
     useEffect(() => {
         const query = `{users { name { first last } _id email } }`;
         fetchUsers(query, authCtx.token)
-            .then(data => {
-                const { users } = data;
+            .then(payload => {
+                const { errors } = payload;
+                const { users } = payload.data;
                 if (users) {
                     setUsers(users);
                 } else {
                     setUsers([]);
                 }
-                setErrMsg(null);
+
+                if (errors && Array.isArray(errors) && errors.length > 0) {
+                    const errMsg = errors[0].message;
+                    if (errMsg.includes('TokenExpiredError')) {
+                        authCtx.logout();
+                    } else {
+                        setErrMsg(errMsg);
+                    }
+                }
             })
             .catch(err => setErrMsg(err.message));
     }, []);

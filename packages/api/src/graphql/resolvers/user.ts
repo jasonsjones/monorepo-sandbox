@@ -2,9 +2,14 @@ import * as UserRepository from '../../user/userRepository';
 
 export const user = (_: any, args: any) => UserRepository.getUserById(args.id);
 export const users = (_: any, __: any, context: any) => {
-    if (context.user) {
+    if (context.req.user) {
         return UserRepository.getUsers();
     }
+
+    if (context.req.authError) {
+        return new Error(context.req.authError);
+    }
+
     return null;
 };
 

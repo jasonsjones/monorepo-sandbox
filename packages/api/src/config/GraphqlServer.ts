@@ -6,9 +6,7 @@ import { IAuthRequest } from '../types';
 const gqlServer: ApolloServer = new ApolloServer({
     typeDefs,
     resolvers,
-    context: ({ req }: { req: IAuthRequest }) => ({
-        user: req.user
-    })
+    context: ({ req }: { req: IAuthRequest }) => ({ req })
 });
 
 export default gqlServer;
