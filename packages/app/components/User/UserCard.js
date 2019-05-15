@@ -18,6 +18,7 @@ const UserCard = props => {
                     border: 1px solid #ccc;
                     margin: 10px;
                     border-radius: 10px;
+                    transition: all 200ms ease-in-out;
                 }
 
                 .user-container:hover {

@@ -71,7 +71,10 @@ img {
 }
 
 @media only screen and (min-device-width: 375px) and (max-device-width: 667px) {
+    .nav-logo {
+        font-size: 1.25rem;
+    }
     .nav-links {
-        margin-right: 0;
+        margin-right: 15px;
     }
 }

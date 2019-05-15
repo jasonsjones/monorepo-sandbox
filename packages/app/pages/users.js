@@ -7,8 +7,15 @@ const Users = () => {
 
     return (
         <React.Fragment>
-            <h1>Users</h1>
-            {authCtx.token ? <UserList /> : <p>Must be logged in to see this resource</p>}
+            <div className="container">
+                <h1>Users</h1>
+                {authCtx.token ? <UserList /> : <p>Must be logged in to see this resource</p>}
+            </div>
+            <style jsx>{`
+                .container {
+                    margin: 20px;
+                }
+            `}</style>
         </React.Fragment>
     );
 };

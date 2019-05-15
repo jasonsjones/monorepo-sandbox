@@ -40,4 +40,5 @@ form {
 
 form button {
     margin-top: 1rem;
+    cursor: pointer;
 }
