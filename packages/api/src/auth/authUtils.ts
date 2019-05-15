@@ -12,7 +12,7 @@ export const generateToken = (user: IUserModel): string => {
             email: user.email
         },
         config.jwtSecret,
-        { expiresIn: '1hr' }
+        { expiresIn: 60 * 60 /* 1hr (3600s) */ }
     );
 
     return token;
