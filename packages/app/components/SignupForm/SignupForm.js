@@ -3,6 +3,16 @@ import { useState } from 'react';
 import TextField from '../Common/TextField';
 import Button from '../Common/Button';
 
+const doSignup = (query, variables) => {
+    return fetch('http://localhost:3000/graphql', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ query, variables })
+    })
+        .then(res => res.json())
+        .then(payload => payload.data);
+};
+
 const SignupForm = () => {
     const [form, setValues] = useState({
         firstName: '',
@@ -10,6 +20,15 @@ const SignupForm = () => {
         email: '',
         password: ''
     });
+
+    const isFormValid = () => {
+        return (
+            form.firstName.length > 0 &&
+            form.lastName.length > 0 &&
+            form.email.length > 0 &&
+            form.password.length > 0
+        );
+    };
 
     const handleSubmit = e => {
         e.preventDefault();
@@ -40,22 +59,15 @@ const SignupForm = () => {
             password: form.password
         };
 
-        fetch('http://localhost:3000/graphql', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ query, variables })
-        })
-            .then(res => res.json())
-            .then(res => console.log(res.data))
-            .then(() =>
-                setValues({
-                    firstName: '',
-                    lastName: '',
-                    email: '',
-                    password: ''
+        if (isFormValid()) {
+            doSignup(query, variables)
+                .then(data => {
+                    setValues({ firstName: '', lastName: '', email: '', password: '' });
+                    // authCtx.login(data.login.authUser, data.login.token);
+                    // Router.push('/');
                 })
-            )
-            .catch(err => console.log(err));
+                .catch(err => console.log(err));
+        }
     };
 
     const updateField = e => {
