@@ -23,6 +23,11 @@ const LoginForm = () => {
         email: '',
         password: ''
     });
+
+    const isFormValid = () => {
+        return form.email.length > 0 && form.password.length > 0;
+    };
+
     const handleSubmit = e => {
         e.preventDefault();
         const query = `
@@ -45,11 +50,13 @@ const LoginForm = () => {
             password: form.password
         };
 
-        doLogin(query, variables).then(data => {
-            setValues({ email: '', password: '' });
-            authCtx.login(data.login.authUser, data.login.token);
-            Router.push('/');
-        });
+        if (isFormValid()) {
+            doLogin(query, variables).then(data => {
+                setValues({ email: '', password: '' });
+                authCtx.login(data.login.authUser, data.login.token);
+                Router.push('/');
+            });
+        }
     };
 
     const updateField = e => {
