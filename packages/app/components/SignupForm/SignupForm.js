@@ -10,7 +10,7 @@ const doSignup = (query, variables) => {
         body: JSON.stringify({ query, variables })
     })
         .then(res => res.json())
-        .then(payload => payload.data);
+        .then(payload => payload);
 };
 
 const SignupForm = () => {
@@ -33,14 +33,18 @@ const SignupForm = () => {
     const handleSubmit = e => {
         e.preventDefault();
         const query = `
-            mutation CreateUser($firstName: String!,
-                                $lastName: String!,
-                                $email: String!,
-                                $password: String!) {
-                createUser(firstName: $firstName,
-                           lastName: $lastName,
-                           email: $email,
-                           password: $password) {
+            mutation CreateUser(
+                $firstName: String!,
+                $lastName: String!,
+                $email: String!,
+                $password: String!
+            ) {
+                createUser(
+                    firstName: $firstName,
+                    lastName: $lastName,
+                    email: $email,
+                    password: $password
+                ) {
                     _id
                     name {
                         first
@@ -61,7 +65,7 @@ const SignupForm = () => {
 
         if (isFormValid()) {
             doSignup(query, variables)
-                .then(data => {
+                .then(({ data }) => {
                     setValues({ firstName: '', lastName: '', email: '', password: '' });
                     // authCtx.login(data.login.authUser, data.login.token);
                     // Router.push('/');
