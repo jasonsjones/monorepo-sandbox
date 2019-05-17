@@ -5,8 +5,14 @@ import server from './graphqlServer';
 
 const configureApp = (expressApp: Application): void => {
     applyMiddleware(expressApp);
-    server.applyMiddleware({ app: expressApp });
     addRoutes(expressApp);
+    server.applyMiddleware({
+        app: expressApp,
+        cors: {
+            origin: 'http://localhost:4200',
+            credentials: true
+        }
+    });
 };
 
 const app: Application = Express();
