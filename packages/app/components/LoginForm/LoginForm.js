@@ -13,7 +13,7 @@ const doLogin = (query, variables) => {
         body: JSON.stringify({ query, variables })
     })
         .then(res => res.json())
-        .then(payload => payload.data);
+        .then(payload => payload);
 };
 
 const LoginForm = () => {
@@ -33,14 +33,14 @@ const LoginForm = () => {
         const query = `
             query Login($email: String!, $password: String!) {
                 login(email: $email, password: $password) {
-                        authUser {
-                            name {
-                                first
-                                last
-                            }
-                            email
+                    authUser {
+                        name {
+                            first
+                            last
                         }
-                        token
+                        email
+                    }
+                    token
                 }
             }
         `;
@@ -51,7 +51,7 @@ const LoginForm = () => {
         };
 
         if (isFormValid()) {
-            doLogin(query, variables).then(data => {
+            doLogin(query, variables).then(({ data }) => {
                 setValues({ email: '', password: '' });
                 authCtx.login(data.login.authUser, data.login.token);
                 Router.push('/');
@@ -65,6 +65,7 @@ const LoginForm = () => {
             [e.target.name]: e.target.value
         });
     };
+
     return (
         <React.Fragment>
             <form onSubmit={handleSubmit}>

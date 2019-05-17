@@ -23,9 +23,8 @@ const UserList = () => {
     useEffect(() => {
         const query = `{users { name { first last } _id email } }`;
         fetchUsers(query, authCtx.token)
-            .then(payload => {
-                const { errors } = payload;
-                const { users } = payload.data;
+            .then(({ errors, data }) => {
+                const { users } = data;
                 if (users) {
                     setUsers(users);
                 } else {
