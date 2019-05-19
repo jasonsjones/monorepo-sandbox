@@ -77,4 +77,7 @@ img {
     .nav-links {
         margin-right: 15px;
     }
+    .panel {
+        right: -10px;
+    }
 }

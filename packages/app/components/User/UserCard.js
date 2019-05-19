@@ -16,7 +16,7 @@ const UserCard = props => {
                     width: 200px;
                     align-items: center;
                     border: 1px solid #ccc;
-                    margin: 10px;
+                    margin: 10px 10px 0 0;
                     border-radius: 10px;
                     transition: all 200ms ease-in-out;
                 }
@@ -37,6 +37,11 @@ const UserCard = props => {
                 .id {
                     font-size: 0.75rem;
                     color: #aaa;
+                }
+                @media only screen and (min-device-width: 375px) and (max-device-width: 667px) {
+                    .user-container {
+                        width: 300px;
+                    }
                 }
             `}</style>
         </React.Fragment>

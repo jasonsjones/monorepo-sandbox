@@ -52,8 +52,13 @@ const UserList = () => {
             <style jsx>{`
                 .user-list-container {
                     display: flex;
-                    justify-content: space-around;
                     flex-wrap: wrap;
+                }
+                @media only screen and (min-device-width: 375px) and (max-device-width: 667px) {
+                    .user-list-container {
+                        flex-direction: column;
+                        align-items: center;
+                    }
                 }
             `}</style>
         </React.Fragment>

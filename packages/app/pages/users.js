@@ -15,6 +15,12 @@ const Users = () => {
                 .container {
                     margin: 20px;
                 }
+
+                @media only screen and (min-device-width: 375px) and (max-device-width: 667px) {
+                    h1 {
+                        text-align: center;
+                    }
+                }
             `}</style>
         </React.Fragment>
     );
