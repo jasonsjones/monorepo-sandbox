@@ -30,8 +30,8 @@ export const deleteUser = (parent: any, args: any) => {
 };
 
 export const me = (_: any, __: any, context: any) => {
-    if (context.user) {
-        return UserRepository.getUserById(context.user.id);
+    if (context.req.user) {
+        return UserRepository.getUserById(context.req.user.id);
     }
     return null;
 };

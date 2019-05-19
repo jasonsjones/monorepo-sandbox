@@ -5,9 +5,9 @@ import UserCard from './UserCard';
 const fetchUsers = (query, token) => {
     return fetch('http://localhost:3000/graphql', {
         method: 'POST',
+        credentials: 'include',
         headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${token}`
+            'Content-Type': 'application/json'
         },
         body: JSON.stringify({ query })
     })

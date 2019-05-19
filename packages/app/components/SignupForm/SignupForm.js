@@ -6,6 +6,7 @@ import Button from '../Common/Button';
 const doSignup = (query, variables) => {
     return fetch('http://localhost:3000/graphql', {
         method: 'POST',
+        credentials: 'include',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ query, variables })
     })
