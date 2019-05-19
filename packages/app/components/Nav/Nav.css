@@ -18,7 +18,8 @@ nav {
     color: #ccc;
 }
 
-.nav-links a:hover {
+.nav-links a:hover,
+.nav-logo a:hover {
     color: #fff;
 }
 
@@ -46,28 +47,6 @@ img {
 
 .user-profile span {
     cursor: pointer;
-}
-
-.panel-container {
-    font-family: 'Arial';
-    color: #022c43;
-    position: relative;
-}
-
-.panel {
-    position: absolute;
-    top: 28px;
-    right: -30px;
-    border: 1px solid #ddd;
-    width: 150px;
-    box-shadow: 5px 5px 8px #ccc;
-    border-radius: 8px;
-    background-color: #fff;
-    z-index: 10;
-}
-
-.panel p {
-    margin-left: 25px;
 }
 
 @media only screen and (min-device-width: 375px) and (max-device-width: 667px) {

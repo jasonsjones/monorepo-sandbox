@@ -1,28 +1,8 @@
 import { useContext, useState } from 'react';
 import Link from 'next/link';
 import AuthContext from '../../context/AuthContext';
+import ProfileMenu from '../ProfileMenu/ProfileMenu';
 import './Nav.css';
-
-const ProfileMenu = props => {
-    return (
-        <React.Fragment>
-            <div className="panel-container">
-                <div className="panel">
-                    <p>My Account</p>
-                    <p onClick={props.onLogout}>Logout</p>
-                </div>
-            </div>
-            <style jsx>{`
-                p {
-                    cursor: pointer;
-                }
-                p:hover {
-                    color: #ccc;
-                }
-            `}</style>
-        </React.Fragment>
-    );
-};
 
 const Nav = () => {
     const authCtx = useContext(AuthContext);
