@@ -35,6 +35,7 @@ const LoginForm = () => {
             query Login($email: String!, $password: String!) {
                 login(email: $email, password: $password) {
                     authUser {
+                        _id,
                         name {
                             first
                             last
