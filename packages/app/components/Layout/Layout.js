@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import Router from 'next/router';
 
 import Nav from '../Nav/Nav';
 import AuthContext from '../../context/AuthContext';
@@ -17,6 +18,7 @@ const Layout = ({ children }) => {
     const logout = () => {
         setAuthUser(null);
         setToken('');
+        Router.push('/');
     };
 
     return (
