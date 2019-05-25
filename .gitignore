@@ -7,3 +7,4 @@ dist
 packages/api/src/**/*.json
 .next
 .env
+.DS_Store

@@ -13,7 +13,7 @@ const Users = () => {
             </div>
             <style jsx>{`
                 .container {
-                    margin: 20px;
+                    margin: 20px 50px;
                 }
 
                 @media only screen and (min-device-width: 375px) and (max-device-width: 667px) {
