@@ -19,6 +19,7 @@ export default gql`
 
     type Mutation {
         createUser(firstName: String, lastName: String, email: String, password: String): User
+        updateUser(id: String, newUserData: UserInput): User
         deleteUser(id: String): User
     }
 
@@ -43,6 +44,15 @@ export default gql`
     type Name {
         first: String
         last: String
+    }
+
+    input UserInput {
+        "User's first and last names"
+        firstName: String
+        lastName: String
+
+        "User's email address"
+        email: String
     }
 
     type LoginResponse {

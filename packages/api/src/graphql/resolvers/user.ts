@@ -36,6 +36,10 @@ export const me = (_: any, __: any, context: any) => {
     return null;
 };
 
+export const updateUser = (_: any, args: any) => {
+    return UserRepository.updateUser(args.id, args.newUserData);
+};
+
 export const UserTypeResolvers = {
     createdAt: (parent: any) => new Date(parent.createdAt).toISOString(),
     updatedAt: (parent: any) => new Date(parent.updatedAt).toISOString()

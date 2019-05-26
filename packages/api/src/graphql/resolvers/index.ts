@@ -1,5 +1,5 @@
 import { login } from './auth';
-import { createUser, deleteUser, me, user, users, UserTypeResolvers } from './user';
+import { createUser, deleteUser, me, updateUser, user, users, UserTypeResolvers } from './user';
 import { version } from './version';
 
 const rootQuery = {
@@ -12,7 +12,8 @@ const rootQuery = {
 
 const rootMutation = {
     createUser,
-    deleteUser
+    deleteUser,
+    updateUser
 };
 
 export default {

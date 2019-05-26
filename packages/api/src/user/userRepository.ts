@@ -21,3 +21,14 @@ export const getUserByEmail = (email: string): Promise<IUserModel> => {
 export const deleteUser = (id: string): Promise<IUserModel> => {
     return User.findByIdAndRemove(id).exec();
 };
+
+export const updateUser = (id: string, newUserData: any): Promise<IUserModel> => {
+    return User.findByIdAndUpdate(
+        id,
+        {
+            name: { first: newUserData.firstName, last: newUserData.lastName },
+            email: newUserData.email
+        },
+        { new: true }
+    ).exec();
+};
