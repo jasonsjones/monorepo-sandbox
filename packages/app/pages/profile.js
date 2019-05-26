@@ -100,6 +100,9 @@ const Profile = () => {
                 }
 
                 @media only screen and (min-device-width: 375px) and (max-device-width: 667px) {
+                    .container {
+                        margin: 20px 30px;
+                    }
                     h1 {
                         text-align: center;
                     }
