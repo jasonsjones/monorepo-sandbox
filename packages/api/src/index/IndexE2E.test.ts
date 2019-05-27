@@ -31,4 +31,18 @@ describe('Index E2E tests', () => {
                 expect(/\d.\d.\d/.test(res.body.payload.version)).to.be.true;
             });
     });
+
+    it('gets the API version (graphql query)', () => {
+        const query = `query { version }`;
+        return request(app)
+            .post('/graphql')
+            .set('Content-Type', 'application/json')
+            .send({ query })
+            .then(res => {
+                const { data } = res.body;
+                expect(data.version).to.be.a('string');
+                // tslint:disable-next-line
+                expect(/\d.\d.\d/.test(data.version)).to.be.true;
+            });
+    });
 });
