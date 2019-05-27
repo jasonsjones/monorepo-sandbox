@@ -4,8 +4,12 @@ import app from '../config/app';
 import { dbConnect, getDbConnection } from '../config/db';
 
 describe('User E2E tests', () => {
-    const ollie =
-        'firstName: "Oliver", lastName: "Queen", email: "oliver@qc.com", password: "123456"';
+    const ollie = {
+        firstName: 'Oliver',
+        lastName: 'Queen',
+        email: 'oliver@qc.com',
+        password: '123456'
+    };
 
     before(() => {
         dbConnect();
@@ -16,28 +20,47 @@ describe('User E2E tests', () => {
     });
 
     it('creates a user', () => {
-        const query = `mutation {
-            createUser( ${ollie} ) {
-                _id
-                name {
-                    first
-                    last
+        const query = `
+            mutation CreateUser(
+                $firstName: String!,
+                $lastName: String!,
+                $email: String!,
+                $password: String!
+            ) {
+                createUser(
+                    firstName: $firstName,
+                    lastName: $lastName,
+                    email: $email,
+                    password: $password
+                ) {
+                    _id
+                    name {
+                        first
+                        last
+                    }
+                    email
+                    password
                 }
-                email
-                password
             }
-        }`;
+        `;
+        const variables = {
+            firstName: ollie.firstName,
+            lastName: ollie.lastName,
+            email: ollie.email,
+            password: ollie.password
+        };
+
         return request(app)
             .post('/graphql')
             .set('Content-Type', 'application/json')
-            .send({ query })
+            .send({ query, variables })
             .then(res => {
-                const data = res.body.data;
+                const { data } = res.body;
                 expect(data.createUser).to.have.property('name');
                 expect(data.createUser).to.have.property('email');
                 expect(data.createUser).to.have.property('password');
                 expect(data.createUser.name).to.have.property('first');
                 expect(data.createUser.name).to.have.property('last');
             });
-    }).timeout(10000);
+    }).timeout(8000);
 });
