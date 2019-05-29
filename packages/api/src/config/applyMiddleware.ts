@@ -8,7 +8,12 @@ import { IAuthRequest } from '../types';
 import config from './config';
 
 const getTokens = (req: IAuthRequest) => {
-    const token = req.cookies['access-token'];
+    let bearerToken = null;
+    if (req.headers.authorization) {
+        bearerToken = req.headers.authorization.split(' ')[1];
+    }
+
+    const token = bearerToken || req.cookies['access-token'];
     const refreshToken = req.cookies['refresh-token'];
 
     return {
