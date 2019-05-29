@@ -36,8 +36,12 @@ export const me = (_: any, __: any, context: any) => {
     return null;
 };
 
-export const updateUser = (_: any, args: any) => {
-    return UserRepository.updateUser(args.id, args.newUserData);
+export const updateUser = (_: any, args: any, context: any) => {
+    if (context.req.user.id === args.id) {
+        const updatedData = JSON.parse(JSON.stringify(args.newUserData));
+        return UserRepository.updateUser(args.id, updatedData);
+    }
+    return null;
 };
 
 export const UserTypeResolvers = {

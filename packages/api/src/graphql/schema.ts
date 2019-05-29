@@ -46,13 +46,17 @@ export default gql`
         last: String
     }
 
+    input NameInput {
+        first: String!
+        last: String!
+    }
+
     input UserInput {
         "User's first and last names"
-        firstName: String
-        lastName: String
+        name: NameInput!
 
         "User's email address"
-        email: String
+        email: String!
     }
 
     type LoginResponse {
