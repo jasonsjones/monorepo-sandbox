@@ -1,8 +1,12 @@
 import { Application } from 'express';
-import IndexRouter from '../index/IndexRouter';
 
 const addRoutes = (app: Application): void => {
-    app.use('/api', IndexRouter.getInstance());
+    app.use('/api', (req, res) =>
+        res.json({
+            success: true,
+            message: 'This is the only RESTful endpoint'
+        })
+    );
 };
 
 export default addRoutes;
