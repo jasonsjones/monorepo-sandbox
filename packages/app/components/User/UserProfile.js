@@ -1,19 +1,52 @@
+import TextField from '../Common/TextField';
 const Profile = props => {
-    const { user } = props;
+    const { user, editMode } = props;
     return (
         <React.Fragment>
             <div className="profile-container">
                 <img src="/static/placeholder-profile-sq.jpg" />
                 <div className="info">
-                    <h2>
-                        {user.name.first} {user.name.last}
-                    </h2>
-                    <p className="email">{user.email}</p>
+                    {editMode ? (
+                        <div className="name-form">
+                            <div style={{ marginRight: '1.5rem' }}>
+                                <TextField
+                                    type="text"
+                                    name="firstName"
+                                    label="First Name"
+                                    value={user.name.first}
+                                    handleChange={() => {}}
+                                />
+                            </div>
+                            <TextField
+                                type="text"
+                                name="lastName"
+                                label="Last Name"
+                                value={user.name.last}
+                                handleChange={() => {}}
+                            />
+                        </div>
+                    ) : (
+                        <h2>
+                            {user.name.first} {user.name.last}
+                        </h2>
+                    )}
+                    {editMode ? (
+                        <TextField
+                            type="text"
+                            name="email"
+                            label="Email"
+                            value={user.email}
+                            handleChange={() => {}}
+                        />
+                    ) : (
+                        <p className="email">{user.email}</p>
+                    )}
                     <p className="id">{user._id}</p>
                 </div>
             </div>
             <style jsx>{`
-                .profile-container {
+                .profile-container,
+                .name-form {
                     display: flex;
                 }
                 p {

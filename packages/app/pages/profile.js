@@ -1,21 +1,28 @@
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import AuthContext from '../context/AuthContext';
 import UserProfile from '../components/User/UserProfile';
 
 const Profile = () => {
     const authCtx = useContext(AuthContext);
+    const [isEditMode, setEditMode] = useState(false);
+
+    const handleEdit = evt => {
+        setEditMode(!isEditMode);
+    };
 
     return (
         <React.Fragment>
             <div className="container">
                 <div className="header">
                     <h1>Profile</h1>
-                    {authCtx.token && <button>Edit</button>}
+                    {authCtx.token && (
+                        <button onClick={handleEdit}>{!isEditMode ? 'Edit' : 'Done'}</button>
+                    )}
                 </div>
 
                 {authCtx.token && authCtx.authUser ? (
                     <div style={{ marginTop: '20px' }}>
-                        <UserProfile user={authCtx.authUser} />
+                        <UserProfile user={authCtx.authUser} editMode={isEditMode} />
                     </div>
                 ) : (
                     <p>Must be logged in to see this resource</p>
