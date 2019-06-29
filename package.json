@@ -12,7 +12,8 @@
         "kill:server": "lerna run kill:node --stream --scope @orion/api",
         "lint": "lerna run lint",
         "test": "lerna run test",
-        "test:api": "lerna run test --stream --scope @orion/api"
+        "test:api": "lerna run test --stream --scope @orion/api",
+        "test:app": "lerna run test --stream --scope @orion/app"
     },
     "devDependencies": {
         "lerna": "^3.13.2"

@@ -5,7 +5,7 @@
     "scripts": {
         "dev": "next -p 4200",
         "lint": "echo 'running lint script from app'",
-        "test": "echo 'running test script from app'"
+        "test": "jest --colors"
     },
     "license": "MIT",
     "dependencies": {
@@ -15,6 +15,10 @@
         "react-dom": "^16.8.6"
     },
     "devDependencies": {
-        "eslint": "^5.16.0"
+        "@babel/core": "^7.4.5",
+        "@testing-library/react": "^8.0.4",
+        "babel-jest": "^24.8.0",
+        "eslint": "^5.16.0",
+        "jest": "^24.8.0"
     }
 }
