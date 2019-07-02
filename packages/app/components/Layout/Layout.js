@@ -35,6 +35,10 @@ const Layout = ({ children, accessToken }) => {
         }
     }
 
+    const updateAuthUser = user => {
+        setAuthUser({ ...authUser, ...user, ...authUser.name, ...user.name });
+    };
+
     const login = (user, token) => {
         setAuthUser(user);
         setToken(token);
@@ -48,7 +52,7 @@ const Layout = ({ children, accessToken }) => {
 
     return (
         <React.Fragment>
-            <AuthContext.Provider value={{ authUser, token, login, logout }}>
+            <AuthContext.Provider value={{ authUser, token, login, logout, updateAuthUser }}>
                 <Nav />
                 <div className="container">{children}</div>
             </AuthContext.Provider>

@@ -4,5 +4,6 @@ export default React.createContext({
     authUser: null,
     token: '',
     login: () => {},
-    logout: () => {}
+    logout: () => {},
+    updateAuthUser: () => {}
 });
