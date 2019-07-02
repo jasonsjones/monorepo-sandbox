@@ -10,19 +10,27 @@ const Profile = () => {
         setEditMode(!isEditMode);
     };
 
+    const handleUserUpdate = user => {
+        authCtx.updateAuthUser(user);
+    };
+
     return (
         <React.Fragment>
             <div className="container">
                 <div className="header">
                     <h1>Profile</h1>
                     {authCtx.token && (
-                        <button onClick={handleEdit}>{!isEditMode ? 'Edit' : 'Done'}</button>
+                        <button onClick={handleEdit}>{!isEditMode ? 'Edit' : 'Update'}</button>
                     )}
                 </div>
 
                 {authCtx.token && authCtx.authUser ? (
                     <div style={{ marginTop: '20px' }}>
-                        <UserProfile user={authCtx.authUser} editMode={isEditMode} />
+                        <UserProfile
+                            contextUser={authCtx.authUser}
+                            isEditMode={isEditMode}
+                            onUserUpdate={user => handleUserUpdate(user)}
+                        />
                     </div>
                 ) : (
                     <p>Must be logged in to see this resource</p>
