@@ -25,6 +25,8 @@ const LoginForm = () => {
         password: ''
     });
 
+    const [error, setError] = useState(null);
+
     const isFormValid = () => {
         return form.email.length > 0 && form.password.length > 0;
     };
@@ -54,9 +56,14 @@ const LoginForm = () => {
 
         if (isFormValid()) {
             doLogin(query, variables).then(({ data }) => {
-                setValues({ email: '', password: '' });
-                authCtx.login(data.login.authUser, data.login.token);
-                Router.push('/');
+                if (data.login) {
+                    setError(null);
+                    authCtx.login(data.login.authUser, data.login.token);
+                    Router.push('/');
+                } else {
+                    setError("Oops, something went wrong... Let's try again.");
+                    setValues({ email: form.email, password: '' });
+                }
             });
         }
     };
@@ -66,6 +73,10 @@ const LoginForm = () => {
             ...form,
             [e.target.name]: e.target.value
         });
+
+        if (error) {
+            setError(null);
+        }
     };
 
     return (
@@ -87,6 +98,7 @@ const LoginForm = () => {
                 />
                 <Button text="Login" />
             </form>
+            {error && <p style={{ color: '#d63939' }}>{error}</p>}
         </React.Fragment>
     );
 };
