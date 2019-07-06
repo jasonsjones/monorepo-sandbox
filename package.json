@@ -23,7 +23,7 @@
     },
     "lint-staged": {
         "*.{js,ts}": [
-            "yarn lint --fix",
+            "yarn lint",
             "git add"
         ]
     },
