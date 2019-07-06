@@ -4,7 +4,7 @@
     "main": "index.js",
     "scripts": {
         "dev": "next -p 4200",
-        "lint": "echo 'running lint script from app'",
+        "lint": "eslint . --max-warnings 0",
         "test": "jest --colors"
     },
     "license": "MIT",
@@ -17,8 +17,12 @@
     "devDependencies": {
         "@babel/core": "^7.4.5",
         "@testing-library/react": "^8.0.4",
+        "babel-eslint": "^10.0.2",
         "babel-jest": "^24.8.0",
         "eslint": "^5.16.0",
-        "jest": "^24.8.0"
+        "eslint-config-prettier": "^6.0.0",
+        "eslint-plugin-prettier": "^3.1.0",
+        "jest": "^24.8.0",
+        "prettier": "^1.18.2"
     }
 }

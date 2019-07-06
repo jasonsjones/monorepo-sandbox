@@ -1,5 +1,6 @@
 {
     "private": true,
+    "name": "monorepo-sandbox",
     "workspaces": {
         "packages": [
             "packages/*"
@@ -15,8 +16,20 @@
         "test:api": "lerna run test --stream --scope @orion/api",
         "test:app": "lerna run test --stream --scope @orion/app"
     },
-    "devDependencies": {
-        "lerna": "^3.13.2"
+    "husky": {
+        "hooks": {
+            "pre-commit": "lint-staged"
+        }
     },
-    "name": "monorepo-sandbox"
+    "lint-staged": {
+        "*.{js,ts}": [
+            "yarn lint --fix",
+            "git add"
+        ]
+    },
+    "devDependencies": {
+        "husky": "^3.0.0",
+        "lerna": "^3.13.2",
+        "lint-staged": "^9.0.2"
+    }
 }
