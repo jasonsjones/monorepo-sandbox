@@ -47,6 +47,11 @@ const Nav = () => {
                             <span>
                                 {authCtx.authUser.name.first} {authCtx.authUser.name.last}
                             </span>
+                            <img
+                                className={`${showProfileMenu ? 'open' : ''}`}
+                                src="https:icon.now.sh/chevronDown/16/cccccc"
+                                alt="user account icon"
+                            />
                             {showProfileMenu && <ProfileMenu onLogout={authCtx.logout} />}
                         </div>
                     )}

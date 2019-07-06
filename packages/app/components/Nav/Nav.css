@@ -24,7 +24,14 @@ nav {
 }
 
 img {
-    margin-right: 5px;
+    margin: 0 5px;
+    cursor: pointer;
+    transition: 0.4s;
+}
+
+img.open {
+    transition: 0.4s;
+    transform: rotate(180deg);
 }
 
 .nav-logo a,
