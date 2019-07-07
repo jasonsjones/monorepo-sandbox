@@ -13,7 +13,7 @@ const Profile = () => {
                     {authCtx.token && <button>Edit</button>}
                 </div>
 
-                {authCtx.token ? (
+                {authCtx.token && authCtx.authUser ? (
                     <div style={{ marginTop: '20px' }}>
                         <UserProfile user={authCtx.authUser} />
                     </div>

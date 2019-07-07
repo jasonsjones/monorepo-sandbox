@@ -4,6 +4,19 @@ import Head from 'next/head';
 import Layout from '../components/Layout/Layout';
 
 class MyApp extends App {
+    static async getInitialProps({ ctx }) {
+        let token = null;
+        if (ctx.req && ctx.req.headers) {
+            const { cookie } = ctx.req.headers;
+            const parts = cookie.split(';');
+            const accessToken = parts.map(i => i.trim()).filter(j => j.startsWith('access-token'));
+            token = accessToken.length > 0 ? accessToken[0].split('=')[1] : '';
+        }
+
+        return {
+            token
+        };
+    }
     render() {
         const { Component } = this.props;
         return (
@@ -11,7 +24,7 @@ class MyApp extends App {
                 <Head>
                     <title>MonoRepo Sandbox</title>
                 </Head>
-                <Layout>
+                <Layout accessToken={this.props.token}>
                     <Component />
                 </Layout>
             </Container>

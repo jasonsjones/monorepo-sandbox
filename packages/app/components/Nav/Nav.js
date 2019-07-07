@@ -8,6 +8,8 @@ const Nav = () => {
     const authCtx = useContext(AuthContext);
     const [showProfileMenu, setShowProfileMenu] = useState(false);
 
+    const isAuthed = authCtx.authUser && authCtx.token;
+
     return (
         <React.Fragment>
             <nav>
@@ -17,25 +19,25 @@ const Nav = () => {
                     </Link>
                 </div>
                 <div className="nav-links">
-                    {!authCtx.token && (
+                    {!isAuthed && (
                         <Link href="/signup">
                             <a>Signup</a>
                         </Link>
                     )}
 
-                    {!authCtx.token && (
+                    {!isAuthed && (
                         <Link href="/login">
                             <a>Login</a>
                         </Link>
                     )}
 
-                    {authCtx.token && (
+                    {isAuthed && (
                         <Link href="/users">
                             <a>Users</a>
                         </Link>
                     )}
 
-                    {authCtx.authUser && authCtx.token && (
+                    {isAuthed && (
                         <div
                             className="user-profile"
                             onClick={() => setShowProfileMenu(!showProfileMenu)}

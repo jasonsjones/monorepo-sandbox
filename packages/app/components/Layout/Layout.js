@@ -5,14 +5,39 @@ import Nav from '../Nav/Nav';
 import AuthContext from '../../context/AuthContext';
 import './Layout.css';
 
-const Layout = ({ children }) => {
+const fetchAuthUser = query => {
+    return fetch('http://localhost:3000/graphql', {
+        method: 'POST',
+        credentials: 'include',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ query })
+    })
+        .then(res => res.json())
+        .then(payload => payload);
+};
+
+const Layout = ({ children, accessToken }) => {
     const [authUser, setAuthUser] = useState(null);
-    const [token, setToken] = useState('');
+    const [token, setToken] = useState(accessToken);
+
+    if (token && !authUser) {
+        const query = `query {
+            me {
+                name {
+                    first
+                    last
+                }
+                email
+            }
+        }`;
+        if (process.browser) {
+            fetchAuthUser(query).then(({ data }) => setAuthUser(data.me));
+        }
+    }
 
     const login = (user, token) => {
         setAuthUser(user);
         setToken(token);
-        // add to local storage here...
     };
 
     const logout = () => {
