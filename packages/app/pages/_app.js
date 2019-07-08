@@ -18,13 +18,13 @@ class MyApp extends App {
         };
     }
     render() {
-        const { Component } = this.props;
+        const { Component, token } = this.props;
         return (
             <Container>
                 <Head>
                     <title>MonoRepo Sandbox</title>
                 </Head>
-                <Layout accessToken={this.props.token}>
+                <Layout accessToken={token}>
                     <Component />
                 </Layout>
             </Container>
