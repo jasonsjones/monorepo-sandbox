@@ -28,3 +28,7 @@ export const updateUser = (id: string, newUserData: any): Promise<IUserModel> =>
     }
     return User.findByIdAndUpdate(id, newUserData, { new: true }).exec();
 };
+
+export const getModel = () => {
+    return User;
+};
