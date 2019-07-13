@@ -23,36 +23,17 @@ const BARRY = {
     password: '123456'
 };
 
-/*
-const loginQuery = `
-    query Login($email: String!, $password: String!) {
-        login(email: $email, password: $password) {
-            authUser {
-                _id,
-                name {
-                    first
-                    last
-                }
-                email
-            }
-            token
-        }
-    }
-`;
-
-const loginVariables = {
-    email: BARRY.email,
-    password: BARRY.password
-};
-*/
-
 describe('User E2E tests', () => {
     before(() => {
         dbConnect();
     });
 
     afterEach(async () => {
-        await getDbConnection().dropCollection('users');
+        const connection = await getDbConnection();
+        const list = await connection.db.listCollections({ name: 'users' }).toArray();
+        if (list.length !== 0) {
+            await UserRepository.getModel().collection.drop();
+        }
     });
 
     describe('mutation to create a user', () => {
@@ -103,6 +84,108 @@ describe('User E2E tests', () => {
         }).timeout(8000);
     });
 
+    describe('mutation to update a user', () => {
+        let id: string;
+        let token: string;
+
+        before(() => {
+            return UserRepository.createUser(BARRY).then(user => {
+                id = user._id;
+                token = generateToken(user);
+            });
+        });
+
+        it('updates a user', () => {
+            const query = `
+                mutation UpdateUser(
+                    $id: ID!,
+                    $updatedData: UserInput!
+                ) {
+                    updateUser(
+                        id: $id,
+                        newUserData: $updatedData
+                    ) {
+                        _id
+                        name {
+                            first
+                            last
+                        }
+                        email
+                    }
+                }
+            `;
+
+            const variables = {
+                id,
+                updatedData: {
+                    name: {
+                        first: 'Flash',
+                        last: 'Allen'
+                    },
+                    email: 'barry@starlabs.com'
+                }
+            };
+
+            return request(app)
+                .post('/graphql')
+                .set('Content-Type', 'application/json')
+                .set('Authorization', `Bearer ${token}`)
+                .send({ query, variables })
+                .then(res => {
+                    const { updateUser } = res.body.data;
+                    expect(updateUser).to.have.property('name');
+                    expect(updateUser).to.have.property('email');
+                    expect(updateUser.name).to.have.property('first');
+                    expect(updateUser.name).to.have.property('last');
+                    expect(updateUser.name.first).to.equal('Flash');
+                    expect(updateUser.name.last).to.equal('Allen');
+                });
+        });
+    });
+
+    describe('query for user login', () => {
+        before(() => {
+            return UserRepository.createUser(BARRY);
+        });
+
+        it('returns the authorized user and token', () => {
+            const doLogin = (email: string, password: string) => {
+                const query = `
+                    query Login($email: String!, $password: String!) {
+                        login(email: $email, password: $password) {
+                            authUser {
+                                _id,
+                                name {
+                                    first
+                                    last
+                                }
+                                email
+                            }
+                            token
+                        }
+                    }
+                `;
+
+                const variables = {
+                    email,
+                    password
+                };
+
+                const response = request(app)
+                    .post('/graphql')
+                    .set('Content-Type', 'application/json')
+                    .send({ query, variables });
+                return response;
+            };
+
+            return doLogin(BARRY.email, BARRY.password).then(res => {
+                const { data } = res.body;
+                expect(data.login.authUser).to.be.an('object');
+                expect(data.login.token).to.be.a('string');
+            });
+        });
+    });
+
     describe('query to get users', () => {
         let token: string;
 
@@ -133,58 +216,6 @@ describe('User E2E tests', () => {
                     expect(users).to.be.an('array');
                     expect(users).to.have.length(1);
                 });
-        }).timeout(8000);
-    });
-
-    describe.skip('mutation to update a user', () => {
-        let id: string;
-        before(() => {
-            return UserRepository.createUser(BARRY).then(user => {
-                id = user._id;
-            });
-        });
-
-        it('updates a user', () => {
-            const query = `
-                mutation UpdateUser(
-                    $id: ID!,
-                    $updatedData: UserInput!
-                ) {
-                    updateUser(
-                        id: $id,
-                        updatedData: $updatedData
-                    ) {
-                        _id
-                        name {
-                            first
-                            last
-                        }
-                        email
-                    }
-                }
-            `;
-            const variables = {
-                id,
-                updatedData: {
-                    name: {
-                        first: 'Flash',
-                        last: 'Allen'
-                    },
-                    email: 'barry@starlabs.com'
-                }
-            };
-            // need to login first before updating user data.
-            return request(app)
-                .post('/graphql')
-                .set('Content-Type', 'application/json')
-                .send({ query, variables })
-                .then(res => {
-                    const { data } = res.body;
-                    expect(data.updateUser).to.have.property('name');
-                    expect(data.updateUser).to.have.property('email');
-                    expect(data.updateUser.name).to.have.property('first');
-                    expect(data.updateUser.name).to.have.property('last');
-                });
-        });
+        }).timeout(5000);
     });
 });
