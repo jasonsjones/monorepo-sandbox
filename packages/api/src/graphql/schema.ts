@@ -11,7 +11,11 @@ export default gql`
         "Fetch the context user"
         me: User
 
+        "Login a user with email & password"
         login(email: String, password: String): LoginResponse
+
+        "Logout the currently authenticated user"
+        logout: Boolean
 
         "Fetch the version of the API"
         version: String
@@ -20,7 +24,7 @@ export default gql`
     type Mutation {
         createUser(firstName: String, lastName: String, email: String, password: String): User
         updateUser(id: ID, newUserData: UserInput): User
-        deleteUser(id: String): User
+        deleteUser(id: ID): User
     }
 
     "A simple User type"

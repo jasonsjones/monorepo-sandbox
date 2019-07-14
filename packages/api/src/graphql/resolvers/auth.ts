@@ -17,3 +17,9 @@ export const login = (parent: any, args: any, { res }: any) => {
         }
     });
 };
+
+export const logout = (parent: any, args: any, { req, res }: any) => {
+    req.user = null;
+    res.clearCookie('access-token');
+    return true;
+};
