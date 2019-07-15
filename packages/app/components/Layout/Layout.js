@@ -5,7 +5,7 @@ import Nav from '../Nav/Nav';
 import AuthContext from '../../context/AuthContext';
 import './Layout.css';
 
-const fetchAuthUser = query => {
+const doQuery = query => {
     return fetch('http://localhost:3000/graphql', {
         method: 'POST',
         credentials: 'include',
@@ -15,6 +15,9 @@ const fetchAuthUser = query => {
         .then(res => res.json())
         .then(payload => payload);
 };
+
+const fetchAuthUser = doQuery;
+const doLogout = doQuery;
 
 const Layout = ({ children, accessToken }) => {
     const [authUser, setAuthUser] = useState(null);
@@ -45,9 +48,14 @@ const Layout = ({ children, accessToken }) => {
     };
 
     const logout = () => {
-        setAuthUser(null);
-        setToken('');
-        Router.push('/');
+        const logoutQuery = `query { logout }`;
+        doLogout(logoutQuery).then(({ data }) => {
+            if (data.logout) {
+                setAuthUser(null);
+                setToken('');
+                Router.push('/');
+            }
+        });
     };
 
     return (
