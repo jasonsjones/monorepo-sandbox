@@ -1,10 +1,10 @@
 import React from 'react';
 import { render, cleanup } from '@testing-library/react';
-import Home from '../index';
-
-afterEach(cleanup);
+import Home from '../pages/index';
 
 describe('Index page', () => {
+    afterEach(cleanup);
+
     it('renders a h1', () => {
         const { container } = render(<Home />);
         expect(container.firstChild.nodeName).toBe('H1');
