@@ -12,7 +12,7 @@
         "dev:app": "lerna run dev --stream --scope @orion/app",
         "build": "lerna run build --stream",
         "kill:api": "lerna run kill:node --stream --scope @orion/api",
-        "lint": "lerna run lint",
+        "lint": "lerna run lint --stream",
         "test": "lerna run test --stream",
         "test:api": "lerna run test --stream --scope @orion/api",
         "test:app": "lerna run test --stream --scope @orion/app"
