@@ -1,4 +1,3 @@
-import { expect } from 'chai';
 import request from 'supertest';
 import app from '../config/app';
 
@@ -8,10 +7,9 @@ describe('Index E2E tests', () => {
             .get('/api')
             .expect(200)
             .then(res => {
-                expect(res.body).to.have.property('success');
-                expect(res.body).to.have.property('message');
-                // tslint:disable-next-line
-                expect(res.body.success).to.be.true;
+                expect(res.body).toHaveProperty('success');
+                expect(res.body).toHaveProperty('message');
+                expect(res.body.success).toBeTruthy();
             });
     });
 
@@ -23,9 +21,8 @@ describe('Index E2E tests', () => {
             .send({ query })
             .then(res => {
                 const { data } = res.body;
-                expect(data.version).to.be.a('string');
-                // tslint:disable-next-line
-                expect(/\d.\d.\d/.test(data.version)).to.be.true;
+                expect(typeof data.version).toBe('string');
+                expect(/\d.\d.\d/.test(data.version)).toBeTruthy();
             });
     });
 });

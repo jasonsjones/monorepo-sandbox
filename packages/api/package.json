@@ -8,7 +8,7 @@
         "dev": "DEBUG=app,db* ts-node-dev src/index.ts",
         "lint": "tslint -c tslint.json src/**/*.ts",
         "kill:node": "kill -9 $(lsof -i tcp:3000 | grep node | awk '{print $2}')",
-        "test": "NODE_ENV=testing mocha --exit --color -r ts-node/register src/**/*.test.ts"
+        "test": "NODE_ENV=testing jest --color"
     },
     "license": "MIT",
     "devDependencies": {
@@ -20,20 +20,21 @@
         "@types/dotenv": "^6.1.0",
         "@types/express": "^4.16.1",
         "@types/graphql": "^14.2.2",
+        "@types/jest": "^24.0.15",
         "@types/jsonwebtoken": "^8.3.2",
         "@types/mocha": "^5.2.7",
         "@types/mongoose": "^5.5.3",
         "@types/morgan": "^1.7.35",
         "@types/supertest": "^2.0.7",
-        "chai": "^4.2.0",
-        "mocha": "^6.1.2",
+        "jest": "^24.8.0",
         "nodemon": "^1.19.1",
         "supertest": "^4.0.2",
+        "ts-jest": "^24.0.2",
         "ts-node": "^8.2.0",
         "ts-node-dev": "^1.0.0-pre.39",
         "tslint": "^5.17.0",
         "tslint-config-prettier": "^1.17.0",
-        "typescript": "^3.5.1"
+        "typescript": "^3.5.3"
     },
     "dependencies": {
         "apollo-server-express": "^2.5.1",
