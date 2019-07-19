@@ -1,3 +1,4 @@
+import { generateToken } from '../../auth/authUtils';
 import * as UserRepository from '../../user/userRepository';
 
 export const user = (_: any, args: any) => UserRepository.getUserById(args.id);
@@ -13,7 +14,7 @@ export const users = (_: any, __: any, context: any) => {
     return null;
 };
 
-export const createUser = (parent: any, args: any) => {
+export const createUser = (parent: any, args: any, context: any) => {
     const newUser = {
         name: {
             first: args.firstName,
@@ -22,7 +23,17 @@ export const createUser = (parent: any, args: any) => {
         email: args.email,
         password: args.password
     };
-    return UserRepository.createUser(newUser);
+    return UserRepository.createUser(newUser).then(createdUser => {
+        const token = generateToken(createdUser);
+        context.res.cookie('access-token', token, {
+            httpOnly: true,
+            maxAge: 1000 * 60 * 60 /* 1hr */
+        });
+        return {
+            authUser: createdUser,
+            token
+        };
+    });
 };
 
 export const deleteUser = (parent: any, args: any) => {

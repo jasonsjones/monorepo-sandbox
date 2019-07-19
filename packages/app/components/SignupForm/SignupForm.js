@@ -1,4 +1,6 @@
-import { useState } from 'react';
+import Router from 'next/router';
+import { useContext, useState } from 'react';
+import AuthContext from '../../context/AuthContext';
 
 import TextField from '../Common/TextField';
 import Button from '../Common/Button';
@@ -9,12 +11,12 @@ const doSignup = (query, variables) => {
         credentials: 'include',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ query, variables })
-    })
-        .then(res => res.json())
-        .then(payload => payload);
+    }).then(res => res.json());
 };
 
 const SignupForm = () => {
+    const authCtx = useContext(AuthContext);
+
     const [form, setValues] = useState({
         firstName: '',
         lastName: '',
@@ -46,13 +48,16 @@ const SignupForm = () => {
                     email: $email,
                     password: $password
                 ) {
-                    _id
-                    name {
-                        first
-                        last
+                    authUser {
+                        _id
+                        name {
+                            first
+                            last
+                        }
+                        email
+                        password
                     }
-                    email
-                    password
+                    token
                 }
             }
         `;
@@ -68,8 +73,8 @@ const SignupForm = () => {
             doSignup(query, variables)
                 .then(({ data }) => {
                     setValues({ firstName: '', lastName: '', email: '', password: '' });
-                    // authCtx.login(data.login.authUser, data.login.token);
-                    // Router.push('/');
+                    authCtx.login(data.createUser.authUser, data.createUser.token);
+                    Router.push('/');
                 })
                 .catch(err => console.log(err));
         }
