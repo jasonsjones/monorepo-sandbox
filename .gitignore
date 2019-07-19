@@ -5,6 +5,11 @@ tmp/
 temp/
 dist
 packages/api/src/**/*.json
+packages/app/cypress/integration/examples
+packages/app/cypress/plugins/index.js
+packages/app/cypress/support/commands.js
+packages/app/cypress/support/index.js
+packages/app/cypress/fixtures/example.json
 .next
 .env
 .DS_Store
