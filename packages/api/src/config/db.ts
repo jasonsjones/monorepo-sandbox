@@ -44,16 +44,20 @@ const attachHandlers = (connection: Connection): void => {
 };
 
 export const dbConnect = (): Connection => {
-    mongoose.connect(buildConnectionString(), {
-        useCreateIndex: true,
-        useFindAndModify: false,
-        useNewUrlParser: true
-    });
+    if (dbConnection) {
+        return dbConnection;
+    } else {
+        mongoose.connect(buildConnectionString(), {
+            useCreateIndex: true,
+            useFindAndModify: false,
+            useNewUrlParser: true
+        });
 
-    dbConnection = mongoose.connection;
-    attachHandlers(dbConnection);
+        dbConnection = mongoose.connection;
+        attachHandlers(dbConnection);
 
-    return dbConnection;
+        return dbConnection;
+    }
 };
 
 export const getDbConnection = (): Connection => {

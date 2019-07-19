@@ -1,38 +1,44 @@
+import { Connection } from 'mongoose';
 import request from 'supertest';
 import { generateToken } from '../auth/authUtils';
 import app from '../config/app';
-import { dbConnect, getDbConnection } from '../config/db';
+import { dbConnect } from '../config/db';
 import * as UserRepository from '../user/userRepository';
 
-const OLLIE = {
-    name: {
-        first: 'Oliver',
-        last: 'Queen'
-    },
-    email: 'oliver@qc.com',
-    password: '123456'
-};
-
-const BARRY = {
-    name: {
-        first: 'Barry',
-        last: 'Allen'
-    },
-    email: 'barry@qc.com',
-    password: '123456'
-};
-
 describe('User E2E tests', () => {
+    let dbconnection: Connection;
+
+    const OLLIE = {
+        name: {
+            first: 'Oliver',
+            last: 'Queen'
+        },
+        email: 'oliver@qc.com',
+        password: '123456'
+    };
+
+    const BARRY = {
+        name: {
+            first: 'Barry',
+            last: 'Allen'
+        },
+        email: 'barry@starlabs.com',
+        password: '123456'
+    };
+
     beforeAll(() => {
-        dbConnect();
+        dbconnection = dbConnect();
     });
 
     afterEach(async () => {
-        const connection = await getDbConnection();
-        const list = await connection.db.listCollections({ name: 'users' }).toArray();
+        const list = await dbconnection.db.listCollections({ name: 'users' }).toArray();
         if (list.length !== 0) {
             await UserRepository.getModel().collection.drop();
         }
+    });
+
+    afterAll(async () => {
+        await dbconnection.close();
     });
 
     describe('mutation to create a user', () => {
