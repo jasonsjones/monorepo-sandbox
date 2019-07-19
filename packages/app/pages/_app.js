@@ -8,7 +8,7 @@ class MyApp extends App {
         let token = null;
         if (ctx.req && ctx.req.headers) {
             const { cookie } = ctx.req.headers;
-            const parts = cookie.split(';');
+            const parts = cookie ? cookie.split(';') : [];
             const accessToken = parts.map(i => i.trim()).filter(j => j.startsWith('access-token'));
             token = accessToken.length > 0 ? accessToken[0].split('=')[1] : '';
         }
