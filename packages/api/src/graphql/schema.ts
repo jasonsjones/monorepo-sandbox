@@ -30,6 +30,7 @@ export default gql`
         ): LoginResponse
         updateUser(id: ID, newUserData: UserInput): User
         deleteUser(id: ID): User
+        deleteUserAll: Boolean
     }
 
     "A simple User type"

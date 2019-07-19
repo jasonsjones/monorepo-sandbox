@@ -2,6 +2,7 @@ import { generateToken } from '../../auth/authUtils';
 import * as UserRepository from '../../user/userRepository';
 
 export const user = (_: any, args: any) => UserRepository.getUserById(args.id);
+
 export const users = (_: any, __: any, context: any) => {
     if (context.req.user) {
         return UserRepository.getUsers();
@@ -38,6 +39,10 @@ export const createUser = (parent: any, args: any, context: any) => {
 
 export const deleteUser = (parent: any, args: any) => {
     return UserRepository.deleteUser(args.id);
+};
+
+export const deleteUserAll = () => {
+    return UserRepository.deleteUserAll();
 };
 
 export const me = (_: any, __: any, context: any) => {
