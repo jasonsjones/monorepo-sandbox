@@ -6,7 +6,7 @@ const TextField = props => {
         <React.Fragment>
             <div className="form-control">
                 <label htmlFor={name}>{label}</label>
-                <input type={type} name={name} onChange={handleChange} value={value} />
+                <input type={type} id={name} onChange={handleChange} value={value} />
             </div>
             <style jsx>{`
                 label {
