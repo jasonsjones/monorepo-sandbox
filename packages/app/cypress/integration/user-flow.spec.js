@@ -8,10 +8,10 @@ describe('User Signup/Login Flow', () => {
     describe('signup and login a new user', () => {
         it('successfully signs up a new user', () => {
             cy.visit('http://localhost:4200/signup');
-            cy.get('input[name="firstName"').type('Oliver');
-            cy.get('input[name="lastName"').type('Queen');
-            cy.get('input[name="email"').type('oliver@qc.com');
-            cy.get('input[name="password"').type('123456');
+            cy.get('#firstName').type('Oliver');
+            cy.get('#lastName').type('Queen');
+            cy.get('#email').type('oliver@qc.com');
+            cy.get('#password').type('123456');
             cy.get('button')
                 .contains('Submit')
                 .click();
@@ -88,8 +88,8 @@ describe('User Signup/Login Flow', () => {
 
         it('successfully logs in a valid user', () => {
             cy.visit('http://localhost:4200/login');
-            cy.get('input[name="email"').type('barry@starlabs.com');
-            cy.get('input[name="password"').type('123456');
+            cy.get('#email').type('barry@starlabs.com');
+            cy.get('#password').type('123456');
             cy.get('button')
                 .contains('Login')
                 .click();

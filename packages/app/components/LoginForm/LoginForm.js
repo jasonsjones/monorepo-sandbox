@@ -71,7 +71,7 @@ const LoginForm = () => {
     const updateField = e => {
         setValues({
             ...form,
-            [e.target.name]: e.target.value
+            [e.target.id]: e.target.value
         });
 
         if (error) {
