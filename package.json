@@ -1,11 +1,9 @@
 {
     "private": true,
     "name": "monorepo-sandbox",
-    "workspaces": {
-        "packages": [
-            "packages/*"
-        ]
-    },
+    "workspaces": [
+        "packages/*"
+    ],
     "scripts": {
         "dev": "lerna run dev --stream",
         "dev:api": "lerna run dev --stream --scope @orion/api",
