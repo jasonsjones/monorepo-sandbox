@@ -1,14 +1,32 @@
 nav {
-    background-color: #022c43;
-    height: 60px;
+    height: 80px;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    background: rgb(2, 0, 36);
+    background: linear-gradient(90deg, #020024 0%, #022c43 40%, #064f77 100%);
 }
 
 .nav-logo {
-    margin-left: 15px;
-    font-size: 1.5rem;
+    margin-left: 35px;
+}
+
+.logo-text_container {
+    width: 100px;
+    text-align: right;
+}
+.logo-text_primary {
+    margin: 0;
+    font-size: 1.75rem;
+    color: #ff8600e6;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.logo-text_secondary {
+    margin: -5px 0 0 0;
+    font-weight: 300;
+    font-size: 1.1rem;
 }
 
 .nav-links {
@@ -16,6 +34,7 @@ nav {
     align-items: center;
     margin-right: 50px;
     color: #ccc;
+    font-size: 1.25rem;
 }
 
 .nav-links a:hover,
@@ -36,9 +55,23 @@ img.open {
 
 .nav-logo a,
 .nav-links a {
-    margin-right: 15px;
+    margin-right: 45px;
     text-decoration: none;
     color: #ccc;
+}
+
+.nav-links a {
+    border: 1px solid #ccc;
+    padding: 10px 20px;
+    border-radius: 10px;
+    color: #ff8600e6;
+    background-color: #022c43;
+}
+
+.nav-links a:hover {
+    background: #020024;
+    color: #ccc;
+    border: 1px solid #ff8600e6;
 }
 
 .user-profile {

@@ -16,7 +16,12 @@ const Nav = () => {
             <nav>
                 <div className="nav-logo">
                     <Link href="/">
-                        <a>J2 Sandbox</a>
+                        <a>
+                            <div className="logo-text_container">
+                                <h3 className="logo-text_primary">Orion</h3>
+                                <p className="logo-text_secondary">labs</p>
+                            </div>
+                        </a>
                     </Link>
                 </div>
                 <div className="nav-links">
