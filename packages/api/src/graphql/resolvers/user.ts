@@ -24,17 +24,7 @@ export const createUser = (parent: any, args: any, context: any) => {
         email: args.email,
         password: args.password
     };
-    return UserRepository.createUser(newUser).then(createdUser => {
-        const token = generateToken(createdUser);
-        context.res.cookie('access-token', token, {
-            httpOnly: true,
-            maxAge: 1000 * 60 * 60 /* 1hr */
-        });
-        return {
-            authUser: createdUser,
-            token
-        };
-    });
+    return UserRepository.createUser(newUser);
 };
 
 export const deleteUser = (parent: any, args: any) => {
