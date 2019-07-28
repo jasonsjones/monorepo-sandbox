@@ -3,7 +3,9 @@ import React from 'react';
 const Button = props => {
     return (
         <React.Fragment>
-            <button type="submit">{props.text}</button>
+            <button onClick={props.clickHandler} type={props.type}>
+                {props.text}
+            </button>
             <style jsx>{`
                 button {
                     height: 2.5rem;

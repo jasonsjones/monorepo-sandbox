@@ -1,6 +1,5 @@
 import Router from 'next/router';
-import { useContext, useState } from 'react';
-import AuthContext from '../../context/AuthContext';
+import { useState } from 'react';
 
 import TextField from '../Common/TextField';
 import Button from '../Common/Button';
@@ -15,8 +14,6 @@ const doSignup = (query, variables) => {
 };
 
 const SignupForm = () => {
-    const authCtx = useContext(AuthContext);
-
     const [form, setValues] = useState({
         firstName: '',
         lastName: '',
@@ -48,16 +45,12 @@ const SignupForm = () => {
                     email: $email,
                     password: $password
                 ) {
-                    authUser {
-                        _id
-                        name {
-                            first
-                            last
-                        }
-                        email
-                        password
+                    _id
+                    name {
+                        first
+                        last
                     }
-                    token
+                    email
                 }
             }
         `;
@@ -72,9 +65,10 @@ const SignupForm = () => {
         if (isFormValid()) {
             doSignup(query, variables)
                 .then(({ data }) => {
-                    setValues({ firstName: '', lastName: '', email: '', password: '' });
-                    authCtx.login(data.createUser.authUser, data.createUser.token);
-                    Router.push('/');
+                    if (data) {
+                        setValues({ firstName: '', lastName: '', email: '', password: '' });
+                        Router.push('/verifyemail');
+                    }
                 })
                 .catch(err => console.log(err));
         }
@@ -118,7 +112,7 @@ const SignupForm = () => {
                     value={form.password}
                     handleChange={updateField}
                 />
-                <Button text="Submit" />
+                <Button type="submit" text="Submit" />
             </form>
         </React.Fragment>
     );

@@ -96,7 +96,7 @@ const LoginForm = () => {
                     value={form.password}
                     handleChange={updateField}
                 />
-                <Button text="Login" />
+                <Button type="submit" text="Login" />
             </form>
             {error && <p style={{ color: '#d63939' }}>{error}</p>}
         </React.Fragment>
