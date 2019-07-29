@@ -6,11 +6,14 @@ import { IUserModel } from '../types';
 const userSchema = new Schema(
     {
         name: {
-            first: String,
-            last: String
+            first: { type: String },
+            last: { type: String }
         },
         email: { type: String, unique: true },
-        password: String
+        password: { type: String },
+        isEmailVerified: { type: Boolean, default: false },
+        emailVerificationToken: { type: String },
+        lastLogin: { type: Date }
     },
     { timestamps: true }
 );

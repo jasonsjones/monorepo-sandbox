@@ -1,3 +1,4 @@
+import crypto from 'crypto';
 import jwt from 'jsonwebtoken';
 import config from '../config/config';
 import { IUserModel } from '../types';
@@ -23,4 +24,8 @@ export const verifyToken = (token: string): string | object => {
         throw new Error('token is required to verify');
     }
     return jwt.verify(token, config.jwtSecret);
+};
+
+export const generateRandomToken = (): string => {
+    return crypto.randomBytes(20).toString('hex');
 };

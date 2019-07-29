@@ -1,9 +1,12 @@
+import { generateRandomToken } from '../auth/authUtils';
 import config from '../config/config';
 import { IUser, IUserModel } from '../types';
 import User from './userModel';
 
 export const createUser = (user: IUser): Promise<IUserModel | null> => {
-    return User.create(user);
+    const newUser = new User(user);
+    newUser.emailVerificationToken = generateRandomToken();
+    return newUser.save();
 };
 
 export const getUsers = (): Promise<IUserModel[]> => {

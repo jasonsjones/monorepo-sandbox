@@ -42,6 +42,9 @@ export default gql`
         "User's password; this will be hashed very soon :-)"
         password: String
 
+        isEmailVerified: Boolean
+        emailVerificationToken: String
+
         createdAt: String
         updatedAt: String
     }

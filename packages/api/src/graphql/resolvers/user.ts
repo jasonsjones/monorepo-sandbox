@@ -51,6 +51,8 @@ export const updateUser = (_: any, args: any, context: any) => {
 };
 
 export const UserTypeResolvers = {
+    isEmailVerified: (parent: any) => parent.isEmailVerified,
+    emailVerificationToken: (parent: any) => parent.emailVerificationToken,
     createdAt: (parent: any) => new Date(parent.createdAt).toISOString(),
     updatedAt: (parent: any) => new Date(parent.updatedAt).toISOString()
 };
