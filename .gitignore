@@ -6,6 +6,8 @@ temp/
 dist
 packages/api/src/**/*.json
 packages/app/cypress/examples
+packages/app/cypress/screenshots
+packages/app/cypress/videos
 packages/app/cypress/plugins/index.js
 packages/app/cypress/support/commands.js
 packages/app/cypress/support/index.js

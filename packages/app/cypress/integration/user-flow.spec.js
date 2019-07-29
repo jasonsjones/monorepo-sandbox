@@ -5,8 +5,8 @@ describe('User Signup/Login Flow', () => {
         });
     });
 
-    describe('signup and login a new user', () => {
-        it('successfully signs up a new user', () => {
+    describe('Signup', () => {
+        it('signs up a new user', () => {
             cy.visit('http://localhost:4200/signup');
             cy.get('#firstName').type('Oliver');
             cy.get('#lastName').type('Queen');
@@ -16,39 +16,11 @@ describe('User Signup/Login Flow', () => {
                 .contains('Submit')
                 .click();
 
-            cy.get('nav .nav-links span')
-                .contains('Oliver Queen')
-                .should('be.visible');
-            cy.get('nav a')
-                .contains('Login')
-                .should('not.exist');
-            cy.get('nav a')
-                .contains('Signup')
-                .should('not.exist');
-            cy.url().should('eq', 'http://localhost:4200/');
-        });
-
-        it('logs out the user', () => {
-            cy.get('nav .nav-links span')
-                .contains('Oliver Queen')
-                .should('be.visible')
-                .click();
-
-            cy.get('nav p')
-                .contains('Logout')
-                .should('be.visible')
-                .click();
-
-            cy.get('nav a')
-                .contains('Login')
-                .should('be.visible');
-            cy.get('nav a')
-                .contains('Signup')
-                .should('be.visible');
+            cy.url().should('eq', 'http://localhost:4200/verifyemail');
         });
     });
 
-    describe('login an existing user', () => {
+    describe('Login', () => {
         const query = `
                 mutation CreateUser(
                     $firstName: String!,
@@ -62,10 +34,11 @@ describe('User Signup/Login Flow', () => {
                         email: $email,
                         password: $password
                     ) {
-                        authUser {
-                            _id
+                        name {
+                            first
+                            last
                         }
-                        token
+                        email
                     }
                 }
             `;
@@ -86,7 +59,7 @@ describe('User Signup/Login Flow', () => {
                 .then(res => console.log(res.body.data));
         });
 
-        it('successfully logs in a valid user', () => {
+        it('logs in a valid user', () => {
             cy.visit('http://localhost:4200/login');
             cy.get('#email').type('barry@starlabs.com');
             cy.get('#password').type('123456');
@@ -104,6 +77,25 @@ describe('User Signup/Login Flow', () => {
                 .contains('Signup')
                 .should('not.exist');
             cy.url().should('eq', 'http://localhost:4200/');
+        });
+
+        it('logs out the user', () => {
+            cy.get('nav .nav-links span')
+                .contains('Barry Allen')
+                .should('be.visible')
+                .click();
+
+            cy.get('nav p')
+                .contains('Logout')
+                .should('be.visible')
+                .click();
+
+            cy.get('nav a')
+                .contains('Login')
+                .should('be.visible');
+            cy.get('nav a')
+                .contains('Signup')
+                .should('be.visible');
         });
     });
 });
