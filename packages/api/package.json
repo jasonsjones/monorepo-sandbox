@@ -9,7 +9,9 @@
         "dev:cypress": "NODE_ENV=testing yarn dev",
         "lint": "tslint -c tslint.json src/**/*.ts",
         "kill:node": "kill -9 $(lsof -i tcp:3000 | grep node | awk '{print $2}')",
-        "test": "NODE_ENV=testing jest --color --runInBand"
+        "test": "NODE_ENV=testing jest --color --runInBand",
+        "test:integration": "NODE_ENV=testing jest -c jest.config.integration.js --color --runInBand",
+        "test:unit": "NODE_ENV=testing jest -c jest.config.unit.js --color --runInBand"
     },
     "license": "MIT",
     "devDependencies": {
