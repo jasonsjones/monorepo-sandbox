@@ -1,4 +1,4 @@
-import { generateToken } from '../../auth/authUtils';
+import Mailer from '../../mailer/mailer';
 import * as UserRepository from '../../user/userRepository';
 
 export const user = (_: any, args: any) => UserRepository.getUserById(args.id);
@@ -15,8 +15,8 @@ export const users = (_: any, __: any, context: any) => {
     return null;
 };
 
-export const createUser = (parent: any, args: any, context: any) => {
-    const newUser = {
+export const createUser = async (parent: any, args: any, context: any) => {
+    const newUserData = {
         name: {
             first: args.firstName,
             last: args.lastName
@@ -24,7 +24,9 @@ export const createUser = (parent: any, args: any, context: any) => {
         email: args.email,
         password: args.password
     };
-    return UserRepository.createUser(newUser);
+    const newUser = await UserRepository.createUser(newUserData);
+    await Mailer.sendVerificatonEmail(newUser);
+    return user;
 };
 
 export const deleteUser = (parent: any, args: any) => {
