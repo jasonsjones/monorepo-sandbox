@@ -13,7 +13,11 @@ class Mailer {
                 to: user.email,
                 subject: 'Email Verification',
                 text: `Please verify your email. Thank you!
-                // this email will include the token -- ${user.emailVerificationToken}`
+                // this email will include the token -- ${user.emailVerificationToken}
+                // or maybe a link to some RESTful endpoint:
+
+                    http://localhost:3000/api/verifyemail/${user.emailVerificationToken}
+                `
             });
         }
     };
