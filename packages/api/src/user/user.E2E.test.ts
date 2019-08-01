@@ -3,7 +3,7 @@ import request from 'supertest';
 import { generateToken } from '../auth/authUtils';
 import app from '../config/app';
 import { dbConnect } from '../config/db';
-import * as UserRepository from '../user/userRepository';
+import * as UserRepository from './userRepository';
 
 describe('User E2E tests', () => {
     let dbconnection: Connection;
