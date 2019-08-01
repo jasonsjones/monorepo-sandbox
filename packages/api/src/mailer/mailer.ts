@@ -1,17 +1,19 @@
 import nodemailer from 'nodemailer';
 import config from '../config/config';
+import { IUser } from '../types';
 
 class Mailer {
-    public sendVerificatonEmail = async (user: any): Promise<any> => {
+    public sendVerificatonEmail = async (user: IUser): Promise<any> => {
         const transporter = nodemailer.createTransport(this.getMailOptions());
         const verifiedTransporter = config.env === 'testing' ? true : await transporter.verify();
 
         if (verifiedTransporter) {
             return transporter.sendMail({
-                from: 'me@example.com',
+                from: 'account.verify@sandbox.com',
                 to: user.email,
                 subject: 'Email Verification',
-                text: `Please verify your email (token ${user.emailVerificationToken})...Thanks!`
+                text: `Please verify your email. Thank you!
+                // this email will include the token -- ${user.emailVerificationToken}`
             });
         }
     };
