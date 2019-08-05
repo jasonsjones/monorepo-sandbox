@@ -29,9 +29,9 @@ describe('Nav component', () => {
         expect(container.firstChild.nodeName).toBe('NAV');
     });
 
-    it('has anchor element with logo text', () => {
+    it('has h3 element with logo text', () => {
         const { getByText } = render(<Nav />);
-        expect(getByText('J2 Sandbox').nodeName).toBe('A');
+        expect(getByText(/orion/i).nodeName).toBe('H3');
     });
 
     ['Signup', 'Login'].forEach(link => {
