@@ -5,7 +5,7 @@
         "packages/*"
     ],
     "scripts": {
-        "bootstrap": "lerna boostrap",
+        "bootstrap": "lerna bootstrap",
         "dev": "lerna run dev --stream",
         "dev:api": "lerna run dev --stream --scope @orion/api",
         "dev:app": "lerna run dev --stream --scope @orion/app",

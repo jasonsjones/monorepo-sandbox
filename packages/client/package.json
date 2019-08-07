@@ -1,0 +1,44 @@
+{
+    "name": "@orion/client",
+    "version": "0.1.0",
+    "private": true,
+    "dependencies": {
+        "materialize-css": "^1.0.0",
+        "react": "^16.8.6",
+        "react-dom": "^16.8.6",
+        "react-router-dom": "^5.0.1",
+        "react-scripts": "3.0.1"
+    },
+    "scripts": {
+        "dev": "yarn start",
+        "start": "PORT=4201 react-scripts start",
+        "build": "react-scripts build",
+        "test": "react-scripts test",
+        "eject": "react-scripts eject"
+    },
+    "eslintConfig": {
+        "extends": "react-app"
+    },
+    "browserslist": {
+        "production": [
+            ">0.2%",
+            "not dead",
+            "not op_mini all"
+        ],
+        "development": [
+            "last 1 chrome version",
+            "last 1 firefox version",
+            "last 1 safari version"
+        ]
+    },
+    "devDependencies": {
+        "@testing-library/jest-dom": "^4.0.0",
+        "@testing-library/react": "^8.0.7",
+        "eslint-config-prettier": "^6.0.0",
+        "eslint-plugin-prettier": "^3.1.0"
+    },
+    "engines": {
+        "node": "10.16.0",
+        "yarn": "1.16.0"
+    }
+}
