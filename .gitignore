@@ -1,9 +1,12 @@
-.vscode/
-node_modules/
-build/
-tmp/
-temp/
-dist
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+node_modules
+/.pnp
+.pnp.js
+
+# testing
+/coverage
 packages/api/src/**/*.json
 packages/app/cypress/examples
 packages/app/cypress/screenshots
@@ -12,6 +15,23 @@ packages/app/cypress/plugins/index.js
 packages/app/cypress/support/commands.js
 packages/app/cypress/support/index.js
 packages/app/cypress/fixtures/example.json
-.next
-.env
+
+# production
+/build
+/dist
+
+# misc
+tmp/
+temp/
+.vscode/
 .DS_Store
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+.next
+
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
