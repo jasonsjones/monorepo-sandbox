@@ -17,8 +17,8 @@ packages/app/cypress/support/index.js
 packages/app/cypress/fixtures/example.json
 
 # production
-/build
-/dist
+build/
+dist/
 
 # misc
 tmp/

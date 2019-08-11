@@ -7,11 +7,12 @@
         "react": "^16.8.6",
         "react-dom": "^16.8.6",
         "react-router-dom": "^5.0.1",
-        "react-scripts": "3.0.1"
+        "react-scripts": "3.0.1",
+        "serve": "^11.1.0"
     },
     "scripts": {
-        "dev": "yarn start",
-        "start": "PORT=4201 react-scripts start",
+        "dev": "PORT=4201 react-scripts start",
+        "start": "serve -s build",
         "build": "react-scripts build",
         "test": "react-scripts test",
         "eject": "react-scripts eject"
