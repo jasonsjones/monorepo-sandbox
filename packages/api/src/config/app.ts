@@ -9,7 +9,7 @@ const configureApp = (expressApp: Application): void => {
     server.applyMiddleware({
         app: expressApp,
         cors: {
-            origin: '*',
+            origin: ['http://localhost:4200', 'http://localhost:4201'],
             credentials: true
         }
     });
