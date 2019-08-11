@@ -7,16 +7,14 @@ const ProfileMenu = props => {
             <div className="panel-container">
                 <div className="panel">
                     <Link href="/profile">
-                        <a>My Profile</a>
+                        <a className="profile-link">My Profile</a>
                     </Link>
-                    <p onClick={props.onLogout}>Logout</p>
+                    <p className="profile-link" onClick={props.onLogout}>
+                        Logout
+                    </p>
                 </div>
             </div>
             <style jsx>{`
-                p {
-                    cursor: pointer;
-                }
-
                 .panel-container {
                     font-family: 'Arial';
                     position: relative;
@@ -35,14 +33,14 @@ const ProfileMenu = props => {
                     z-index: 10;
                 }
 
-                p,
-                a {
+                .profile-link {
+                    text-decoration: none;
+                    cursor: pointer;
                     margin-left: 25px;
                     color: #022c43;
                 }
 
-                p:hover,
-                a:hover {
+                .profile-link:hover {
                     color: #ccc;
                 }
 
