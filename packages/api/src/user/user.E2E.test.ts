@@ -57,16 +57,13 @@ describe('User E2E tests', () => {
                         email: $email,
                         password: $password
                     ) {
-                        authUser {
-                            _id
-                            name {
-                                first
-                                last
-                            }
-                            email
-                            password
+                        _id
+                        name {
+                            first
+                            last
                         }
-                        token
+                        email
+                        password
                     }
                 }
             `;
@@ -84,16 +81,12 @@ describe('User E2E tests', () => {
                 .send({ query, variables })
                 .then(res => {
                     const { data } = res.body;
-                    expect(data.createUser).toHaveProperty('authUser');
-                    expect(data.createUser).toHaveProperty('token');
-                    expect(typeof data.createUser.authUser).toBe('object');
-                    expect(typeof data.createUser.token).toBe('string');
-
-                    expect(data.createUser.authUser).toHaveProperty('name');
-                    expect(data.createUser.authUser).toHaveProperty('email');
-                    expect(data.createUser.authUser).toHaveProperty('password');
-                    expect(data.createUser.authUser.name).toHaveProperty('first');
-                    expect(data.createUser.authUser.name).toHaveProperty('last');
+                    expect(data.createUser).toHaveProperty('_id');
+                    expect(data.createUser).toHaveProperty('name');
+                    expect(data.createUser).toHaveProperty('email');
+                    expect(data.createUser).toHaveProperty('password');
+                    expect(data.createUser.name).toHaveProperty('first');
+                    expect(data.createUser.name).toHaveProperty('last');
                 });
         });
     });

@@ -26,7 +26,7 @@ export const createUser = async (parent: any, args: any, context: any) => {
     };
     const newUser = await UserRepository.createUser(newUserData);
     await Mailer.sendVerificatonEmail(newUser);
-    return user;
+    return newUser;
 };
 
 export const deleteUser = (parent: any, args: any) => {
