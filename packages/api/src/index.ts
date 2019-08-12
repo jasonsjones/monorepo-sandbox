@@ -7,6 +7,8 @@ import gqlServer from './config/graphqlServer';
 const log = debug('app');
 const PORT = process.env.PORT || 3000;
 
+process.on('SIGINT', () => process.exit());
+
 const startServer = (server: ApolloServer): void => {
     dbConnect();
     app.listen(PORT, () => {
