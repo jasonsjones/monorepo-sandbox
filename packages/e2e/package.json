@@ -1,0 +1,11 @@
+{
+    "name": "@orion/e2e",
+    "version": "1.0.0",
+    "scripts": {
+        "test:e2e": "cypress open"
+    },
+    "license": "MIT",
+    "devDependencies": {
+        "cypress": "^3.4.0"
+    }
+}
