@@ -1,6 +1,5 @@
-import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
-import { Application, NextFunction, Response } from 'express';
+import express, { Application, NextFunction, Response } from 'express';
 import morgan from 'morgan';
 import { verifyToken } from '../auth/authUtils';
 import { IAuthRequest } from '../types';
@@ -44,8 +43,8 @@ const addUserToRequest = (req: IAuthRequest, res: Response, next: NextFunction) 
 };
 
 const applyMiddleware = (app: Application): void => {
-    app.use(bodyParser.json());
-    app.use(bodyParser.urlencoded({ extended: false }));
+    app.use(express.json());
+    app.use(express.urlencoded({ extended: false }));
     app.use(cookieParser());
 
     app.use(addUserToRequest);
