@@ -37,6 +37,9 @@ const Profile = () => {
                 )}
             </div>
             <style jsx>{`
+                h1 {
+                    width: 200px;
+                }
                 button {
                     height: 2rem;
                     width: 80px;
@@ -51,12 +54,17 @@ const Profile = () => {
                     background-color: #ddd;
                     cursor: pointer;
                 }
+
                 .container {
                     margin: 20px 50px;
                 }
+
                 .header {
                     display: flex;
-                    justify-content: space-between;
+                    align-items: center;
+                }
+                .header button {
+                    margin-left: 2rem;
                 }
 
                 @media only screen and (min-device-width: 375px) and (max-device-width: 667px) {

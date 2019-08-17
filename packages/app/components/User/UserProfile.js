@@ -45,13 +45,13 @@ const Profile = props => {
     const updateField = e => {
         setEditedUser({
             ...editedUser,
-            [e.target.name]: e.target.value
+            [e.target.id]: e.target.value
         });
     };
     return (
         <React.Fragment>
             <div className="profile-container">
-                <img src="/static/placeholder-profile-sq.jpg" />
+                <img className="user-avatar" src="/static/placeholder-profile-sq.jpg" />
                 <div className="info">
                     {isEditMode ? (
                         <div className="name-form">
@@ -77,6 +77,7 @@ const Profile = props => {
                             {editedUser.firstName} {editedUser.lastName}
                         </h2>
                     )}
+
                     {isEditMode ? (
                         <TextField
                             type="text"
@@ -105,7 +106,7 @@ const Profile = props => {
                     flex-direction: column;
                     justify-content: space-around;
                 }
-                img {
+                .user-avatar {
                     width: 200px;
                     height: 200px;
                 }
