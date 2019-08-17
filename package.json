@@ -12,6 +12,8 @@
         "build": "lerna run build --stream",
         "lint": "lerna run lint --stream",
         "postinstall": "yarn bootstrap",
+        "start:mailhog": "[ ! \"$(docker ps -q -f name=mailhog)\" ] && docker start mailhog || exit 0",
+        "stop:mailhog": "[ \"$(docker ps -q -f name=mailhog)\" ] && docker stop mailhog || exit 0",
         "test": "lerna run test --stream",
         "test:api": "lerna run test --stream --scope @orion/api",
         "test:app": "lerna run test --stream --scope @orion/app",
