@@ -1,0 +1,48 @@
+/*
+
+Palette colors:
+1. #022c43
+2. #053f5e
+3. #115173
+4. #ffd700
+
+palette from https://colorhunt.co/palette/141100
+
+*/
+
+body {
+    font-family: 'Arial';
+    margin: 0;
+    padding: 0;
+}
+
+h1,
+h2 {
+    margin: 0;
+    padding: 0;
+    color: #053f5e;
+}
+
+.container {
+    max-width: 960px;
+    margin: 0 auto;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-control {
+    display: flex;
+    flex-direction: column;
+}
+
+form button {
+    margin-top: 1rem;
+    cursor: pointer;
+}
+
+form button:hover {
+    background-color: #115173;
+}
