@@ -21,6 +21,10 @@ export const getUserByEmail = (email: string): Promise<IUserModel> => {
     return User.findOne({ email }).exec();
 };
 
+export const getUserByQuery = (query: any): Promise<IUserModel> => {
+    return User.findOne(query).exec();
+};
+
 export const deleteUser = (id: string): Promise<IUserModel> => {
     return User.findByIdAndRemove(id).exec();
 };
