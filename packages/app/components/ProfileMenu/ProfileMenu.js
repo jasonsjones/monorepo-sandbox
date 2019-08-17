@@ -1,19 +1,21 @@
 import React from 'react';
 import Link from 'next/link';
 
-const ProfileMenu = props => {
+const ProfileMenu = ({ show, onLogout }) => {
     return (
         <React.Fragment>
-            <div className="panel-container">
-                <div className="panel">
-                    <Link href="/profile">
-                        <a className="profile-link">My Profile</a>
-                    </Link>
-                    <p className="profile-link" onClick={props.onLogout}>
-                        Logout
-                    </p>
+            {show && (
+                <div className={`panel-container ${show ? 'open' : ''}`}>
+                    <div className="panel">
+                        <Link href="/profile">
+                            <a className="profile-link">My Profile</a>
+                        </Link>
+                        <p className="profile-link" onClick={onLogout}>
+                            Logout
+                        </p>
+                    </div>
                 </div>
-            </div>
+            )}
             <style jsx>{`
                 .panel-container {
                     font-family: 'Arial';
@@ -22,8 +24,8 @@ const ProfileMenu = props => {
 
                 .panel {
                     position: absolute;
-                    top: 28px;
-                    right: -30px;
+                    top: 20px;
+                    right: 0px;
                     padding-top: 15px;
                     border: 1px solid #ddd;
                     width: 150px;

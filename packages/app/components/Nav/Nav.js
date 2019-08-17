@@ -61,7 +61,7 @@ const Nav = () => {
                                 src="https:icon.now.sh/chevronDown/16/cccccc"
                                 alt="chevron down"
                             />
-                            {showProfileMenu && <ProfileMenu onLogout={authCtx.logout} />}
+                            <ProfileMenu show={showProfileMenu} onLogout={authCtx.logout} />
                         </div>
                     )}
                 </div>
