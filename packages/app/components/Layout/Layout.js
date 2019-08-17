@@ -26,11 +26,13 @@ const Layout = ({ children, accessToken }) => {
     if (token && !authUser) {
         const query = `query {
             me {
+                _id
                 name {
                     first
                     last
                 }
                 email
+                isEmailVerified
             }
         }`;
         if (process.browser) {

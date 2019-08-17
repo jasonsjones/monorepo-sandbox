@@ -42,7 +42,8 @@ const LoginForm = () => {
                             first
                             last
                         }
-                        email
+                        email,
+                        isEmailVerified
                     }
                     token
                 }
