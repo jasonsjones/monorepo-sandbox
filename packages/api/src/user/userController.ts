@@ -10,8 +10,22 @@ export const verifyemail = (req: Request, res: Response): void => {
             }
             return user;
         })
-        .then(() => {
-            // TODO: update redirect url to point back to the app e.g. http://localhost:4200/someroute
-            res.redirect('https://www.dev.to');
+        .then(user => {
+            let json = {};
+
+            if (user) {
+                json = {
+                    success: true,
+                    message: 'email verified',
+                    payload: { user }
+                };
+            } else {
+                json = {
+                    success: false,
+                    message: 'email not verified; user not found',
+                    payload: { user }
+                };
+            }
+            res.json(json);
         });
 };
