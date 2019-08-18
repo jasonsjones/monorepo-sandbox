@@ -67,7 +67,7 @@ const SignupForm = () => {
                 .then(({ data }) => {
                     if (data) {
                         setValues({ firstName: '', lastName: '', email: '', password: '' });
-                        Router.push('/verifyemail');
+                        Router.push('/aftersignup');
                     }
                 })
                 .catch(err => console.log(err));
