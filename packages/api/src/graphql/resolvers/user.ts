@@ -57,6 +57,8 @@ export const verifyEmail = (_: any, args: any) => {
     return UserRepository.getUserByQuery({ emailVerificationToken }).then(fetchedUser => {
         if (fetchedUser && !fetchedUser.isEmailVerified) {
             return UserRepository.updateUser(fetchedUser._id, { isEmailVerified: true });
+        } else if (fetchedUser && fetchedUser.isEmailVerified) {
+            return fetchedUser;
         }
         return null;
     });
