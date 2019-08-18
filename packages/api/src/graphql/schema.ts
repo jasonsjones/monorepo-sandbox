@@ -17,6 +17,8 @@ export default gql`
         "Logout the currently authenticated user"
         logout: Boolean
 
+        verifyEmail(token: String): User
+
         "Fetch the version of the API"
         version: String
     }

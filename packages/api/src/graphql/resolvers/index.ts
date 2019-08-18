@@ -7,7 +7,8 @@ import {
     updateUser,
     user,
     users,
-    UserTypeResolvers
+    UserTypeResolvers,
+    verifyEmail
 } from './user';
 import { version } from './version';
 
@@ -17,7 +18,8 @@ const rootQuery = {
     version,
     user,
     users,
-    me
+    me,
+    verifyEmail
 };
 
 const rootMutation = {

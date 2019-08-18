@@ -52,6 +52,16 @@ export const updateUser = (_: any, args: any, context: any) => {
     return null;
 };
 
+export const verifyEmail = (_: any, args: any) => {
+    const emailVerificationToken = args.token;
+    return UserRepository.getUserByQuery({ emailVerificationToken }).then(fetchedUser => {
+        if (fetchedUser && !fetchedUser.isEmailVerified) {
+            return UserRepository.updateUser(fetchedUser._id, { isEmailVerified: true });
+        }
+        return null;
+    });
+};
+
 export const UserTypeResolvers = {
     isEmailVerified: (parent: any) => parent.isEmailVerified,
     emailVerificationToken: (parent: any) => parent.emailVerificationToken,
