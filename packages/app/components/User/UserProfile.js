@@ -89,12 +89,25 @@ const Profile = props => {
                     ) : (
                         <p className="email">{editedUser.email}</p>
                     )}
+                    {contextUser.isEmailVerified && (
+                        <div className="email-verify-display">
+                            <p>Email verified</p>
+                            <img src="https:icon.now.sh/done/18/00aa00" alt="done icon" />
+                        </div>
+                    )}
+                    {!contextUser.isEmailVerified && (
+                        <div className="email-verify-display">
+                            <p>Email verified</p>
+                            <img src="https:icon.now.sh/close/18/aa0000" alt="close icon" />
+                        </div>
+                    )}
                     <p className="id">{contextUser._id}</p>
                 </div>
             </div>
             <style jsx>{`
                 .profile-container,
-                .name-form {
+                .name-form,
+                .email-verify-display {
                     display: flex;
                 }
                 p {
@@ -120,6 +133,13 @@ const Profile = props => {
                 .email {
                     color: #aaa;
                     font-size: 1.25rem;
+                }
+                .email-verify-display {
+                    color: #aaa;
+                    align-items: center;
+                }
+                .email-verify-display img {
+                    margin: 0 10px;
                 }
                 @media only screen and (min-device-width: 375px) and (max-device-width: 667px) {
                     .profile-container {
