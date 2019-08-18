@@ -1,4 +1,5 @@
 import cookieParser from 'cookie-parser';
+import cors from 'cors';
 import express, { Application, NextFunction, Response } from 'express';
 import morgan from 'morgan';
 import { verifyToken } from '../auth/authUtils';
@@ -46,6 +47,7 @@ const applyMiddleware = (app: Application): void => {
     app.use(express.json());
     app.use(express.urlencoded({ extended: false }));
     app.use(cookieParser());
+    app.use(cors());
 
     app.use(addUserToRequest);
 
