@@ -1,22 +1,52 @@
-import Router from 'next/router';
-import Button from '../components/Common/Button';
+import React, { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
+
+const doVerifyEmail = (query, variables) => {
+    return fetch('http://localhost:3000/graphql', {
+        method: 'POST',
+        credentials: 'include',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ query, variables })
+    }).then(res => res.json());
+};
 
 const VerifyEmail = () => {
-    const handleLoginRoute = () => {
-        Router.push('/login');
-    };
+    const router = useRouter();
+    const [message, setMessage] = useState('Verifying email now...');
+    useEffect(() => {
+        console.log(`will make a call to /api/verifyemail/${router.query.token}`);
+        const query = `
+            query VerifyEmail(
+                $token: String!
+            ) {
+                verifyEmail(token: $token) {
+                    _id
+                    name {
+                        first
+                        last
+                    }
+                    email
+                    isEmailVerified
+                }
+            }
+        `;
+
+        const variables = {
+            token: router.query.token
+        };
+
+        doVerifyEmail(query, variables).then(({ data }) => {
+            console.log(data);
+            if (data.verifyEmail) {
+                setMessage('Thank you for verifying your email!');
+            }
+        });
+    }, []);
 
     return (
         <React.Fragment>
             <div className="container">
-                <h2>Thank you for creating an account.</h2>
-                <h4>
-                    We have sent an email to the account you provided. Please verify the address and
-                    then login.
-                </h4>
-                <div className="center-button">
-                    <Button clickHandler={handleLoginRoute} type="button" text="Login" />
-                </div>
+                <h2>{message}</h2>
             </div>
             <style jsx>{`
                 .container {
@@ -32,11 +62,6 @@ const VerifyEmail = () => {
                 h2,
                 h4 {
                     text-align: center;
-                }
-
-                .center-button {
-                    display: flex;
-                    justify-content: center;
                 }
 
                 @media only screen and (min-device-width: 375px) and (max-device-width: 667px) {
