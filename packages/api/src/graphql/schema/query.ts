@@ -13,6 +13,8 @@ export default gql`
 
         verifyEmail(token: String): User
 
+        resendEmailVerification: Boolean
+
         "Fetch the version of the API"
         version: String
     }

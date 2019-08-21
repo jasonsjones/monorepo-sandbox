@@ -64,6 +64,15 @@ export const verifyEmail = (_: any, args: any) => {
     });
 };
 
+export const resendEmailVerification = async (_: any, __: any, context: any) => {
+    if (context.req.user) {
+        const usr = await UserRepository.getUserById(context.req.user.id);
+        await Mailer.sendVerificatonEmail(usr);
+        return true;
+    }
+    return false;
+};
+
 export const UserTypeResolvers = {
     isEmailVerified: (parent: any) => parent.isEmailVerified,
     emailVerificationToken: (parent: any) => parent.emailVerificationToken,

@@ -4,6 +4,7 @@ import {
     deleteUser,
     deleteUserAll,
     me,
+    resendEmailVerification,
     updateUser,
     user,
     users,
@@ -12,13 +13,12 @@ import {
 } from './user';
 import { version } from './version';
 
-const rootQuery = {
-    login,
-    logout,
+const query = {
     version,
     user,
     users,
     me,
+    resendEmailVerification,
     verifyEmail
 };
 
@@ -27,6 +27,16 @@ const rootMutation = {
     deleteUser,
     deleteUserAll,
     updateUser
+};
+
+const auth = {
+    login,
+    logout
+};
+
+const rootQuery = {
+    ...query,
+    ...auth
 };
 
 export default {
