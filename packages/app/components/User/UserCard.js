@@ -7,6 +7,19 @@ const UserCard = props => {
                     {user.name.first} {user.name.last}
                 </div>
                 <div className="user-info">{user.email}</div>
+
+                {user.isEmailVerified && (
+                    <div className="email-verify-display">
+                        <p>Email verified</p>
+                        <img src="https:icon.now.sh/done/28/00aa00" alt="done icon" />
+                    </div>
+                )}
+                {!user.isEmailVerified && (
+                    <div className="email-verify-display">
+                        <p>Email verified</p>
+                        <img src="https:icon.now.sh/close/28/aa0000" alt="close icon" />
+                    </div>
+                )}
                 <div className="user-info id">{user._id}</div>
             </section>
             <style jsx>{`
@@ -28,6 +41,15 @@ const UserCard = props => {
 
                 .user-info {
                     padding: 10px;
+                }
+
+                .email-verify-display {
+                    display: flex;
+                    padding: 0 10px;
+                }
+
+                .email-verify-display img {
+                    margin: 0 0 0 5px;
                 }
 
                 .name {

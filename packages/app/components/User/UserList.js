@@ -21,7 +21,7 @@ const UserList = () => {
     const authCtx = useContext(AuthContext);
 
     useEffect(() => {
-        const query = `{users { name { first last } _id email } }`;
+        const query = `{users { name { first last } _id email isEmailVerified } }`;
         fetchUsers(query, authCtx.token)
             .then(({ errors, data }) => {
                 const { users } = data;
