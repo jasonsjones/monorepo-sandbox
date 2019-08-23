@@ -4,6 +4,7 @@ import {
     deleteUser,
     deleteUserAll,
     me,
+    requestPasswordReset,
     resendEmailVerification,
     updateUser,
     user,
@@ -19,6 +20,7 @@ const query = {
     users,
     me,
     resendEmailVerification,
+    requestPasswordReset,
     verifyEmail
 };
 

@@ -7,5 +7,7 @@ export default gql`
 
         "Logout the currently authenticated user"
         logout: Boolean
+
+        requestPasswordReset(email: String): Boolean
     }
 `;

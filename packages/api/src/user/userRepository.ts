@@ -46,6 +46,17 @@ export const updateUser = (id: string, newUserData: any): Promise<IUserModel> =>
     return User.findByIdAndUpdate(id, newUserData, { new: true }).exec();
 };
 
+export const generatePasswordResetToken = (email: string): Promise<IUserModel> => {
+    return getUserByEmail(email).then(usr => {
+        const expiresIn2Hours = new Date();
+        expiresIn2Hours.setHours(expiresIn2Hours.getHours() + 2);
+
+        usr.passwordResetToken = generateRandomToken();
+        usr.passwordResetTokenExpiresAt = expiresIn2Hours;
+        return usr.save();
+    });
+};
+
 export const getModel = () => {
     return User;
 };

@@ -18,7 +18,6 @@ Please verify your email. Thank you!
 // or maybe a link to some RESTful endpoint:
 
 http://localhost:4200/verifyemail?token=${user.emailVerificationToken}
-
                 `,
                 html: `
 <style>
@@ -61,8 +60,29 @@ http://localhost:4200/verifyemail?token=${user.emailVerificationToken}
     <p class="text">&mdash; The Orion Labs Team</p>
 
 </div>
-
                 `
+            });
+        }
+    };
+
+    public sendPasswordResetEmail = async (user: IUser): Promise<any> => {
+        const transporter = nodemailer.createTransport(this.getMailOptions());
+        const verifiedTransporter = config.env === 'testing' ? true : await transporter.verify();
+
+        if (verifiedTransporter) {
+            return transporter.sendMail({
+                from: 'account.reset@sandbox.com',
+                to: user.email,
+                subject: 'Password Reset',
+                text: `
+You recently requested to reset your password with Orion Labs.  If you did not initiate this request, no action is required.
+If you did, then you will need to click on the below link and change your password.  This link is only valid for the next 2 hours.
+// this email will include the token -- ${user.passwordResetToken}
+// or maybe a link to some RESTful endpoint:
+
+http://localhost:4200/changepassword?token=${user.passwordResetToken}
+                `,
+                html: ``
             });
         }
     };

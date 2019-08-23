@@ -73,6 +73,12 @@ export const resendEmailVerification = async (_: any, __: any, context: any) => 
     return false;
 };
 
+export const requestPasswordReset = async (_: any, args: any, context: any) => {
+    const usr = await UserRepository.generatePasswordResetToken(args.email);
+    await Mailer.sendPasswordResetEmail(usr);
+    return true;
+};
+
 export const UserTypeResolvers = {
     isEmailVerified: (parent: any) => parent.isEmailVerified,
     emailVerificationToken: (parent: any) => parent.emailVerificationToken,
