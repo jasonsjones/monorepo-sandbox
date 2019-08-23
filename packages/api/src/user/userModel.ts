@@ -13,7 +13,10 @@ const userSchema = new Schema(
         password: { type: String },
         isEmailVerified: { type: Boolean, default: false },
         emailVerificationToken: { type: String },
-        lastLogin: { type: Date }
+        lastLogin: { type: Date },
+        passwordResetToken: { type: String },
+        passwordResetTokenExpiresAt: { type: Date },
+        passwordLastChangedAt: { type: Date }
     },
     { timestamps: true }
 );

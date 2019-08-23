@@ -12,11 +12,15 @@ export default gql`
         "User's email address"
         email: String
 
-        "User's password; this will be hashed very soon :-)"
+        "User's password"
         password: String
 
         isEmailVerified: Boolean
         emailVerificationToken: String
+
+        passwordResetToken: String
+        passwordResetTokenExpiresAt: String
+        passwordLastChangedAt: String
 
         createdAt: String
         updatedAt: String

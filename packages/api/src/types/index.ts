@@ -12,6 +12,9 @@ export interface IUser {
     password: string;
     isEmailVerified?: boolean;
     emailVerificationToken?: string;
+    passwordResetToken?: string;
+    passwordResetTokenExpiresAt?: Date;
+    passwordLastChangedAt?: Date;
 }
 
 interface IPayload {

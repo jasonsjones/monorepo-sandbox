@@ -76,6 +76,9 @@ export const resendEmailVerification = async (_: any, __: any, context: any) => 
 export const UserTypeResolvers = {
     isEmailVerified: (parent: any) => parent.isEmailVerified,
     emailVerificationToken: (parent: any) => parent.emailVerificationToken,
+    passwordResetToken: (parent: any) => parent.passwordResetToken,
+    passwordResetTokenExpiresAt: (parent: any) => parent.passwordResetTokenExpiresAt,
+    passwordLastChangedAt: (parent: any) => parent.passwordLastChangedAt,
     createdAt: (parent: any) => new Date(parent.createdAt).toISOString(),
     updatedAt: (parent: any) => new Date(parent.updatedAt).toISOString()
 };
