@@ -2,6 +2,15 @@ import React, { useState } from 'react';
 import TextField from '../Common/TextField';
 import Button from '../Common/Button';
 
+const doRequest = (query, variables) => {
+    return fetch('http://localhost:3000/graphql', {
+        method: 'POST',
+        credentials: 'include',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ query, variables })
+    }).then(res => res.json());
+};
+
 const ResetPasswordForm = () => {
     const [email, setEmail] = useState('');
     const [showMsg, setShowMsg] = useState(false);
@@ -20,9 +29,15 @@ const ResetPasswordForm = () => {
     const handleSubmit = e => {
         e.preventDefault();
         if (email.length > 0 && /\w+@\w/.test(email)) {
-            // make gql query to reset password and then setShowMsg on success.
-            // const query = `query { resetPassword(email: email)}`
-            setShowMsg(true);
+            const query = `query RequestPasswordReset($email: String!) {
+                requestPasswordReset(email: $email)
+            }`;
+            const variables = { email };
+            doRequest(query, variables).then(({ data }) => {
+                if (data.requestPasswordReset) {
+                    setShowMsg(true);
+                }
+            });
         } else {
             setError('Not a valid email address');
         }
