@@ -1,12 +1,20 @@
 import React from 'react';
 
 const TextField = props => {
-    const { name = 'unknown', type = 'text', value, label = 'No Label', handleChange } = props;
+    const {
+        name = 'unknown',
+        type = 'text',
+        value,
+        label = 'No Label',
+        error = '',
+        handleChange
+    } = props;
     return (
         <React.Fragment>
             <div className="form-control">
                 <label htmlFor={name}>{label}</label>
                 <input type={type} id={name} onChange={handleChange} value={value} />
+                {error && <p className="error">{error}</p>}
             </div>
             <style jsx>{`
                 label {
@@ -30,6 +38,12 @@ const TextField = props => {
 
                 .form-control label {
                     margin: 1rem 0 0.2rem;
+                }
+
+                .form-control .error {
+                    color: #dd0000;
+                    margin: 5px 0;
+                    font-size: 0.75rem;
                 }
             `}</style>
         </React.Fragment>

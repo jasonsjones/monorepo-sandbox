@@ -35,6 +35,18 @@ describe('TextField component', () => {
         expect(getByLabelText('Email').value).toBe('oliver');
     });
 
+    it('displays error text when error prop is provided', () => {
+        const props = {
+            label: 'Email',
+            type: 'email',
+            value: 'oliver',
+            error: 'Some error message',
+            handleChange: () => {}
+        };
+        const { getByText } = render(<TextField {...props} />);
+        expect(getByText('Some error message')).toBeTruthy();
+    });
+
     it(`calls 'handleChange' prop when value changes`, () => {
         const handleChange = jest.fn();
         const props = { label: 'Email', type: 'email', value: 'oliver', handleChange };
