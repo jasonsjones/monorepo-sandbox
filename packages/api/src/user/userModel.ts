@@ -24,6 +24,10 @@ const userSchema = new Schema(
 userSchema.pre('save', function(next) {
     const user: IUserModel = this as IUserModel;
 
+    if (!user.isModified('password')) {
+        return next();
+    }
+
     genSalt(10, (saltErr: any, salt: string) => {
         if (saltErr) {
             return next(saltErr);

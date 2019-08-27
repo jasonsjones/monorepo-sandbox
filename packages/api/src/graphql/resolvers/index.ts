@@ -1,5 +1,6 @@
 import { login, logout } from './auth';
 import {
+    changePassword,
     createUser,
     deleteUser,
     deleteUserAll,
@@ -25,6 +26,7 @@ const query = {
 };
 
 const rootMutation = {
+    changePassword,
     createUser,
     deleteUser,
     deleteUserAll,

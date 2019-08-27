@@ -79,6 +79,10 @@ export const requestPasswordReset = async (_: any, args: any, context: any) => {
     return true;
 };
 
+export const changePassword = async (_: any, args: any, __: any) => {
+    return UserRepository.changePassword(args.password, args.token);
+};
+
 export const UserTypeResolvers = {
     isEmailVerified: (parent: any) => parent.isEmailVerified,
     emailVerificationToken: (parent: any) => parent.emailVerificationToken,

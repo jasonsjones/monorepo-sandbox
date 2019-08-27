@@ -57,6 +57,22 @@ export const generatePasswordResetToken = (email: string): Promise<IUserModel> =
     });
 };
 
+export const changePassword = (password: string, token: string): Promise<boolean> => {
+    return getUserByQuery({ passwordResetToken: token }).then(usr => {
+        const now = new Date();
+        if (now < usr.passwordResetTokenExpiresAt) {
+            usr.password = password;
+            usr.passwordLastChangedAt = now;
+            usr.passwordResetToken = null;
+            usr.passwordResetTokenExpiresAt = null;
+            return usr.save().then(() => {
+                return true;
+            });
+        }
+        return false;
+    });
+};
+
 export const getModel = () => {
     return User;
 };
