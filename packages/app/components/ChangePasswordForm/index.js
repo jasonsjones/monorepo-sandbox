@@ -18,22 +18,23 @@ const ChangePasswordForm = ({ token }) => {
         confirmPassword: ''
     });
 
-    const [error, setError] = useState('');
+    const [fieldError, setFieldError] = useState('');
+    const [submitError, setSubmitError] = useState('');
 
     useEffect(() => {
         if (form.confirmPassword.length > 0 && form.password !== form.confirmPassword) {
-            setError('Passwords do NOT match');
+            setFieldError('Passwords do NOT match');
         }
         if (
             (form.confirmPassword.length > 0 && form.password === form.confirmPassword) ||
             form.confirmPassword.length === 0
         ) {
-            setError('');
+            setFieldError('');
         }
     }, [form]);
 
     const isFormValid = () => {
-        return form.password.length > 0, form.password === form.confirmPassword;
+        return form.password.length > 0 && form.password === form.confirmPassword;
     };
 
     const handleSubmit = e => {
@@ -59,11 +60,16 @@ const ChangePasswordForm = ({ token }) => {
             doChange(query, variables)
                 .then(({ data }) => {
                     if (data.changePassword) {
+                        setSubmitError('');
                         Router.push('/login');
+                    } else {
+                        setSubmitError('Password reset was unsuccessful');
                     }
                     setValues({ password: '', confirmPassword: '' });
                 })
                 .catch(err => console.log(err));
+        } else {
+            setSubmitError('Password field is required');
         }
     };
 
@@ -89,11 +95,18 @@ const ChangePasswordForm = ({ token }) => {
                     name="confirmPassword"
                     label="Confirm Password"
                     value={form.confirmPassword}
-                    error={error}
+                    error={fieldError}
                     handleChange={updateField}
                 />
                 <Button type="submit" text="Submit" />
             </form>
+            {submitError && <p className="error">{submitError}</p>}
+
+            <style jsx>{`
+                .error {
+                    color: #cc0000;
+                }
+            `}</style>
         </React.Fragment>
     );
 };
