@@ -23,7 +23,53 @@ h2 {
     color: #053f5e;
 }
 
-.container {
+.site-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.site-content {
+    flex: 1;
+}
+
+.site-footer {
+    height: 200px;
+    background-color: #999;
+}
+
+.site-footer_content {
+    display: flex;
+    justify-content: space-around;
+    color: #fff;
+}
+
+.social-account {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.site-footer_about,
+.site-footer_connect {
+    max-width: 350px;
+}
+
+.site-footer_connect ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.site-footer_connect a {
+    text-decoration: none;
+    color: #fff;
+}
+
+.social-icon {
+    margin-right: 10px;
+}
+
+.content-container {
     max-width: 960px;
     margin: 0 auto;
 }

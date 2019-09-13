@@ -1,5 +1,45 @@
 import React from 'react';
+import Banner from '../../components/Banner/';
 import './Layout.css';
+
+const Footer = () => {
+    return (
+        <div className="site-footer_content">
+            <section className="site-footer_about">
+                <h3>About</h3>
+                <p>
+                    A simple playground app to explore the technical benefits and project structure
+                    of a monorepo
+                </p>
+            </section>
+            <section className="site-footer_connect">
+                <h3>Connect</h3>
+                <ul>
+                    <li>
+                        <a href="!#" className="social-account">
+                            <img
+                                className="social-icon"
+                                src="https:icon.now.sh/github/14/fff"
+                                alt="github account"
+                            />
+                            <span className="social-name">github</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="!#" className="social-account">
+                            <img
+                                className="social-icon"
+                                src="https:icon.now.sh/twitter/14/fff"
+                                alt="twitter account"
+                            />
+                            <span className="social-name">twitter</span>
+                        </a>
+                    </li>
+                </ul>
+            </section>
+        </div>
+    );
+};
 
 /*
 const doQuery = query => {
@@ -58,7 +98,18 @@ const Layout = ({ children }) => {
     };
     */
 
-    return <div className="container">{children}</div>;
+    return (
+        <div className="site-container">
+            <header className="site-header"></header>
+            <main className="site-content">
+                <Banner />
+                <div className="content-container">{children}</div>
+            </main>
+            <footer className="site-footer">
+                <Footer />
+            </footer>
+        </div>
+    );
 };
 
 export default Layout;
