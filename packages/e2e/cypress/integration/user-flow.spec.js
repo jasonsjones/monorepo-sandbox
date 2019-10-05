@@ -16,7 +16,7 @@ describe('User Signup/Login Flow', () => {
                 .contains('Submit')
                 .click();
 
-            cy.url().should('eq', 'http://localhost:4200/verifyemail');
+            cy.url().should('eq', 'http://localhost:4200/aftersignup');
         });
     });
 
