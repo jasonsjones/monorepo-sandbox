@@ -31,18 +31,25 @@ h2 {
 
 .site-content {
     flex: 1;
+    background-color: #eee;
 }
 
 .site-footer {
     height: 200px;
-    background-color: #999;
+    background: linear-gradient(180deg, #020024 0%, #022c43 70%, #064f77 100%);
 }
 
 .site-footer_content {
     display: flex;
-    justify-content: space-around;
+    justify-content: center;
     color: #fff;
 }
+
+/*
+.site-footer_content section {
+    border: 1px solid #fff;
+}
+*/
 
 .social-account {
     display: flex;
@@ -50,9 +57,9 @@ h2 {
     margin-top: 10px;
 }
 
-.site-footer_about,
-.site-footer_connect {
-    max-width: 350px;
+.site-footer_about {
+    max-width: 450px;
+    margin-right: 4rem;
 }
 
 .site-footer_connect ul {
@@ -63,6 +70,10 @@ h2 {
 .site-footer_connect a {
     text-decoration: none;
     color: #fff;
+}
+
+.site-footer_connect a:hover {
+    color: #ccc;
 }
 
 .social-icon {

@@ -1,4 +1,5 @@
 import React from 'react';
+import Nav from '../../components/Nav/';
 import Banner from '../../components/Banner/';
 import './Layout.css';
 
@@ -16,7 +17,12 @@ const Footer = () => {
                 <h3>Connect</h3>
                 <ul>
                     <li>
-                        <a href="!#" className="social-account">
+                        <a
+                            href="https://github.com/jasonsjones"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="social-account"
+                        >
                             <img
                                 className="social-icon"
                                 src="https:icon.now.sh/github/14/fff"
@@ -26,7 +32,12 @@ const Footer = () => {
                         </a>
                     </li>
                     <li>
-                        <a href="!#" className="social-account">
+                        <a
+                            href="https://twitter.com/jsj0nes"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="social-account"
+                        >
                             <img
                                 className="social-icon"
                                 src="https:icon.now.sh/twitter/14/fff"
@@ -102,6 +113,7 @@ const Layout = ({ children }) => {
         <div className="site-container">
             <header className="site-header"></header>
             <main className="site-content">
+                <Nav />
                 <Banner />
                 <div className="content-container">{children}</div>
             </main>
