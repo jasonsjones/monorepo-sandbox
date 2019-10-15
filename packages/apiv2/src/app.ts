@@ -16,8 +16,16 @@ const bootstrapApolloServer = async (expressApp: Application): Promise<ApolloSer
 */
 
 const app = express();
-app.get('/', (_, res): void => {
+app.get('/api', (_, res): void => {
     res.json({ success: true, message: 'welcome to a new stack' });
+});
+
+app.get('/', (_, res): void => {
+    res.json({
+        success: true,
+        message: 'api endpoint is not here',
+        url: 'http://localhost:3001/api'
+    });
 });
 
 // bootstrapApolloServer(app);
