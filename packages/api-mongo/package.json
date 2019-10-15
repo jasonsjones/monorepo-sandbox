@@ -1,5 +1,5 @@
 {
-    "name": "@orion/api",
+    "name": "@orion/api-mongo",
     "version": "1.0.0",
     "main": "dist/index.js",
     "scripts": {
