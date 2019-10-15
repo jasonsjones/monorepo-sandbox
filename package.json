@@ -6,6 +6,7 @@
     ],
     "scripts": {
         "bootstrap": "lerna bootstrap",
+        "clean": "lerna clean",
         "dev": "lerna run dev --stream",
         "dev:api": "lerna run dev --stream --scope @orion/api",
         "dev:app": "lerna run dev --stream --scope @orion/app",
