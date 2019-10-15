@@ -1,4 +1,4 @@
-# API v2
+# Sandbox API
 
 > Node API for exploring new technologies and libraries
 

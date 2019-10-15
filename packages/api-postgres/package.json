@@ -1,5 +1,5 @@
 {
-    "name": "@orion/apiv2",
+    "name": "@orion/api-postgres",
     "version": "0.0.1",
     "description": "Boilerplate graphql server written in typescript backed by a postgres data store",
     "license": "MIT",
