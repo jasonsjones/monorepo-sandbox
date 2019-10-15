@@ -1,5 +1,5 @@
 {
-    "name": "@orion/webapp",
+    "name": "@orion/app-react",
     "version": "0.1.0",
     "private": true,
     "dependencies": {
