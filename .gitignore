@@ -23,6 +23,7 @@ dist/
 # misc
 tmp/
 temp/
+data/
 .vscode/
 .DS_Store
 .env
