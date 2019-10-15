@@ -1,6 +1,16 @@
 version: '3'
 
 services:
+    mailhog:
+        container_name: mailhog
+        image: mailhog/mailhog
+        restart: unless-stopped
+        ports:
+            - '1025:1025'
+            - '8025:8025'
+        networks:
+            - sandbox
+
     postgres:
         image: postgres:11.5
         container_name: pdb
@@ -10,7 +20,7 @@ services:
         environment:
             POSTGRES_USER: ${POSTGRES_USER:-postgres}
         networks:
-            - postgres
+            - sandbox
         volumes:
             - ./data/postgres:/var/lib/postgresql/data
 
@@ -25,9 +35,9 @@ services:
         ports:
             - '${PGADMIN_PORT:-5050}:80'
         networks:
-            - postgres
+            - sandbox
         restart: unless-stopped
 
 networks:
-    postgres:
+    sandbox:
         driver: bridge
