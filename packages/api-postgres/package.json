@@ -33,8 +33,10 @@
         "typeorm": "0.2.19"
     },
     "scripts": {
+        "build": "tsc",
         "dev": "NODE_ENV=development ts-node-dev src/index.ts",
         "lint": "eslint src/**/*.ts",
+        "start": "NODE_ENV=production node dist/index.js",
         "test": "NODE_ENV=testing jest"
     },
     "jest": {

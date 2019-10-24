@@ -1,0 +1,48 @@
+import { ConnectionOptions } from 'typeorm';
+
+export const dbOptions: ConnectionOptions[] = [
+    {
+        name: 'development',
+        type: 'postgres',
+        host: 'localhost',
+        port: 5432,
+        username: 'postgres',
+        password: '',
+        database: 'sandbox-dev',
+        synchronize: true,
+        logging: false,
+        entities: ['src/entity/**/*.ts'],
+        migrations: ['src/migration/**/*.ts'],
+        subscribers: ['src/subscriber/**/*.ts'],
+        cli: {
+            entitiesDir: 'src/entity',
+            migrationsDir: 'src/migration',
+            subscribersDir: 'src/subscriber'
+        }
+    },
+    {
+        name: 'testing',
+        type: 'postgres',
+        host: 'localhost',
+        port: 5432,
+        username: 'postgres',
+        password: '',
+        database: 'sandbox-test',
+        synchronize: true,
+        logging: false,
+        dropSchema: true,
+        entities: ['src/entity/**/*.ts'],
+        migrations: ['src/migration/**/*.ts'],
+        subscribers: ['src/subscriber/**/*.ts'],
+        cli: {
+            entitiesDir: 'src/entity',
+            migrationsDir: 'src/migration',
+            subscribersDir: 'src/subscriber'
+        }
+    },
+    {
+        name: 'production',
+        type: 'postgres',
+        url: process.env.DATABASE_URL || 'postgres://postgres@localhost/sandbox-dev'
+    }
+];
