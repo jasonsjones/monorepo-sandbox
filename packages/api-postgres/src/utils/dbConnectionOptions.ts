@@ -1,44 +1,38 @@
 import { ConnectionOptions } from 'typeorm';
 
+const cliOptions = {
+    cli: {
+        entitiesDir: 'src/entity',
+        migrationsDir: 'src/migration',
+        subscribersDir: 'src/subscriber'
+    }
+};
+
+const commonOptions = {
+    host: 'localhost',
+    port: 5432,
+    username: 'postgres',
+    password: '',
+    synchronize: true,
+    logging: false,
+    entities: ['src/entity/**/*.ts'],
+    migrations: ['src/migration/**/*.ts'],
+    subscribers: ['src/subscriber/**/*.ts'],
+    ...cliOptions
+};
+
 export const dbOptions: ConnectionOptions[] = [
     {
         name: 'development',
         type: 'postgres',
-        host: 'localhost',
-        port: 5432,
-        username: 'postgres',
-        password: '',
         database: 'sandbox-dev',
-        synchronize: true,
-        logging: false,
-        entities: ['src/entity/**/*.ts'],
-        migrations: ['src/migration/**/*.ts'],
-        subscribers: ['src/subscriber/**/*.ts'],
-        cli: {
-            entitiesDir: 'src/entity',
-            migrationsDir: 'src/migration',
-            subscribersDir: 'src/subscriber'
-        }
+        ...commonOptions
     },
     {
         name: 'testing',
         type: 'postgres',
-        host: 'localhost',
-        port: 5432,
-        username: 'postgres',
-        password: '',
-        database: 'sandbox-test',
-        synchronize: true,
-        logging: false,
         dropSchema: true,
-        entities: ['src/entity/**/*.ts'],
-        migrations: ['src/migration/**/*.ts'],
-        subscribers: ['src/subscriber/**/*.ts'],
-        cli: {
-            entitiesDir: 'src/entity',
-            migrationsDir: 'src/migration',
-            subscribersDir: 'src/subscriber'
-        }
+        ...commonOptions
     },
     {
         name: 'production',
