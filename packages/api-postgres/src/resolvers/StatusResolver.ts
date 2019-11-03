@@ -1,8 +1,9 @@
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
 import { Resolver, Query } from 'type-graphql';
 
 @Resolver()
 class StatusResolver {
-    @Query()
+    @Query(() => String)
     public status(): string {
         return 'It works!';
     }
