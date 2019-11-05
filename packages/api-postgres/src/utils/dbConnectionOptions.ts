@@ -31,6 +31,7 @@ export const dbOptions: ConnectionOptions[] = [
     {
         name: 'testing',
         type: 'postgres',
+        database: 'sandbox-test',
         dropSchema: true,
         ...commonOptions
     },
