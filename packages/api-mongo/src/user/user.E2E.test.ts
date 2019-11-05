@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
 import { Connection } from 'mongoose';
 import request from 'supertest';
 import { generateToken } from '../auth/authUtils';

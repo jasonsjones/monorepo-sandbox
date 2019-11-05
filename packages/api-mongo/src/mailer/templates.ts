@@ -47,7 +47,7 @@ const styles = `
 </style>
 `;
 
-export const getEmailVerificatonTemplate = (user: IUser) => {
+export const getEmailVerificatonTemplate = (user: IUser): string => {
     return `
 ${styles}
 <div class="container">
@@ -64,7 +64,7 @@ ${styles}
     `;
 };
 
-export const getPasswordResetTemplate = (user: IUser) => {
+export const getPasswordResetTemplate = (user: IUser): string => {
     return `
 ${styles}
 <div class="container">

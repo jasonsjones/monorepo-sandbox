@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
 import { Connection } from 'mongoose';
 import { dbConnect } from '../config/db';
 import * as UserRepository from './userRepository';
@@ -65,7 +66,7 @@ describe('User Repository', () => {
             .then(() => UserRepository.getUsers())
             .then(users => expect(users).toHaveLength(2))
             .then(() => UserRepository.deleteUserAll())
-            .then(res => UserRepository.getUsers())
+            .then(() => UserRepository.getUsers())
             .then(users => expect(users).toHaveLength(0));
     });
 });

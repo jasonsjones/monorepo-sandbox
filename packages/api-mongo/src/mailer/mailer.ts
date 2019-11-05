@@ -3,6 +3,11 @@ import config from '../config/config';
 import { IUser } from '../types';
 import { getEmailVerificatonTemplate, getPasswordResetTemplate } from './templates';
 
+interface MailOptions {
+    port?: number;
+    jsonTransport?: boolean;
+}
+
 class Mailer {
     public sendVerificatonEmail = async (user: IUser): Promise<any> => {
         const transporter = nodemailer.createTransport(this.getMailOptions());
@@ -47,7 +52,7 @@ http://localhost:4200/changepassword?token=${user.passwordResetToken}
         }
     };
 
-    private getMailOptions = () => {
+    private getMailOptions = (): MailOptions => {
         let mailOpts = null;
         switch (config.env) {
             case 'testing':

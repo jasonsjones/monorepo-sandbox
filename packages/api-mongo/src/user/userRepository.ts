@@ -33,7 +33,7 @@ export const deleteUserAll = (): Promise<boolean> => {
     if (config.env === 'testing') {
         return User.deleteMany({})
             .exec()
-            .then(() => true);
+            .then((): boolean => true);
     }
 
     return Promise.resolve(false);
@@ -47,35 +47,37 @@ export const updateUser = (id: string, newUserData: any): Promise<IUserModel> =>
 };
 
 export const generatePasswordResetToken = (email: string): Promise<IUserModel> => {
-    return getUserByEmail(email).then(usr => {
-        const expiresIn2Hours = new Date();
-        expiresIn2Hours.setHours(expiresIn2Hours.getHours() + 2);
+    return getUserByEmail(email).then(
+        (usr): Promise<IUserModel> => {
+            const expiresIn2Hours = new Date();
+            expiresIn2Hours.setHours(expiresIn2Hours.getHours() + 2);
 
-        usr.passwordResetToken = generateRandomToken();
-        usr.passwordResetTokenExpiresAt = expiresIn2Hours;
-        return usr.save();
-    });
+            usr.passwordResetToken = generateRandomToken();
+            usr.passwordResetTokenExpiresAt = expiresIn2Hours;
+            return usr.save();
+        }
+    );
 };
 
 export const changePassword = (password: string, token: string): Promise<boolean> => {
-    return getUserByQuery({ passwordResetToken: token }).then(usr => {
-        if (usr) {
-            const now = new Date();
-            if (now < usr.passwordResetTokenExpiresAt) {
-                usr.password = password;
-                usr.passwordLastChangedAt = now;
-                usr.passwordResetToken = null;
-                usr.passwordResetTokenExpiresAt = null;
-                return usr.save().then(() => {
-                    return true;
-                });
+    return getUserByQuery({ passwordResetToken: token }).then(
+        (usr): Promise<boolean> => {
+            if (usr) {
+                const now = new Date();
+                if (now < usr.passwordResetTokenExpiresAt) {
+                    usr.password = password;
+                    usr.passwordLastChangedAt = now;
+                    usr.passwordResetToken = null;
+                    usr.passwordResetTokenExpiresAt = null;
+                    return usr.save().then((): boolean => true);
+                }
+                Promise.resolve().then((): boolean => false);
             }
-            return false;
+            Promise.resolve().then((): boolean => false);
         }
-        return false;
-    });
+    );
 };
 
-export const getModel = () => {
+export const getModel = (): any => {
     return User;
 };

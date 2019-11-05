@@ -6,7 +6,12 @@ import { IAuthRequest } from '../types';
 
 import config from './config';
 
-const getTokens = (req: IAuthRequest) => {
+interface TokenResponse {
+    token: string;
+    refreshToken: string;
+}
+
+const getTokens = (req: IAuthRequest): TokenResponse => {
     let bearerToken = null;
     if (req.headers.authorization) {
         bearerToken = req.headers.authorization.split(' ')[1];
@@ -21,7 +26,7 @@ const getTokens = (req: IAuthRequest) => {
     };
 };
 
-const addUserToRequest = (req: IAuthRequest, res: Response, next: NextFunction) => {
+const addUserToRequest = (req: IAuthRequest, res: Response, next: NextFunction): void => {
     const { token } = getTokens(req);
     if (token) {
         try {
