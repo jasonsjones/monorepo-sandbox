@@ -50,7 +50,8 @@ export const dbConnect = (): Connection => {
         mongoose.connect(buildConnectionString(), {
             useCreateIndex: true,
             useFindAndModify: false,
-            useNewUrlParser: true
+            useNewUrlParser: true,
+            useUnifiedTopology: true
         });
 
         dbConnection = mongoose.connection;
