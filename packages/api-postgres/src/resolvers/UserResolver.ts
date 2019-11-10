@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/explicit-function-return-type */
 import { Arg, Resolver, Mutation, Query } from 'type-graphql';
 import { MutationResponse } from '../types';
 import { User } from '../entity/User';

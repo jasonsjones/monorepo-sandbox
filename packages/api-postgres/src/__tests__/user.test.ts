@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/explicit-function-return-type */
 import request from 'supertest';
 import { getConnection } from 'typeorm';
 import app from '../app';
@@ -153,8 +152,13 @@ describe('mutation to create a user', () => {
 describe('query for allUsers', () => {
     beforeAll(async () => {
         await getConnection().manager.clear(User);
-        return UserService.createUser('Test', 'User1', 'test-user1@example.com', 'plaintext').then(
-            () => UserService.createUser('Test', 'User2', 'test-user2@example.com', 'plaintext')
+        return UserService.createUser(
+            'Test',
+            'User1',
+            'test-user1@example.com',
+            'plaintext'
+        ).then(() =>
+            UserService.createUser('Test', 'User2', 'test-user2@example.com', 'plaintext')
         );
     });
 

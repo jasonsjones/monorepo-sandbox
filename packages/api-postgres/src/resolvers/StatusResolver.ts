@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/explicit-function-return-type */
 import { Resolver, Query } from 'type-graphql';
 
 @Resolver()
