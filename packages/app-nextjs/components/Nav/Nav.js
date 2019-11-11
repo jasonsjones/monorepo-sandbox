@@ -24,19 +24,17 @@ const Nav = () => {
                     </Link>
                 </div>
                 <div className="nav-links">
-                    {!isAuthed &&
-                        (!isFetching && (
-                            <Link href="/signup">
-                                <a>Signup</a>
-                            </Link>
-                        ))}
+                    {!isAuthed && !isFetching && (
+                        <Link href="/signup">
+                            <a>Signup</a>
+                        </Link>
+                    )}
 
-                    {!isAuthed &&
-                        (!isFetching && (
-                            <Link href="/login">
-                                <a>Login</a>
-                            </Link>
-                        ))}
+                    {!isAuthed && !isFetching && (
+                        <Link href="/login">
+                            <a>Login</a>
+                        </Link>
+                    )}
 
                     {isAuthed && (
                         <Link href="/users">
