@@ -1,4 +1,5 @@
-import App, { Container } from 'next/app';
+import { Fragment } from 'react';
+import App from 'next/app';
 import Head from 'next/head';
 
 import Layout from '../components/Layout/Layout';
@@ -20,14 +21,14 @@ class MyApp extends App {
     render() {
         const { Component, token } = this.props;
         return (
-            <Container>
+            <Fragment>
                 <Head>
                     <title>MonoRepo Sandbox</title>
                 </Head>
                 <Layout accessToken={token}>
                     <Component />
                 </Layout>
-            </Container>
+            </Fragment>
         );
     }
 }
