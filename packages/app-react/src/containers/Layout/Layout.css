@@ -39,47 +39,6 @@ h2 {
     background: linear-gradient(180deg, #020024 0%, #022c43 70%, #064f77 100%);
 }
 
-.site-footer_content {
-    display: flex;
-    justify-content: center;
-    color: #fff;
-}
-
-/*
-.site-footer_content section {
-    border: 1px solid #fff;
-}
-*/
-
-.social-account {
-    display: flex;
-    align-items: center;
-    margin-top: 10px;
-}
-
-.site-footer_about {
-    max-width: 450px;
-    margin-right: 4rem;
-}
-
-.site-footer_connect ul {
-    list-style-type: none;
-    padding: 0;
-}
-
-.site-footer_connect a {
-    text-decoration: none;
-    color: #fff;
-}
-
-.site-footer_connect a:hover {
-    color: #ccc;
-}
-
-.social-icon {
-    margin-right: 10px;
-}
-
 .content-container {
     max-width: 960px;
     margin: 0 auto;
