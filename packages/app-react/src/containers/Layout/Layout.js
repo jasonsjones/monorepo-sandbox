@@ -1,6 +1,6 @@
 import React from 'react';
 import Nav from '../../components/Nav';
-import Banner from '../../components/Banner';
+// import Banner from '../../components/Banner';
 import Footer from '../../components/Footer';
 import './Layout.css';
 
@@ -66,7 +66,7 @@ const Layout = ({ children }) => {
             <header className="site-header"></header>
             <main className="site-content">
                 <Nav />
-                <Banner />
+                {/* <Banner /> */}
                 <div className="content-container">{children}</div>
             </main>
             <footer className="site-footer">
