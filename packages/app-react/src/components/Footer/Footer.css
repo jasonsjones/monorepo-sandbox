@@ -1,7 +1,7 @@
 .site-footer_content {
     display: flex;
     justify-content: center;
-    color: #fff;
+    color: #ccc;
 }
 
 /*
@@ -28,11 +28,11 @@
 
 .site-footer_connect a {
     text-decoration: none;
-    color: #fff;
+    color: #ccc;
 }
 
 .site-footer_connect a:hover {
-    color: #ccc;
+    color: #fff;
 }
 
 .social-icon {
