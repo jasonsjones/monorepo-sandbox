@@ -1,14 +1,14 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
+import AuthContext from '../../context/AuthContext';
 import './Nav.css';
-// import AuthContext from '../../context/AuthContext';
 // import ProfileMenu from '../ProfileMenu/ProfileMenu';
 
 const Nav = () => {
-    // const authCtx = useContext(AuthContext);
+    const authCtx = useContext(AuthContext);
     // const [showProfileMenu, setShowProfileMenu] = useState(false);
 
-    // const isAuthed = authCtx.authUser && authCtx.token;
+    const isAuthed = authCtx.authUser && authCtx.token;
     // const isFetching = !authCtx.authUser && authCtx.token;
 
     return (
@@ -22,23 +22,11 @@ const Nav = () => {
                         </div>
                     </Link>
                 </div>
+                <div className="nav-links">
+                    {!isAuthed && <Link to="/signup">Signup</Link>}
+                    {!isAuthed && <Link to="/login">Login</Link>}
+                </div>
                 {/* <div className="nav-links">
-                    <Link to="/signup">Signup</Link>
-                </div> */}
-                {/* <div className="nav-links">
-                    {!isAuthed &&
-                        (!isFetching && (
-                            <Link href="/signup">
-                                <a>Signup</a>
-                            </Link>
-                        ))}
-
-                    {!isAuthed &&
-                        (!isFetching && (
-                            <Link href="/login">
-                                <a>Login</a>
-                            </Link>
-                        ))}
 
                     {isAuthed && (
                         <Link href="/users">

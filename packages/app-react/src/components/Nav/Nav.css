@@ -13,6 +13,7 @@ nav a {
 
 .nav-logo {
     margin-left: 35px;
+    padding-top: 20px;
 }
 
 .logo-text_container {
@@ -35,7 +36,6 @@ nav a {
     color: #ccc;
 }
 
-/*
 .nav-links {
     display: flex;
     align-items: center;
@@ -57,7 +57,7 @@ nav a {
 }
 
 .nav-links a {
-    border: 1px solid #ccc;
+    border: 2px solid #ff8600e6;
     padding: 10px 20px;
     border-radius: 10px;
     color: #ff8600e6;
@@ -67,6 +67,5 @@ nav a {
 .nav-links a:hover {
     background: #020024;
     color: #ccc;
-    border: 1px solid #ff8600e6;
+    border: 2px solid #ccc;
 }
-*/
