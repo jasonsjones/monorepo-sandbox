@@ -17,11 +17,14 @@ export class User extends BaseEntity {
     lastName: string;
 
     @Field()
-    @Column('varchar', { length: 255 })
+    @Column('varchar', { unique: true, length: 255 })
     email: string;
 
     @Column()
     password: string;
+
+    @Field()
+    name: string;
 
     @Field()
     @Column({ default: false })
