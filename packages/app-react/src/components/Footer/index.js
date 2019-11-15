@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
 import './Footer.css';
 
+const SOCIAL_ICON_COLOR = 'ccc';
+const SOCIAL_ICON_COLOR_HOVER = 'fff';
+
 const Footer = () => {
-    const [githubIconColor, setGithubIconColor] = useState('ccc');
-    const [twitterIconColor, setTwitterIconColor] = useState('ccc');
+    const [githubIconColor, setGithubIconColor] = useState(SOCIAL_ICON_COLOR);
+    const [twitterIconColor, setTwitterIconColor] = useState(SOCIAL_ICON_COLOR);
 
     return (
         <div className="site-footer_content">
@@ -18,8 +21,8 @@ const Footer = () => {
                 <h3>Connect</h3>
                 <ul>
                     <li
-                        onMouseOver={() => setGithubIconColor('fff')}
-                        onMouseOut={() => setGithubIconColor('ccc')}
+                        onMouseOver={() => setGithubIconColor(SOCIAL_ICON_COLOR_HOVER)}
+                        onMouseOut={() => setGithubIconColor(SOCIAL_ICON_COLOR)}
                     >
                         <a
                             href="https://github.com/jasonsjones"
@@ -36,8 +39,8 @@ const Footer = () => {
                         </a>
                     </li>
                     <li
-                        onMouseOver={() => setTwitterIconColor('fff')}
-                        onMouseOut={() => setTwitterIconColor('ccc')}
+                        onMouseOver={() => setTwitterIconColor(SOCIAL_ICON_COLOR_HOVER)}
+                        onMouseOut={() => setTwitterIconColor(SOCIAL_ICON_COLOR)}
                     >
                         <a
                             href="https://twitter.com/jsj0nes"
