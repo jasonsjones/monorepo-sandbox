@@ -4,7 +4,7 @@ nav {
     justify-content: space-between;
     align-items: center;
     background: rgb(2, 0, 36);
-    background: linear-gradient(90deg, #020024 0%, #022c43 40%, #064f77 100%);
+    background: linear-gradient(0deg, #020024 0%, #022c43 40%, #064f77 100%);
 }
 
 nav a {
