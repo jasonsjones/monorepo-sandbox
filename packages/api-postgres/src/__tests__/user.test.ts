@@ -1,5 +1,5 @@
 import request from 'supertest';
-import { getConnection } from 'typeorm';
+import { getConnection, getRepository } from 'typeorm';
 import app from '../app';
 import { User } from '../entity/User';
 import { createDbConnection } from '../utils/createDbConnection';
@@ -16,7 +16,9 @@ beforeAll(() => {
     return createDbConnection();
 });
 
-afterAll(() => {
+afterAll(async () => {
+    const userRepository = await getRepository(User);
+    userRepository.clear();
     getConnection().close();
 });
 
