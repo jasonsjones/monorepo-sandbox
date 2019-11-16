@@ -1,4 +1,4 @@
-import { Arg, Resolver, Mutation, Query, FieldResolver, Root } from 'type-graphql';
+import { Arg, Resolver, Mutation, Query } from 'type-graphql';
 import { MutationResponse } from '../types';
 import { User } from '../entity/User';
 import UserService from '../services/UserService';
@@ -8,11 +8,6 @@ class UserResolver {
     @Query(() => [User])
     allUsers(): Promise<User[]> {
         return UserService.getAllUsers();
-    }
-
-    @FieldResolver()
-    name(@Root() parent: User): string {
-        return `${parent.firstName} ${parent.lastName}`;
     }
 
     @Mutation(() => MutationResponse)

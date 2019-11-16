@@ -1,5 +1,5 @@
 import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, CreateDateColumn } from 'typeorm';
-import { ObjectType, Field, ID } from 'type-graphql';
+import { ObjectType, Field, ID, Root } from 'type-graphql';
 
 @ObjectType()
 @Entity('users')
@@ -24,7 +24,9 @@ export class User extends BaseEntity {
     password: string;
 
     @Field()
-    name: string;
+    name(@Root() parent: User): string {
+        return `${parent.firstName} ${parent.lastName}`;
+    }
 
     @Field()
     @Column({ default: false })
