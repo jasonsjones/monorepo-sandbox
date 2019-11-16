@@ -39,7 +39,7 @@
         "dev": "NODE_ENV=development ts-node-dev src/index.ts",
         "lint": "eslint src/**/*.ts",
         "start": "NODE_ENV=production node dist/index.js",
-        "test": "NODE_ENV=testing jest"
+        "test": "NODE_ENV=testing jest --color --runInBand"
     },
     "jest": {
         "preset": "ts-jest"
