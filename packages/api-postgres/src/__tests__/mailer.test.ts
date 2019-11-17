@@ -1,6 +1,6 @@
 import { getConnection, getRepository } from 'typeorm';
 import UserService from '../services/UserService';
-import Mailer from './mailer';
+import Mailer from '../mailer/mailer';
 import { User } from '../entity/User';
 import { createDbConnection } from '../utils/createDbConnection';
 
