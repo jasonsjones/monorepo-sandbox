@@ -1,13 +1,11 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 import { ObjectType, Field } from 'type-graphql';
+import { User } from '../entity/User';
 
 @ObjectType()
-export class Error {
+class PayloadType {
     @Field()
-    path: string;
-
-    @Field()
-    message: string;
+    user?: User;
 }
 
 @ObjectType()
@@ -18,6 +16,6 @@ export class MutationResponse {
     @Field()
     message: string;
 
-    @Field(() => [Error], { nullable: true })
-    error?: Error[];
+    @Field()
+    payload?: PayloadType;
 }

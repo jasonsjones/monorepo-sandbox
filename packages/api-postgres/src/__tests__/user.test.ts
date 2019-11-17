@@ -1,15 +1,24 @@
-import request from 'supertest';
+import request, { Test, Response } from 'supertest';
 import { getConnection, getRepository } from 'typeorm';
 import app from '../app';
 import { User } from '../entity/User';
 import { createDbConnection } from '../utils/createDbConnection';
 import UserService from '../services/UserService';
 
-const makeGraphQLCall = (query: string, variables = {}): request.Test => {
+const makeGraphQLCall = (query: string, variables = {}): Test => {
     return request(app)
         .post('/graphql')
         .set('Content-Type', 'application/json')
         .send({ query, variables });
+};
+
+const verifyHasSingleError = (res: Response): void => {
+    const response = res.body;
+    expect(response).toHaveProperty('errors');
+    expect(response).toHaveProperty('data');
+    expect(response.data).toBeNull();
+    expect(response.errors).toHaveLength(1);
+    expect(response.errors[0].extensions.exception.validationErrors).toHaveLength(1);
 };
 
 beforeAll(() => {
@@ -28,13 +37,16 @@ describe('mutation to create a user', () => {
     const email = 'test-user@example.com';
     const password = '123456';
     const query = `
-        mutation RegisterUser($firstName: String!, $lastName: String!, $email: String!, $password: String!) {
-            registerUser(firstName: $firstName, lastName: $lastName, email: $email, password: $password) {
+        mutation RegisterUser($input: RegisterInput!) {
+            registerUser(input: $input) {
                 success
                 message
-                error {
-                    path
-                    message
+                payload {
+                    user {
+                        id
+                        name
+                        email
+                    }
                 }
             }
         }
@@ -42,10 +54,12 @@ describe('mutation to create a user', () => {
 
     it('creates a user', () => {
         const variables = {
-            firstName,
-            lastName,
-            email,
-            password
+            input: {
+                firstName,
+                lastName,
+                email,
+                password
+            }
         };
 
         return makeGraphQLCall(query, variables)
@@ -53,9 +67,9 @@ describe('mutation to create a user', () => {
                 const json = res.body.data.registerUser;
                 expect(json).toHaveProperty('success');
                 expect(json).toHaveProperty('message');
-                expect(json).toHaveProperty('error');
+                expect(json).toHaveProperty('payload');
                 expect(json.success).toBeTruthy();
-                expect(json.error).toBeFalsy();
+                expect(json.payload).toHaveProperty('user');
                 return User.find({ where: { email } });
             })
             .then(users => {
@@ -66,87 +80,88 @@ describe('mutation to create a user', () => {
             });
     });
 
-    it('returns an error if the email already exists', () => {
+    it('returns an error if the firstName is not long enough', () => {
         const variables = {
-            firstName,
-            lastName,
-            email,
-            password
+            input: {
+                firstName: '',
+                lastName,
+                email: 'oliver2@qc.com',
+                password
+            }
         };
 
-        return makeGraphQLCall(query, variables).then(res => {
-            const json = res.body.data.registerUser;
-            expect(json).toHaveProperty('success');
-            expect(json).toHaveProperty('message');
-            expect(json).toHaveProperty('error');
-            expect(json.success).toBeFalsy();
-            expect(json.error).toHaveLength(1);
-            const error = json.error[0];
-            expect(error).toHaveProperty('path');
-            expect(error).toHaveProperty('message');
-        });
+        return makeGraphQLCall(query, variables).then(verifyHasSingleError);
     });
 
-    it('returns an error if the email is not long enough', () => {
+    it('returns an error if the lastName is not long enough', () => {
         const variables = {
-            firstName,
-            lastName,
-            email: 'jj',
-            password
+            input: {
+                firstName,
+                lastName: '',
+                email: 'oliver2@qc.com',
+                password
+            }
         };
 
-        return makeGraphQLCall(query, variables).then(res => {
-            const json = res.body.data.registerUser;
-            expect(json).toHaveProperty('success');
-            expect(json).toHaveProperty('message');
-            expect(json).toHaveProperty('error');
-            expect(json.success).toBeFalsy();
-            expect(json.error).toHaveLength(1);
-            const error = json.error[0];
-            expect(error).toHaveProperty('path');
-            expect(error).toHaveProperty('message');
-        });
+        return makeGraphQLCall(query, variables).then(verifyHasSingleError);
+    });
+
+    it('returns an error if the email is not valid ', () => {
+        const variables = {
+            input: {
+                firstName,
+                lastName,
+                email: 'oliver<at>qc.com',
+                password
+            }
+        };
+
+        return makeGraphQLCall(query, variables).then(verifyHasSingleError);
+    });
+
+    it('returns an error if the email already exists', () => {
+        const variables = {
+            input: {
+                firstName,
+                lastName,
+                email,
+                password
+            }
+        };
+
+        return makeGraphQLCall(query, variables).then(verifyHasSingleError);
     });
 
     it('returns an error if the password is not long enough', () => {
         const variables = {
-            firstName,
-            lastName,
-            email: 'weak-password@example.com',
-            password: 'ab'
+            input: {
+                firstName,
+                lastName,
+                email: 'weak-password@example.com',
+                password: 'ab'
+            }
         };
 
-        return makeGraphQLCall(query, variables).then(res => {
-            const json = res.body.data.registerUser;
-            expect(json).toHaveProperty('success');
-            expect(json).toHaveProperty('message');
-            expect(json).toHaveProperty('error');
-            expect(json.success).toBeFalsy();
-            expect(json.error).toHaveLength(1);
-            const error = json.error[0];
-            expect(error).toHaveProperty('path');
-            expect(error).toHaveProperty('message');
-        });
+        return makeGraphQLCall(query, variables).then(verifyHasSingleError);
     });
 
-    it('returns multiple errors if the email and password are not long enough', () => {
+    it('returns multiple errors if the email is not valid and password is not long enough', () => {
         const variables = {
-            firstName,
-            lastName,
-            email: 'ab',
-            password: 'cd'
+            input: {
+                firstName,
+                lastName,
+                email: 'notvalid<at>example.com',
+                password: 'cd'
+            }
         };
 
         return makeGraphQLCall(query, variables).then(res => {
-            const json = res.body.data.registerUser;
-            expect(json).toHaveProperty('success');
-            expect(json).toHaveProperty('message');
-            expect(json).toHaveProperty('error');
-            expect(json.success).toBeFalsy();
-            expect(json.error).toHaveLength(2);
-            const error = json.error[0];
-            expect(error).toHaveProperty('path');
-            expect(error).toHaveProperty('message');
+            const response = res.body;
+            expect(response).toHaveProperty('errors');
+            expect(response).toHaveProperty('data');
+            expect(response.data).toBeNull();
+            expect(response.errors).toHaveLength(1);
+            expect(response.errors[0].extensions.exception.validationErrors).toHaveLength(2);
         });
     });
 });
