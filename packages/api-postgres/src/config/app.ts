@@ -3,8 +3,8 @@ import express from 'express';
 import { Application } from 'express';
 import { ApolloServer } from 'apollo-server-express';
 import { buildSchema } from 'type-graphql';
-import StatusResolver from './resolvers/StatusResolver';
-import UserResolver from './resolvers/UserResolver';
+import StatusResolver from '../modules/status/StatusResolver';
+import UserResolver from '../modules/user/UserResolver';
 // import AuthResolver from './resolvers/AuthResolver';
 
 const bootstrapApolloServer = async (expressApp: Application): Promise<ApolloServer> => {

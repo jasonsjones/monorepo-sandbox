@@ -1,5 +1,5 @@
 import nodemailer from 'nodemailer';
-import { User } from '../entity/User';
+import { User } from '../../entity/User';
 import { getEmailVerificatonTemplateHTML, getEmailVerificatonTemplateText } from './templates';
 
 interface MailOptions {

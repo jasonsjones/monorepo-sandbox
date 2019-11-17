@@ -1,5 +1,5 @@
 import request from 'supertest';
-import app from '../app';
+import app from '../config/app';
 
 const makeGraphQLCall = (query: string, variables = {}): request.Test => {
     return request(app)

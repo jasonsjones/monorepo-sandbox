@@ -1,5 +1,5 @@
 import request from 'supertest';
-import app from '../app';
+import app from '../config/app';
 
 it('get / route returns json payload', (): Promise<void> => {
     return request(app)

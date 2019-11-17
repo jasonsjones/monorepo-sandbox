@@ -1,6 +1,6 @@
 import request, { Test, Response } from 'supertest';
 import { getConnection, getRepository } from 'typeorm';
-import app from '../app';
+import app from '../config/app';
 import { User } from '../entity/User';
 import { createDbConnection } from '../utils/createDbConnection';
 import UserService from '../services/UserService';

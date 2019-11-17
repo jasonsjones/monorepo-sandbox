@@ -1,5 +1,5 @@
 import 'reflect-metadata';
-import app from './app';
+import app from './config/app';
 import { createDbConnection } from './utils/createDbConnection';
 
 const PORT = process.env.PORT || 3001;

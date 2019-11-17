@@ -1,8 +1,8 @@
 import { Arg, Resolver, Mutation, Query } from 'type-graphql';
-import { MutationResponse } from '../types';
-import { User } from '../entity/User';
-import UserService from '../services/UserService';
-import { RegisterInput } from './RegisterInput';
+import { MutationResponse } from '../../types';
+import { User } from '../../entity/User';
+import UserService from '../../services/UserService';
+import { RegisterInput } from './register/RegisterInput';
 
 @Resolver(User)
 class UserResolver {
