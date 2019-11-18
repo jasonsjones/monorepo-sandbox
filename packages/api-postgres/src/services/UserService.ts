@@ -1,7 +1,6 @@
 import bcrypt from 'bcryptjs';
 import { v4 } from 'uuid';
 import { User } from '../entity/User';
-// import { Error } from '../types';
 
 class UserService {
     static EMAIL_LENGTH = 3;

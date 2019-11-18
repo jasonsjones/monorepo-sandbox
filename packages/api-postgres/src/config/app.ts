@@ -5,10 +5,10 @@ import { ApolloServer } from 'apollo-server-express';
 import { buildSchema } from 'type-graphql';
 import StatusResolver from '../modules/status/StatusResolver';
 import UserResolver from '../modules/user/UserResolver';
-// import AuthResolver from './resolvers/AuthResolver';
+import AuthResolver from '../modules/auth/AuthResolver';
 
 const bootstrapApolloServer = async (expressApp: Application): Promise<ApolloServer> => {
-    const schema = await buildSchema({ resolvers: [StatusResolver, UserResolver] });
+    const schema = await buildSchema({ resolvers: [StatusResolver, UserResolver, AuthResolver] });
     const apolloServer = new ApolloServer({ schema });
     apolloServer.applyMiddleware({ app: expressApp });
     return apolloServer;
