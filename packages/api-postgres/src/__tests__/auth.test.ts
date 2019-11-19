@@ -12,6 +12,16 @@ const makeGraphQLCall = (query: string, variables = {}): Test => {
         .send({ query, variables });
 };
 
+const verifyInvalidUser = (res: request.Response): void => {
+    const result = res.body;
+    expect(result).toHaveProperty('errors');
+    expect(result).toHaveProperty('data');
+    expect(result.data).toBeNull();
+    expect(result.errors).toHaveLength(1);
+    expect(result.errors[0]).toHaveProperty('message');
+    expect(result.errors[0].message).toEqual('invalid user credentials');
+};
+
 beforeAll(() => {
     return createDbConnection();
 });
@@ -27,7 +37,9 @@ describe('Authentication resolver', () => {
     const password = '123456';
     const query = `
         mutation Login($email: String!, $password: String!) {
-            login(email: $email, password: $password)
+            login(email: $email, password: $password) {
+                accessToken
+            }
         }
     `;
 
@@ -43,7 +55,8 @@ describe('Authentication resolver', () => {
 
         return makeGraphQLCall(query, variables).then(res => {
             const result = res.body.data.login;
-            expect(result).toBe(true);
+            expect(result).toHaveProperty('accessToken');
+            expect(typeof result.accessToken).toBe('string');
         });
     });
 
@@ -53,10 +66,7 @@ describe('Authentication resolver', () => {
             password: 'badpassword'
         };
 
-        return makeGraphQLCall(query, variables).then(res => {
-            const result = res.body.data.login;
-            expect(result).toBe(false);
-        });
+        return makeGraphQLCall(query, variables).then(verifyInvalidUser);
     });
 
     it('does not log in a user with an unknown email', () => {
@@ -65,9 +75,6 @@ describe('Authentication resolver', () => {
             password
         };
 
-        return makeGraphQLCall(query, variables).then(res => {
-            const result = res.body.data.login;
-            expect(result).toBe(false);
-        });
+        return makeGraphQLCall(query, variables).then(verifyInvalidUser);
     });
 });

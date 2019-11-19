@@ -1,16 +1,35 @@
-import { Resolver, Mutation, Arg } from 'type-graphql';
+import { Resolver, Mutation, Arg, ObjectType, Field } from 'type-graphql';
 import { compareSync } from 'bcryptjs';
 import UserService from '../../services/UserService';
+import { generateToken } from './authUtils';
+
+@ObjectType()
+class LoginResponse {
+    @Field()
+    accessToken: string;
+}
 
 @Resolver()
 class AuthResolver {
-    @Mutation(() => Boolean)
-    async login(@Arg('email') email: string, @Arg('password') password: string): Promise<boolean> {
+    @Mutation(() => LoginResponse)
+    async login(
+        @Arg('email') email: string,
+        @Arg('password') password: string
+    ): Promise<LoginResponse> {
         const user = await UserService.getUserByEmail(email);
-        if (user) {
-            return compareSync(password, user.password);
+        if (!user) {
+            throw new Error('invalid user credentials');
         }
-        return false;
+
+        const isValid = compareSync(password, user.password);
+        if (!isValid) {
+            throw new Error('invalid user credentials');
+        }
+
+        const token = generateToken(user);
+        return {
+            accessToken: token
+        };
     }
 }
 
