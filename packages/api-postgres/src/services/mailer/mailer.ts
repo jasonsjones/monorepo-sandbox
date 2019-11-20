@@ -8,8 +8,8 @@ interface MailOptions {
 }
 
 class Mailer {
-    public sendVerificatonEmail = async (user: User): Promise<any> => {
-        const transporter = nodemailer.createTransport(this.getMailOptions());
+    public static sendVerificationEmail = async (url: string, user: User): Promise<any> => {
+        const transporter = nodemailer.createTransport(Mailer.getMailOptions());
         const verifiedTransporter =
             process.env.NODE_ENV === 'testing' ? true : await transporter.verify();
 
@@ -18,13 +18,13 @@ class Mailer {
                 from: 'account.verify@sandbox.com',
                 to: user.email,
                 subject: 'Email Verification',
-                text: getEmailVerificatonTemplateText(user),
-                html: getEmailVerificatonTemplateHTML(user)
+                text: getEmailVerificatonTemplateText(url, user),
+                html: getEmailVerificatonTemplateHTML(url, user)
             });
         }
     };
 
-    private getMailOptions = (): MailOptions => {
+    private static getMailOptions = (): MailOptions => {
         let mailOpts = {};
         switch (process.env.NODE_ENV) {
             case 'testing':
@@ -47,4 +47,4 @@ class Mailer {
     };
 }
 
-export default new Mailer();
+export default Mailer;
