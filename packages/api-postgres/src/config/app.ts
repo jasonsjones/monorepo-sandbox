@@ -1,15 +1,32 @@
 import 'reflect-metadata';
 import express from 'express';
-import { Application } from 'express';
+import { Application, Request, Response } from 'express';
 import { ApolloServer } from 'apollo-server-express';
 import { buildSchema } from 'type-graphql';
 import StatusResolver from '../modules/status/StatusResolver';
 import UserResolver from '../modules/user/UserResolver';
 import AuthResolver from '../modules/auth/AuthResolver';
+import { AugmentedRequest } from '../types';
+
+const buildContext = ({
+    req,
+    res
+}: {
+    req: Request;
+    res: Response;
+}): { req: AugmentedRequest; res: Response } => {
+    return {
+        req,
+        res
+    };
+};
 
 const bootstrapApolloServer = async (expressApp: Application): Promise<ApolloServer> => {
     const schema = await buildSchema({ resolvers: [StatusResolver, UserResolver, AuthResolver] });
-    const apolloServer = new ApolloServer({ schema });
+    const apolloServer = new ApolloServer({
+        schema,
+        context: buildContext
+    });
     apolloServer.applyMiddleware({ app: expressApp });
     return apolloServer;
 };
