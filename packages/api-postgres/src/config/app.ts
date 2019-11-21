@@ -27,7 +27,13 @@ const bootstrapApolloServer = async (expressApp: Application): Promise<ApolloSer
         schema,
         context: buildContext
     });
-    apolloServer.applyMiddleware({ app: expressApp });
+    apolloServer.applyMiddleware({
+        app: expressApp,
+        cors: {
+            origin: ['http://localhost:4200', 'http://localhost:4201'],
+            credentials: true
+        }
+    });
     return apolloServer;
 };
 
