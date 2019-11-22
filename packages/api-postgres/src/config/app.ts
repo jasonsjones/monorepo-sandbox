@@ -7,15 +7,9 @@ import { buildSchema } from 'type-graphql';
 import StatusResolver from '../modules/status/StatusResolver';
 import UserResolver from '../modules/user/UserResolver';
 import AuthResolver from '../modules/auth/AuthResolver';
-import { AugmentedRequest } from '../types';
+import { AppContext } from '../types';
 
-const buildContext = ({
-    req,
-    res
-}: {
-    req: Request;
-    res: Response;
-}): { req: AugmentedRequest; res: Response } => {
+const buildContext = ({ req, res }: { req: Request; res: Response }): AppContext => {
     return {
         req,
         res

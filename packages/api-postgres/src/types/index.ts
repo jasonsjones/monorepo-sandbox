@@ -1,10 +1,11 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
-import { Request } from 'express';
+import { Request, Response } from 'express';
 import { ObjectType, Field } from 'type-graphql';
 import { User } from '../entity/User';
 
-export interface AugmentedRequest extends Request {
-    user?: User;
+export interface AppContext {
+    req: Request;
+    res: Response;
 }
 
 @ObjectType()
