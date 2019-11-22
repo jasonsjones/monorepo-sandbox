@@ -67,7 +67,7 @@ const Layout = ({ children }) => {
             <main className="site-content">
                 <Nav />
                 {/* <Banner /> */}
-                <div className="content-container">{children}</div>
+                {children}
             </main>
             <footer className="site-footer">
                 <Footer />

@@ -39,11 +39,6 @@ h2 {
     background: linear-gradient(180deg, #020024 0%, #022c43 70%, #064f77 100%);
 }
 
-.content-container {
-    max-width: 960px;
-    margin: 0 auto;
-}
-
 form {
     display: flex;
     flex-direction: column;
