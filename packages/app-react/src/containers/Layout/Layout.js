@@ -63,9 +63,10 @@ const Layout = ({ children }) => {
 
     return (
         <div className="site-container">
-            <header className="site-header"></header>
-            <main className="site-content">
+            <header className="site-header">
                 <Nav />
+            </header>
+            <main className="site-content">
                 {/* <Banner /> */}
                 {children}
             </main>

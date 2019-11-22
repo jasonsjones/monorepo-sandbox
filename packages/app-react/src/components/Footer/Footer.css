@@ -38,3 +38,9 @@
 .social-icon {
     margin-right: 10px;
 }
+
+@media only screen and (min-device-width: 375px) and (max-device-width: 667px) {
+    .site-footer_content {
+        margin: 0 3rem;
+    }
+}

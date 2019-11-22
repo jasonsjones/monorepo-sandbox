@@ -69,3 +69,18 @@ nav a {
     color: #ccc;
     border: 2px solid #ccc;
 }
+
+@media only screen and (min-device-width: 375px) and (max-device-width: 667px) {
+    .nav-logo {
+        margin-left: 1rem;
+        padding-top: 1rem;
+    }
+
+    .nav-links {
+        margin-right: 0.5rem;
+    }
+
+    .nav-links a {
+        margin-right: 1rem;
+    }
+}

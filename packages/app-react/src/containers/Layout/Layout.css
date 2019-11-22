@@ -57,3 +57,9 @@ form button {
 form button:hover {
     background-color: #115173;
 }
+
+@media only screen and (min-device-width: 375px) and (max-device-width: 667px) {
+    .site-content {
+        padding: 0 3rem;
+    }
+}

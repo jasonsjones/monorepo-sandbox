@@ -8,7 +8,7 @@ const css = {
         margin: '20px auto 0'
     },
     signupForm: {
-        width: '460px',
+        maxWidth: '460px',
         margin: '20px auto'
     },
     signupComplete: {
