@@ -1,6 +1,11 @@
 import { getConnection, getRepository } from 'typeorm';
 import { User } from '../entity/User';
-import { generateToken, verifyToken } from '../modules/auth/authUtils';
+import {
+    createAccessToken,
+    verifyAccessToken,
+    createRefreshToken,
+    verifyRefreshToken
+} from '../modules/auth/authUtils';
 import { createDbConnection } from '../utils/createDbConnection';
 import UserService from '../services/UserService';
 
@@ -24,17 +29,36 @@ describe('Auth util', () => {
         );
     });
 
-    it('generates a json web token', () => {
-        token = generateToken(user);
+    it('generates an access  token', () => {
+        token = createAccessToken(user);
         const parts = token.split('.');
 
         expect(token).toBeDefined();
         expect(parts).toHaveLength(3);
     });
 
-    it('verifies a json web token', () => {
-        const token = generateToken(user);
-        const tokenPayload = verifyToken(token);
+    it('generates a refresh token', () => {
+        token = createRefreshToken(user);
+        const parts = token.split('.');
+
+        expect(token).toBeDefined();
+        expect(parts).toHaveLength(3);
+    });
+
+    it('verifies an access token', () => {
+        const token = createAccessToken(user);
+        const tokenPayload = verifyAccessToken(token);
+
+        expect(tokenPayload).toHaveProperty('id');
+        expect(tokenPayload).toHaveProperty('email');
+        expect(tokenPayload).toHaveProperty('iat');
+        expect(tokenPayload).toHaveProperty('exp');
+    });
+
+    it('verifies a refresh token', () => {
+        const token = createRefreshToken(user);
+        const tokenPayload = verifyRefreshToken(token);
+
         expect(tokenPayload).toHaveProperty('id');
         expect(tokenPayload).toHaveProperty('email');
         expect(tokenPayload).toHaveProperty('iat');
@@ -47,7 +71,7 @@ describe('Auth util', () => {
             '.eyJpZCI6IjVkNmJmYjM5OThjMGY3NjZhMWZlYWY3ZCIsImVtYWlsIjoib2xpdmVyVXNlclHlcG9AcWMuY29tIiwiaWF0IjoxNTY3MzU3NzUzLCJleHAiOjE1NjczNjEzNTN9' +
             '.kWHbt2JlocPcOsCvjXfCL9tAuOIE_K2L4bsKQ9dQRM4';
         expect(() => {
-            verifyToken(badToken);
+            verifyAccessToken(badToken);
         }).toThrow();
     });
 });

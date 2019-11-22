@@ -1,7 +1,7 @@
 import { Resolver, Mutation, Arg, ObjectType, Field } from 'type-graphql';
 import { compareSync } from 'bcryptjs';
 import UserService from '../../services/UserService';
-import { generateToken } from './authUtils';
+import { createAccessToken } from './authUtils';
 
 @ObjectType()
 class LoginResponse {
@@ -26,7 +26,7 @@ class AuthResolver {
             throw new Error('invalid user credentials');
         }
 
-        const token = generateToken(user);
+        const token = createAccessToken(user);
         return {
             accessToken: token
         };
