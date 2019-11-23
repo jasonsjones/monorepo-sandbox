@@ -1,7 +1,8 @@
-import { Resolver, Mutation, Arg, ObjectType, Field } from 'type-graphql';
+import { Resolver, Mutation, Arg, ObjectType, Field, Ctx } from 'type-graphql';
 import { compareSync } from 'bcryptjs';
 import UserService from '../../services/UserService';
-import { createAccessToken } from './authUtils';
+import { createAccessToken, createRefreshToken } from './authUtils';
+import { AppContext } from '../../types';
 
 @ObjectType()
 class LoginResponse {
@@ -14,7 +15,8 @@ class AuthResolver {
     @Mutation(() => LoginResponse)
     async login(
         @Arg('email') email: string,
-        @Arg('password') password: string
+        @Arg('password') password: string,
+        @Ctx() context: AppContext
     ): Promise<LoginResponse> {
         const user = await UserService.getUserByEmail(email);
         if (!user) {
@@ -25,6 +27,8 @@ class AuthResolver {
         if (!isValid) {
             throw new Error('invalid user credentials');
         }
+
+        context.res.cookie('qid', createRefreshToken(user), { httpOnly: true });
 
         const token = createAccessToken(user);
         return {
