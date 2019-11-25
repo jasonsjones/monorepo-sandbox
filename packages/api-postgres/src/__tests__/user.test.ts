@@ -4,6 +4,7 @@ import app from '../config/app';
 import { User } from '../entity/User';
 import { createDbConnection } from '../utils/createDbConnection';
 import UserService from '../services/UserService';
+import TestClient from '../utils/TestClient';
 
 const makeGraphQLCall = (query: string, variables = {}): Test => {
     return request(app)
@@ -206,5 +207,21 @@ describe('query for allUsers', () => {
             expect(firstUser).toHaveProperty('emailVerificationToken');
             expect(firstUser).toHaveProperty('createdAt');
         });
+    });
+});
+
+describe.only('query for me', () => {
+    it('returns the context user', async () => {
+        const email = 'oliver@qc.com';
+        const client = new TestClient(app);
+        await client.createUser('Oliver', 'Queen', email, '123456');
+        await client.login(email, '123456');
+        const response = await client.getMe();
+        const { data, errors } = response.body;
+        expect(errors).toBeUndefined();
+        expect(data.me).toHaveProperty('id');
+        expect(data.me).toHaveProperty('email');
+        expect(data.me).toHaveProperty('name');
+        expect(data.me.email).toEqual(email);
     });
 });
