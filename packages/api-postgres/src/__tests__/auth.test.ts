@@ -78,3 +78,33 @@ describe('Authentication resolver', () => {
         return makeGraphQLCall(query, variables).then(verifyInvalidUser);
     });
 });
+
+describe('REST endpoint for refeshing access token', () => {
+    it('does not refresh access token if there is no refresh token', () => {
+        return request(app)
+            .get('/api/refreshtoken')
+            .then(res => {
+                const json = res.body;
+                expect(json).toHaveProperty('success');
+                expect(json).toHaveProperty('message');
+                expect(json).toHaveProperty('payload');
+                expect(json.payload).toHaveProperty('accessToken');
+                expect(json.success).toEqual(true);
+                expect(json.payload.accessToken).toEqual('');
+            });
+    });
+    it('does not refresh access token if refresh token is invalid', () => {
+        return request(app)
+            .get('/api/refreshtoken')
+            .set('Cookie', ['qid=sending.malformed.token'])
+            .then(res => {
+                const json = res.body;
+                expect(json).toHaveProperty('success');
+                expect(json).toHaveProperty('message');
+                expect(json).toHaveProperty('payload');
+                expect(json.payload).toHaveProperty('accessToken');
+                expect(json.success).toEqual(true);
+                expect(json.payload.accessToken).toEqual('');
+            });
+    });
+});
