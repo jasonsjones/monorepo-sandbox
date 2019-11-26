@@ -1,9 +1,9 @@
-import request, { Test, Response } from 'supertest';
+import request, { Response, Test } from 'supertest';
 import { getConnection, getRepository } from 'typeorm';
 import app from '../config/app';
 import { User } from '../entity/User';
-import { createDbConnection } from '../utils/createDbConnection';
 import UserService from '../services/UserService';
+import { createDbConnection } from '../utils/createDbConnection';
 import TestClient from '../utils/TestClient';
 
 const makeGraphQLCall = (query: string, variables = {}): Test => {
@@ -210,7 +210,7 @@ describe('query for allUsers', () => {
     });
 });
 
-describe.only('query for me', () => {
+describe('query for me', () => {
     it('returns the context user', async () => {
         const email = 'oliver@qc.com';
         const client = new TestClient(app);

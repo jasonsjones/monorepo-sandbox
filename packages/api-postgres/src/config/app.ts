@@ -1,5 +1,6 @@
 import { ApolloServer } from 'apollo-server-express';
 import cookieParser from 'cookie-parser';
+import debug from 'debug';
 import 'dotenv/config';
 import express, { Application, Request, Response } from 'express';
 import 'reflect-metadata';
@@ -15,6 +16,8 @@ import StatusResolver from '../modules/status/StatusResolver';
 import UserResolver from '../modules/user/UserResolver';
 import UserService from '../services/UserService';
 import { AppContext } from '../types';
+
+const logger = debug('app');
 
 const buildContext = ({ req, res }: { req: Request; res: Response }): AppContext => {
     return {
@@ -68,7 +71,7 @@ app.get(
                 return sendEmptyAccessToken();
             }
         } catch (err) {
-            console.log(err.message);
+            logger(err.message);
             return sendEmptyAccessToken();
         }
 

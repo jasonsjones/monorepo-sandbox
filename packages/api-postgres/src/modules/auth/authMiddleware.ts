@@ -1,7 +1,10 @@
+import debug from 'debug';
 import { MiddlewareFn } from 'type-graphql';
+import UserService from '../../services/UserService';
 import { AppContext } from '../../types';
 import { verifyAccessToken } from './authUtils';
-import UserService from '../../services/UserService';
+
+const logger = debug('app');
 
 export const isAuth: MiddlewareFn<AppContext> = async ({ context }, next): Promise<any> => {
     const authorizationHeader = context.req.headers['authorization'];
@@ -16,7 +19,7 @@ export const isAuth: MiddlewareFn<AppContext> = async ({ context }, next): Promi
             context.contextUser = contextUser;
         }
     } catch (err) {
-        console.log(err);
+        logger(err);
         throw new Error('not authenticated');
     }
     return next();

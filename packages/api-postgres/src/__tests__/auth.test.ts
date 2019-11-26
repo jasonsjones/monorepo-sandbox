@@ -93,6 +93,7 @@ describe('REST endpoint for refeshing access token', () => {
                 expect(json.payload.accessToken).toEqual('');
             });
     });
+
     it('does not refresh access token if refresh token is invalid', () => {
         return request(app)
             .get('/api/refreshtoken')
