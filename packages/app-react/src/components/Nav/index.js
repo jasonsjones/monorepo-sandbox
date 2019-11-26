@@ -8,7 +8,8 @@ const Nav = () => {
     const authCtx = useContext(AuthContext);
     // const [showProfileMenu, setShowProfileMenu] = useState(false);
 
-    const isAuthed = authCtx.authUser && authCtx.token;
+    const isAuthed = authCtx.accessToken;
+    // const isAuthed = authCtx.authUser && authCtx.token;
     // const isFetching = !authCtx.authUser && authCtx.token;
 
     return (

@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useState } from 'react';
 
-// import AuthContext from '../../context/AuthContext';
+import AuthContext from '../../context/AuthContext';
 import TextField from '../Common/Textfield';
 import Button from '../Common/Button';
 
@@ -17,7 +17,7 @@ const doLogin = (query, variables) => {
 };
 
 const LoginForm = ({ history }) => {
-    //    const authCtx = useContext(AuthContext);
+    const authCtx = useContext(AuthContext);
 
     const [form, setValues] = useState({
         email: '',
@@ -47,12 +47,12 @@ const LoginForm = ({ history }) => {
 
         if (isFormValid()) {
             doLogin(query, variables).then(({ errors, data }) => {
-                console.log(errors);
                 if (data && data.login) {
                     setError(null);
-                    // authCtx.login(data.login.authUser, data.login.token);
+                    authCtx.login(data.login.accessToken);
                     history.push('/');
                 } else {
+                    console.log(errors);
                     setError("Oops, something went wrong... Let's try again.");
                     setValues({ email: form.email, password: '' });
                 }

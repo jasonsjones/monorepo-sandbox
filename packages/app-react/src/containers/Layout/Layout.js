@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState } from 'react';
+import AuthContext from '../../context/AuthContext';
 import Nav from '../../components/Nav';
 // import Banner from '../../components/Banner';
 import Footer from '../../components/Footer';
@@ -21,9 +22,12 @@ const doLogout = doQuery;
 */
 
 const Layout = ({ children }) => {
+    const [accessToken, setAccessToken] = useState('');
+    const login = token => {
+        setAccessToken(token);
+    };
     /*
     const [authUser, setAuthUser] = useState(null);
-    const [token, setToken] = useState(accessToken);
 
     if (token && !authUser) {
         const query = `query {
@@ -62,18 +66,20 @@ const Layout = ({ children }) => {
     */
 
     return (
-        <div className="site-container">
-            <header className="site-header">
-                <Nav />
-            </header>
-            <main className="site-content">
-                {/* <Banner /> */}
-                {children}
-            </main>
-            <footer className="site-footer">
-                <Footer />
-            </footer>
-        </div>
+        <AuthContext.Provider value={{ accessToken, login }}>
+            <div className="site-container">
+                <header className="site-header">
+                    <Nav />
+                </header>
+                <main className="site-content">
+                    {/* <Banner /> */}
+                    {children}
+                </main>
+                <footer className="site-footer">
+                    <Footer />
+                </footer>
+            </div>
+        </AuthContext.Provider>
     );
 };
 
