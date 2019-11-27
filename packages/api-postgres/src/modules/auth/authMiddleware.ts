@@ -9,7 +9,7 @@ const logger = debug('app');
 export const isAuth: MiddlewareFn<AppContext> = async ({ context }, next): Promise<any> => {
     const authorizationHeader = context.req.headers['authorization'];
     if (!authorizationHeader) {
-        throw new Error('not authenticated');
+        throw new Error('Unauthorized');
     }
     try {
         const token = authorizationHeader.split(' ')[1];
@@ -20,7 +20,7 @@ export const isAuth: MiddlewareFn<AppContext> = async ({ context }, next): Promi
         }
     } catch (err) {
         logger(err);
-        throw new Error('not authenticated');
+        throw new Error('Unauthorized');
     }
     return next();
 };
