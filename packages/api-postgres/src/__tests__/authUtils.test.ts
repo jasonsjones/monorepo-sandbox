@@ -1,3 +1,4 @@
+import jwt, { JsonWebTokenError, TokenExpiredError } from 'jsonwebtoken';
 import { getConnection, getRepository } from 'typeorm';
 import { User } from '../entity/User';
 import {
@@ -65,13 +66,38 @@ describe('Auth util', () => {
         expect(tokenPayload).toHaveProperty('exp');
     });
 
-    it('throws error when provided a bad json web token', () => {
+    // Given the implementation, the following tests do not add much value, but are here for reference
+    it('throws error when provided token with invalid signature', () => {
+        const spy = jest.spyOn(jwt, 'verify').mockImplementation(() => {
+            throw new JsonWebTokenError('invalid signature');
+        });
         const badToken =
             'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9' +
             '.eyJpZCI6IjVkNmJmYjM5OThjMGY3NjZhMWZlYWY3ZCIsImVtYWlsIjoib2xpdmVyVXNlclHlcG9AcWMuY29tIiwiaWF0IjoxNTY3MzU3NzUzLCJleHAiOjE1NjczNjEzNTN9' +
             '.kWHbt2JlocPcOsCvjXfCL9tAuOIE_K2L4bsKQ9dQRM4';
         expect(() => {
             verifyAccessToken(badToken);
-        }).toThrow();
+            spy.mockRestore();
+        }).toThrow('invalid signature');
+    });
+
+    it('throws error when provided malformed token', () => {
+        const spy = jest.spyOn(jwt, 'verify').mockImplementation(() => {
+            throw new JsonWebTokenError('jwt malformed');
+        });
+        expect(() => {
+            verifyAccessToken('malformedtoken');
+            spy.mockRestore();
+        }).toThrow('jwt malformed');
+    });
+
+    it('throws error when provided token has expired', () => {
+        const spy = jest.spyOn(jwt, 'verify').mockImplementation(() => {
+            throw new TokenExpiredError('jwt expired', new Date(Date.now() - 1000 * 60 * 20));
+        });
+        expect(() => {
+            verifyAccessToken('expired.token');
+            spy.mockRestore();
+        }).toThrow('jwt expired');
     });
 });
