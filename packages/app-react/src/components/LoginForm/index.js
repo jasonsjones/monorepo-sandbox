@@ -88,7 +88,9 @@ const LoginForm = ({ history }) => {
                     value={form.password}
                     handleChange={updateField}
                 />
-                <Button type="submit" text="Login" />
+                <div style={{ marginTop: '1rem' }}>
+                    <Button type="submit" text="Login" />
+                </div>
             </form>
             {error && <p style={{ color: '#d63939' }}>{error}</p>}
         </React.Fragment>

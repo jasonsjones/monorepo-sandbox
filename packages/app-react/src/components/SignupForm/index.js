@@ -108,7 +108,9 @@ const SignupForm = ({ onRegister }) => {
                 value={form.password}
                 handleChange={updateField}
             />
-            <Button type="submit" text="Submit" />
+            <div style={{ marginTop: '1rem' }}>
+                <Button type="submit" text="Submit" />
+            </div>
         </form>
     );
 };
