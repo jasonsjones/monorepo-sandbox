@@ -1,64 +1,99 @@
 import React, { useState } from 'react';
-import './Footer.css';
+import styled from '@emotion/styled';
+// import './Footer.css';
 
 const SOCIAL_ICON_COLOR = 'ccc';
 const SOCIAL_ICON_COLOR_HOVER = 'fff';
+
+const Container = styled.div`
+    display: flex;
+    justify-content: center;
+    color: #ccc;
+    @media (min-device-width: 375px) and (max-device-width: 667px) {
+        margin: 0 3rem;
+    }
+`;
+
+const About = styled.section`
+    max-width: 450px;
+    margin-right: 4rem;
+`;
+
+const Connect = styled.section`
+    ul {
+        list-style-type: none;
+        padding: 0;
+    }
+    a {
+        text-decoration: none;
+        color: #ccc;
+    }
+    a:hover {
+        color: #fff;
+    }
+`;
+
+const Account = styled.a`
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+`;
+
+const Icon = styled.img`
+    margin-right: 10px;
+`;
 
 const Footer = () => {
     const [githubIconColor, setGithubIconColor] = useState(SOCIAL_ICON_COLOR);
     const [twitterIconColor, setTwitterIconColor] = useState(SOCIAL_ICON_COLOR);
 
     return (
-        <div className="site-footer_content">
-            <section className="site-footer_about">
+        <Container>
+            <About>
                 <h3>About</h3>
                 <p>
                     A simple playground app to explore the technical benefits and project structure
                     of a monorepo
                 </p>
-            </section>
-            <section className="site-footer_connect">
+            </About>
+            <Connect>
                 <h3>Connect</h3>
                 <ul>
                     <li
                         onMouseOver={() => setGithubIconColor(SOCIAL_ICON_COLOR_HOVER)}
                         onMouseOut={() => setGithubIconColor(SOCIAL_ICON_COLOR)}
                     >
-                        <a
+                        <Account
                             href="https://github.com/jasonsjones"
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="social-account"
                         >
-                            <img
-                                className="social-icon"
+                            <Icon
                                 src={`https:icon.now.sh/github/14/${githubIconColor}`}
                                 alt="github account"
                             />
-                            <span className="social-name">github</span>
-                        </a>
+                            github
+                        </Account>
                     </li>
                     <li
                         onMouseOver={() => setTwitterIconColor(SOCIAL_ICON_COLOR_HOVER)}
                         onMouseOut={() => setTwitterIconColor(SOCIAL_ICON_COLOR)}
                     >
-                        <a
+                        <Account
                             href="https://twitter.com/jsj0nes"
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="social-account"
                         >
-                            <img
-                                className="social-icon"
+                            <Icon
                                 src={`https:icon.now.sh/twitter/14/${twitterIconColor}`}
                                 alt="twitter account"
                             />
-                            <span className="social-name">twitter</span>
-                        </a>
+                            twitter
+                        </Account>
                     </li>
                 </ul>
-            </section>
-        </div>
+            </Connect>
+        </Container>
     );
 };
 
