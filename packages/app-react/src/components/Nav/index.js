@@ -12,7 +12,7 @@ const NavContainer = styled.nav`
     background: rgb(2, 0, 36);
     background: linear-gradient(0deg, #020024 0%, #022c43 40%, #064f77 100%);
 
-    a {
+    & a {
         text-decoration: none;
     }
 `;
@@ -21,7 +21,7 @@ const Logo = styled.div`
     margin-left: 35px;
     padding-top: 20px;
 
-    a {
+    & a {
         margin-right: 45px;
         text-decoration: none;
         color: #ccc;
@@ -37,7 +37,7 @@ const LogoText = styled.div`
     width: 100px;
     text-align: right;
 
-    h3 {
+    & h3 {
         margin: 0;
         font-size: 1.75rem;
         color: #ff8600e6;
@@ -45,7 +45,7 @@ const LogoText = styled.div`
         letter-spacing: 2px;
     }
 
-    p {
+    & p {
         margin: -5px 0 0 0;
         font-weight: 300;
         font-size: 1.1rem;
@@ -60,7 +60,7 @@ const NavLinks = styled.div`
     color: #ccc;
     font-size: 1.25rem;
 
-    a {
+    & a {
         margin-right: 45px;
         text-decoration: none;
         border: 2px solid #ff8600e6;
@@ -70,7 +70,7 @@ const NavLinks = styled.div`
         background-color: #022c43;
     }
 
-    a:hover {
+    & a:hover {
         background: #020024;
         color: #ccc;
         border: 2px solid #ccc;
@@ -79,7 +79,7 @@ const NavLinks = styled.div`
     @media (min-device-width: 375px) and (max-device-width: 667px) {
         margin-right: 0.5rem;
 
-        a {
+        & a {
             margin-right: 1rem;
         }
     }
