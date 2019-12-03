@@ -1,40 +1,45 @@
 import React, { useState } from 'react';
+import styled from '@emotion/styled';
 import SignupForm from '../../components/SignupForm';
 import SignupComplete from '../../components/SignupComplete';
 
-const css = {
-    container: {
-        maxWidth: '1280px',
-        margin: '20px auto 0'
-    },
-    signupForm: {
-        maxWidth: '460px',
-        margin: '20px auto'
-    },
-    signupComplete: {
-        margin: '0 2rem'
+const Container = styled.div`
+    max-width: 1280px;
+    margin: 20px auto 0;
+
+    & h2 {
+        text-align: center;
     }
-};
+`;
+
+const SignupFormContainer = styled.div`
+    max-width: 460px;
+    margin: 20px auto;
+`;
+
+const SignupFormCompleteContainer = styled.div`
+    margin: 0 2rem;
+`;
 
 const Signup = ({ history }) => {
     const [isSignupComplete, setIsSignupComplete] = useState(false);
     return (
-        <div style={css.container}>
+        <Container>
             {!isSignupComplete && (
                 <React.Fragment>
                     <h2>Signup for an Account</h2>
-                    <div style={css.signupForm}>
+                    <SignupFormContainer>
                         <SignupForm onRegister={() => setIsSignupComplete(true)} />
-                    </div>
+                    </SignupFormContainer>
                 </React.Fragment>
             )}
 
             {isSignupComplete && (
-                <div style={css.signupComplete}>
+                <SignupFormCompleteContainer>
                     <SignupComplete history={history} />
-                </div>
+                </SignupFormCompleteContainer>
             )}
-        </div>
+        </Container>
     );
 };
 
