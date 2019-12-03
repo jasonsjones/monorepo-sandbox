@@ -12,6 +12,7 @@
         "dev:api-p": "lerna run dev --stream --scope @orion/api-postgres",
         "dev:app-n": "lerna run dev --stream --scope @orion/app-nextjs",
         "dev:app-r": "lerna run dev --stream --scope @orion/app-react",
+        "dev:v2": "lerna run dev --stream --scope @orion/api-postgres --scope @orion/app-react",
         "docker:up": "docker-compose up -d",
         "docker:down": "docker-compose down -v",
         "build": "lerna run build --stream",
