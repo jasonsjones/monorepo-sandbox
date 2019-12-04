@@ -29,7 +29,8 @@ const Container = styled.div`
 const Content = styled.main`
     flex: 1;
     background-color: #eee;
-    @media (min-device-width: 375px) and (max-device-width: 667px) {
+
+    @media only screen and (min-device-width: 375px) and (max-device-width: 667px) {
         padding: 0 0.5rem;
     }
 `;

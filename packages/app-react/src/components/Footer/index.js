@@ -9,7 +9,8 @@ const Container = styled.div`
     display: flex;
     justify-content: center;
     color: #ccc;
-    @media (min-device-width: 375px) and (max-device-width: 667px) {
+
+    @media only screen and (min-device-width: 375px) and (max-device-width: 667px) {
         margin: 0 3rem;
     }
 `;
@@ -20,15 +21,15 @@ const About = styled.section`
 `;
 
 const Connect = styled.section`
-    ul {
+    & ul {
         list-style-type: none;
         padding: 0;
     }
-    a {
+    & a {
         text-decoration: none;
         color: #ccc;
     }
-    a:hover {
+    & a:hover {
         color: #fff;
     }
 `;

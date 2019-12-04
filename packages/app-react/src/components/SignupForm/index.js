@@ -1,7 +1,12 @@
 import React, { useState } from 'react';
+import styled from '@emotion/styled';
 
 import TextField from '../Common/Textfield';
 import Button from '../Common/Button';
+
+const SubmitButtonContainer = styled.div`
+    margin-top: 1rem;
+`;
 
 const doSignup = (query, variables) => {
     return fetch('http://localhost:3001/graphql', {
@@ -108,9 +113,9 @@ const SignupForm = ({ onRegister }) => {
                 value={form.password}
                 handleChange={updateField}
             />
-            <div style={{ marginTop: '1rem' }}>
+            <SubmitButtonContainer>
                 <Button type="submit" text="Submit" />
-            </div>
+            </SubmitButtonContainer>
         </form>
     );
 };

@@ -27,7 +27,7 @@ const Logo = styled.div`
         color: #ccc;
     }
 
-    @media (min-device-width: 375px) and (max-device-width: 667px) {
+    @media only screen and (min-device-width: 375px) and (max-device-width: 667px) {
         margin-left: 1rem;
         padding-top: 1rem;
     }
@@ -76,7 +76,7 @@ const NavLinks = styled.div`
         border: 2px solid #ccc;
     }
 
-    @media (min-device-width: 375px) and (max-device-width: 667px) {
+    @media only screen and (min-device-width: 375px) and (max-device-width: 667px) {
         margin-right: 0.5rem;
 
         & a {

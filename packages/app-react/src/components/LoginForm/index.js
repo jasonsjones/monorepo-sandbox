@@ -1,9 +1,17 @@
-import React, { useContext } from 'react';
-import { useState } from 'react';
+import React, { useContext, useState } from 'react';
+import styled from '@emotion/styled';
 
 import AuthContext from '../../context/AuthContext';
 import TextField from '../Common/Textfield';
 import Button from '../Common/Button';
+
+const Error = styled.p`
+    color: #d63939;
+`;
+
+const SubmitButtonContainer = styled.div`
+    margin-top: 1rem;
+`;
 
 const doLogin = (query, variables) => {
     return fetch('http://localhost:3001/graphql', {
@@ -88,11 +96,11 @@ const LoginForm = ({ history }) => {
                     value={form.password}
                     handleChange={updateField}
                 />
-                <div style={{ marginTop: '1rem' }}>
+                <SubmitButtonContainer>
                     <Button type="submit" text="Login" />
-                </div>
+                </SubmitButtonContainer>
             </form>
-            {error && <p style={{ color: '#d63939' }}>{error}</p>}
+            {error && <Error>{error}</Error>}
         </React.Fragment>
     );
 };
