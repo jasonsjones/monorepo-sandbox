@@ -88,6 +88,21 @@ const NavLinks = styled.div`
     }
 `;
 
+const LogoutButton = styled.button`
+    border: 2px solid #ff8600e6;
+    padding: 10px 20px;
+    border-radius: 10px;
+    color: #ff8600e6;
+    background-color: #022c43;
+    font-size: 1.25rem;
+
+    &:hover {
+        background: #020024;
+        color: #ccc;
+        border: 2px solid #ccc;
+    }
+`;
+
 const Nav = () => {
     const authCtx = useContext(AuthContext);
     // const [showProfileMenu, setShowProfileMenu] = useState(false);
@@ -107,8 +122,9 @@ const Nav = () => {
                 </Link>
             </Logo>
             <NavLinks>
-                {!isAuthed && <Link to="/signup">Signup</Link>}
                 {!isAuthed && <Link to="/login">Login</Link>}
+                {!isAuthed && <Link to="/signup">Signup</Link>}
+                {isAuthed && <LogoutButton>Logout</LogoutButton>}
             </NavLinks>
             {/* <div className="nav-links">
 
