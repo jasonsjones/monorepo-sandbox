@@ -5,6 +5,8 @@ import TextField from '../Common/Textfield';
 import Button from '../Common/Button';
 
 const SubmitButtonContainer = styled.div`
+    display: flex;
+    justify-content: flex-end;
     margin-top: 1rem;
 `;
 

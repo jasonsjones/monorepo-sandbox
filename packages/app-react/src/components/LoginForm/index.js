@@ -10,6 +10,8 @@ const Error = styled.p`
 `;
 
 const SubmitButtonContainer = styled.div`
+    display: flex;
+    justify-content: flex-end;
     margin-top: 1rem;
 `;
 
