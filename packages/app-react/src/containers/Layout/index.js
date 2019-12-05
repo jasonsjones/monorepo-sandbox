@@ -36,8 +36,13 @@ const Content = styled.main`
 `;
 
 const PageFooter = styled.footer`
-    height: 200px;
+    min-height: 20vh;
     background: linear-gradient(180deg, #020024 0%, #022c43 70%, #064f77 100%);
+
+    @media only screen and (min-device-width: 375px) and (max-device-width: 667px) {
+        min-height: 30vh;
+        padding: 0 0.5rem;
+    }
 `;
 
 /*

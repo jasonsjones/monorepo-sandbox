@@ -11,13 +11,18 @@ const Container = styled.div`
     color: #ccc;
 
     @media only screen and (min-device-width: 375px) and (max-device-width: 667px) {
-        margin: 0 3rem;
+        flex-direction: column;
+        margin: 0 2rem;
     }
 `;
 
 const About = styled.section`
     max-width: 450px;
     margin-right: 4rem;
+
+    @media only screen and (min-device-width: 375px) and (max-device-width: 667px) {
+        margin: 0;
+    }
 `;
 
 const Connect = styled.section`
@@ -31,6 +36,10 @@ const Connect = styled.section`
     }
     & a:hover {
         color: #fff;
+    }
+
+    @media only screen and (min-device-width: 375px) and (max-device-width: 667px) {
+        margin: 0;
     }
 `;
 

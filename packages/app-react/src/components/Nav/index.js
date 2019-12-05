@@ -5,7 +5,7 @@ import AuthContext from '../../context/AuthContext';
 // import ProfileMenu from '../ProfileMenu/ProfileMenu';
 
 const NavContainer = styled.nav`
-    height: 80px;
+    height: 12vh;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -14,6 +14,9 @@ const NavContainer = styled.nav`
 
     & a {
         text-decoration: none;
+    }
+    @media only screen and (min-device-width: 375px) and (max-device-width: 667px) {
+        height: 15vh;
     }
 `;
 
