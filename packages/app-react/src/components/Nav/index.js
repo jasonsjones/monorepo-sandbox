@@ -105,11 +105,8 @@ const LogoutButton = styled.button`
 
 const Nav = () => {
     const authCtx = useContext(AuthContext);
-    // const [showProfileMenu, setShowProfileMenu] = useState(false);
 
     const isAuthed = authCtx.accessToken;
-    // const isAuthed = authCtx.authUser && authCtx.token;
-    // const isFetching = !authCtx.authUser && authCtx.token;
 
     return (
         <NavContainer>
@@ -126,37 +123,46 @@ const Nav = () => {
                 {!isAuthed && <Link to="/signup">Signup</Link>}
                 {isAuthed && <LogoutButton>Logout</LogoutButton>}
             </NavLinks>
-            {/* <div className="nav-links">
-
-                    {isAuthed && (
-                        <Link href="/users">
-                            <a>Users</a>
-                        </Link>
-                    )}
-
-                    {isAuthed && (
-                        <div
-                            className="user-profile"
-                            onClick={() => setShowProfileMenu(!showProfileMenu)}
-                        >
-                            <img
-                                src="https:icon.now.sh/account_circle/24/cccccc"
-                                alt="user account"
-                            />
-                            <span>
-                                {authCtx.authUser.name.first} {authCtx.authUser.name.last}
-                            </span>
-                            <img
-                                className={`${showProfileMenu ? 'open' : ''}`}
-                                src="https:icon.now.sh/chevronDown/16/cccccc"
-                                alt="chevron down"
-                            />
-                            <ProfileMenu show={showProfileMenu} onLogout={authCtx.logout} />
-                        </div>
-                    )}
-                </div> */}
         </NavContainer>
     );
 };
 
 export default Nav;
+
+// TODO: below ref from nextjs version
+/*
+
+const [showProfileMenu, setShowProfileMenu] = useState(false);
+const isAuthed = authCtx.authUser && authCtx.token;
+const isFetching = !authCtx.authUser && authCtx.token;
+
+<div className="nav-links">
+
+    {isAuthed && (
+        <Link href="/users">
+            <a>Users</a>
+        </Link>
+    )}
+
+    {isAuthed && (
+        <div
+            className="user-profile"
+            onClick={() => setShowProfileMenu(!showProfileMenu)}
+        >
+            <img
+                src="https:icon.now.sh/account_circle/24/cccccc"
+                alt="user account"
+            />
+            <span>
+                {authCtx.authUser.name.first} {authCtx.authUser.name.last}
+            </span>
+            <img
+                className={`${showProfileMenu ? 'open' : ''}`}
+                src="https:icon.now.sh/chevronDown/16/cccccc"
+                alt="chevron down"
+            />
+            <ProfileMenu show={showProfileMenu} onLogout={authCtx.logout} />
+        </div>
+    )}
+</div>
+*/
