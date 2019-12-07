@@ -21,9 +21,7 @@ const doLogin = (query, variables) => {
         credentials: 'include',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ query, variables })
-    })
-        .then(res => res.json())
-        .then(payload => payload);
+    }).then(res => res.json());
 };
 
 const LoginForm = ({ history }) => {
