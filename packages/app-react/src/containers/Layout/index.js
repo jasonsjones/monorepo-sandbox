@@ -45,10 +45,33 @@ const PageFooter = styled.footer`
     }
 `;
 
+const doLogout = query => {
+    return fetch('http://localhost:3001/graphql', {
+        method: 'POST',
+        credentials: 'include',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ query })
+    }).then(res => res.json());
+};
+
 const Layout = ({ children }) => {
     const [accessToken, setAccessToken] = useState('');
     const login = token => {
         setAccessToken(token);
+    };
+
+    const logout = () => {
+        const query = `
+            mutation {
+                logout
+            }
+        `;
+
+        doLogout(query).then(({ data }) => {
+            if (data.logout) {
+                setAccessToken('');
+            }
+        });
     };
 
     return (
@@ -77,7 +100,7 @@ const Layout = ({ children }) => {
                 `}
             />
 
-            <AuthContext.Provider value={{ accessToken, login }}>
+            <AuthContext.Provider value={{ accessToken, login, logout }}>
                 <Container>
                     <Nav />
                     <Content>{children}</Content>

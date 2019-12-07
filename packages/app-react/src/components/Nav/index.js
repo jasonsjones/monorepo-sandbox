@@ -131,7 +131,7 @@ const Nav = () => {
             <NavLinks>
                 {!isAuthed && <Link to="/login">Login</Link>}
                 {!isAuthed && <Link to="/signup">Signup</Link>}
-                {isAuthed && <LogoutButton>Logout</LogoutButton>}
+                {isAuthed && <LogoutButton onClick={() => authCtx.logout()}>Logout</LogoutButton>}
             </NavLinks>
         </NavContainer>
     );
