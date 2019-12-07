@@ -49,11 +49,19 @@ const LogoText = styled.div`
     }
 
     & p {
-        margin: -5px 0 0 0;
-        font-weight: 300;
-        font-size: 1.1rem;
-        color: #ccc;
+        margin: -2px 0 0;
+        padding: 0 10px 1px 0;
+        font-weight: bold;
+        font-size: 1.25rem;
+        color: navy;
+        border-radius: 10px;
     }
+`;
+
+const SecondaryText = styled.div`
+    background-color: #ff8600e6;
+    border-radius: 10px;
+    margin-left: 40%;
 `;
 
 const NavLinks = styled.div`
@@ -114,7 +122,9 @@ const Nav = () => {
                 <Link to="/">
                     <LogoText>
                         <h3>Orion</h3>
-                        <p>labs</p>
+                        <SecondaryText>
+                            <p>labs</p>
+                        </SecondaryText>
                     </LogoText>
                 </Link>
             </Logo>
