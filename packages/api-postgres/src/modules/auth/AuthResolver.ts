@@ -35,6 +35,12 @@ class AuthResolver {
             accessToken: token
         };
     }
+
+    @Mutation(() => Boolean)
+    logout(@Ctx() context: AppContext): boolean {
+        context.res.clearCookie('qid');
+        return true;
+    }
 }
 
 export default AuthResolver;

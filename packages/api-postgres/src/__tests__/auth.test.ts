@@ -4,6 +4,7 @@ import app from '../config/app';
 import { User } from '../entity/User';
 import UserService from '../services/UserService';
 import { createDbConnection } from '../utils/createDbConnection';
+import TestClient from '../utils/TestClient';
 
 const makeGraphQLCall = (query: string, variables = {}): Test => {
     return request(app)
@@ -76,6 +77,19 @@ describe('Authentication resolver', () => {
         };
 
         return makeGraphQLCall(query, variables).then(verifyInvalidUser);
+    });
+
+    it('logout removes the refresh token cookie', async () => {
+        let refreshToken: string;
+        const client = new TestClient(app);
+        await client.login(email, password);
+        refreshToken = await client.getRefreshToken();
+        expect(refreshToken.length).toBeGreaterThan(0);
+
+        await client.logout();
+
+        refreshToken = await client.getRefreshToken();
+        expect(refreshToken).toBe('');
     });
 });
 

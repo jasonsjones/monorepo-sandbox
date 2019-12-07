@@ -21,6 +21,43 @@ class TestClient {
         return await UserService.createUser(firstName, lastName, email, password);
     }
 
+    public async createUserWithMutation(
+        firstName: string,
+        lastName: string,
+        email: string,
+        password: string
+    ): Promise<Test> {
+        const query = `
+        mutation RegisterUser($input: RegisterInput!) {
+            registerUser(input: $input) {
+                success
+                message
+                payload {
+                    user {
+                        id
+                        name
+                        email
+                    }
+                }
+            }
+        }
+    `;
+        const variables = {
+            input: {
+                firstName,
+                lastName,
+                email,
+                password
+            }
+        };
+        const response: any = await request(this.app)
+            .post('/graphql')
+            .set('Content-Type', 'application/json')
+            .send({ query, variables });
+
+        return response;
+    }
+
     public async login(email: string, password: string): Promise<string> {
         const query = `
             mutation Login($email: String!, $password: String!) {
@@ -46,6 +83,22 @@ class TestClient {
             return atoken;
         }
         return '';
+    }
+
+    public async logout(): Promise<Test> {
+        const query = `
+            mutation Logout() {
+                logout
+            }
+        `;
+        const response: any = await request(this.app)
+            .post('/graphql')
+            .set('Content-Type', 'application/json')
+            .send({ query });
+
+        const rtoken: string = this.getRefreshTokenFromHeaders(response.headers['set-cookie']);
+        this.setRefreshToken(rtoken);
+        return response;
     }
 
     public async getMe(): Promise<Test> {
@@ -88,6 +141,11 @@ class TestClient {
 
     private getRefreshTokenFromHeaders(headers: string[]): string {
         let refreshToken = '';
+
+        if (!headers || headers.length === 0) {
+            return refreshToken;
+        }
+
         const cookies = headers[0].split(';');
         const qid = cookies.find((cookie: string) => cookie.indexOf('qid=') === 0);
         if (qid) {
