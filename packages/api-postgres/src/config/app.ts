@@ -1,5 +1,6 @@
 import { ApolloServer } from 'apollo-server-express';
 import cookieParser from 'cookie-parser';
+import cors from 'cors';
 import debug from 'debug';
 import 'dotenv/config';
 import express, { Application, Request, Response } from 'express';
@@ -19,6 +20,11 @@ import { AppContext } from '../types';
 
 const logger = debug('app');
 
+const corsOptions = {
+    origin: ['http://localhost:4200', 'http://localhost:4201'],
+    credentials: true
+};
+
 const buildContext = ({ req, res }: { req: Request; res: Response }): AppContext => {
     return {
         req,
@@ -34,16 +40,14 @@ const bootstrapApolloServer = async (expressApp: Application): Promise<ApolloSer
     });
     apolloServer.applyMiddleware({
         app: expressApp,
-        cors: {
-            origin: ['http://localhost:4200', 'http://localhost:4201'],
-            credentials: true
-        }
+        cors: corsOptions
     });
     return apolloServer;
 };
 
 const app = express();
 app.use(cookieParser());
+app.use(cors(corsOptions));
 
 app.get(
     '/api/refreshtoken',
