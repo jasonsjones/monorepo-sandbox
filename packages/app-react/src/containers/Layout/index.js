@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Global, css } from '@emotion/core';
 import styled from '@emotion/styled';
 import AuthContext from '../../context/AuthContext';
-import LoadingContext from '../../context/LoadingContext';
+import { LoadingProvider } from '../../context/LoadingContext';
 import Nav from '../../components/Nav';
 import Footer from '../../components/Footer';
 
@@ -144,7 +144,7 @@ const Layout = ({ children }) => {
                 `}
             />
 
-            <LoadingContext.Provider value={{ isLoading, setIsLoading }}>
+            <LoadingProvider isLoading={isLoading} setIsLoading={setIsLoading}>
                 <AuthContext.Provider value={{ contextUser, accessToken, login, logout }}>
                     <Container>
                         <Nav />
@@ -154,7 +154,7 @@ const Layout = ({ children }) => {
                         </PageFooter>
                     </Container>
                 </AuthContext.Provider>
-            </LoadingContext.Provider>
+            </LoadingProvider>
         </React.Fragment>
     );
 };

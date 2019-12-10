@@ -2,7 +2,7 @@
 import React, { useContext } from 'react';
 import { css, jsx } from '@emotion/core';
 import AuthContext from '../context/AuthContext';
-import LoadingContext from '../context/LoadingContext';
+import { useLoadingCtx } from '../context/LoadingContext';
 
 const Home = () => {
     const styles = css`
@@ -10,7 +10,7 @@ const Home = () => {
     `;
 
     const authCtx = useContext(AuthContext);
-    const loadingCtx = useContext(LoadingContext);
+    const loadingCtx = useLoadingCtx();
 
     return (
         <React.Fragment>

@@ -1,6 +1,18 @@
-import React from 'react';
+import React, { useContext } from 'react';
 
-export default React.createContext({
+const LoadingContext = React.createContext({
     isLoading: true,
     setIsLoading: () => {}
 });
+
+const LoadingProvider = props => {
+    return (
+        <LoadingContext.Provider
+            value={{ isLoading: props.isLoading, setIsLoading: props.setIsLoading }}
+            {...props}
+        />
+    );
+};
+
+const useLoadingCtx = () => useContext(LoadingContext);
+export { LoadingProvider, useLoadingCtx };

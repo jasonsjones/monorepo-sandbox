@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import styled from '@emotion/styled';
 import AuthContext from '../../context/AuthContext';
-import LoadingContext from '../../context/LoadingContext';
+import { useLoadingCtx } from '../../context/LoadingContext';
 // import ProfileMenu from '../ProfileMenu/ProfileMenu';
 
 const NavContainer = styled.nav`
@@ -114,7 +114,7 @@ const LogoutButton = styled.button`
 
 const Nav = () => {
     const authCtx = useContext(AuthContext);
-    const loadingCtx = useContext(LoadingContext);
+    const loadingCtx = useLoadingCtx();
 
     const isAuthed = authCtx.accessToken;
     const isLoading = loadingCtx.isLoading;
