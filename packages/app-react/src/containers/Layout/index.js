@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Global, css } from '@emotion/core';
 import styled from '@emotion/styled';
-import AuthContext from '../../context/AuthContext';
-import { LoadingProvider } from '../../context/LoadingContext';
+import AppProviders from '../AppProviders';
 import Nav from '../../components/Nav';
 import Footer from '../../components/Footer';
 
@@ -46,78 +45,7 @@ const PageFooter = styled.footer`
     }
 `;
 
-const doLogout = query => {
-    return fetch('http://localhost:3001/graphql', {
-        method: 'POST',
-        credentials: 'include',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ query })
-    }).then(res => res.json());
-};
-
-const getMe = (query, token) => {
-    return fetch('http://localhost:3001/graphql', {
-        method: 'POST',
-        credentials: 'include',
-        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
-        body: JSON.stringify({ query })
-    }).then(res => res.json());
-};
-
 const Layout = ({ children }) => {
-    const [accessToken, setAccessToken] = useState('');
-    const [contextUser, setContextUser] = useState(null);
-    const [isLoading, setIsLoading] = useState(true);
-
-    useEffect(() => {
-        fetch('http://localhost:3001/api/refreshtoken', {
-            method: 'GET',
-            credentials: 'include'
-        })
-            .then(res => res.json())
-            .then(res => {
-                if (res.payload.accessToken) {
-                    setAccessToken(res.payload.accessToken);
-                }
-            });
-    }, []);
-
-    useEffect(() => {
-        const query = `query {
-        me {
-            name
-            email
-        }
-    }`;
-        if (accessToken !== '') {
-            getMe(query, accessToken).then(res => {
-                if (res.data.me) {
-                    setContextUser(res.data.me);
-                    setIsLoading(false);
-                }
-            });
-        }
-    }, [accessToken]);
-
-    const login = token => {
-        setAccessToken(token);
-    };
-
-    const logout = () => {
-        const query = `
-            mutation {
-                logout
-            }
-        `;
-
-        doLogout(query).then(({ data }) => {
-            if (data.logout) {
-                setAccessToken('');
-                setContextUser(null);
-            }
-        });
-    };
-
     return (
         <React.Fragment>
             <Global
@@ -144,75 +72,17 @@ const Layout = ({ children }) => {
                 `}
             />
 
-            <LoadingProvider isLoading={isLoading} setIsLoading={setIsLoading}>
-                <AuthContext.Provider value={{ contextUser, accessToken, login, logout }}>
-                    <Container>
-                        <Nav />
-                        <Content>{children}</Content>
-                        <PageFooter>
-                            <Footer />
-                        </PageFooter>
-                    </Container>
-                </AuthContext.Provider>
-            </LoadingProvider>
+            <AppProviders>
+                <Container>
+                    <Nav />
+                    <Content>{children}</Content>
+                    <PageFooter>
+                        <Footer />
+                    </PageFooter>
+                </Container>
+            </AppProviders>
         </React.Fragment>
     );
 };
 
 export default Layout;
-
-// TODO: below ref from nextjs version
-
-/*
-
-const doQuery = query => {
-    return fetch('http://localhost:3000/graphql', {
-        method: 'POST',
-        credentials: 'include',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ query })
-    })
-        .then(res => res.json())
-        .then(payload => payload);
-};
-
-const fetchAuthUser = doQuery;
-const doLogout = doQuery;
-
-const [authUser, setAuthUser] = useState(null);
-
-if (token && !authUser) {
-    const query = `query {
-        me {
-            name {
-                first
-                last
-            }
-            email
-        }
-    }`;
-    if (process.browser) {
-        fetchAuthUser(query).then(({ data }) => setAuthUser(data.me));
-    }
-}
-
-const updateAuthUser = user => {
-    setAuthUser({ ...authUser, ...user, ...authUser.name, ...user.name });
-};
-
-const login = (user, token) => {
-    setAuthUser(user);
-    setToken(token);
-};
-
-const logout = () => {
-    const logoutQuery = `query { logout }`;
-    doLogout(logoutQuery).then(({ data }) => {
-        if (data.logout) {
-            setAuthUser(null);
-            setToken('');
-            Router.push('/');
-        }
-    });
-};
-*/
