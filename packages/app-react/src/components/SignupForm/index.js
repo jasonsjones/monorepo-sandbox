@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from '@emotion/styled';
 
-import { useLoadingCtx } from '../../context/fetchingContext';
+import { useFetchingCtx } from '../../context/fetchingContext';
 import TextField from '../Common/Textfield';
 import Button from '../Common/Button';
 
@@ -28,7 +28,7 @@ const SignupForm = ({ onRegister }) => {
         password: ''
     });
 
-    const { setIsLoading } = useLoadingCtx();
+    const { setIsFetching } = useFetchingCtx();
 
     const isFormValid = () => {
         return (
@@ -40,7 +40,6 @@ const SignupForm = ({ onRegister }) => {
     };
 
     const handleSubmit = e => {
-        setIsLoading(true);
         e.preventDefault();
         const query = `
             mutation RegisterUser($input: RegisterInput!) {
@@ -71,9 +70,10 @@ const SignupForm = ({ onRegister }) => {
         };
 
         if (isFormValid()) {
+            setIsFetching(true);
             doSignup(query, variables)
                 .then(({ data }) => {
-                    setIsLoading(false);
+                    setIsFetching(false);
                     if (data) {
                         setValues({ firstName: '', lastName: '', email: '', password: '' });
                         onRegister();

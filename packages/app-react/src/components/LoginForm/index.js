@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import styled from '@emotion/styled';
 
-import { useLoadingCtx } from '../../context/fetchingContext';
+import { useFetchingCtx } from '../../context/fetchingContext';
 import AuthContext from '../../context/AuthContext';
 import TextField from '../Common/Textfield';
 import Button from '../Common/Button';
@@ -27,7 +27,7 @@ const doLogin = (query, variables) => {
 
 const LoginForm = ({ history }) => {
     const authCtx = useContext(AuthContext);
-    const { setIsLoading } = useLoadingCtx();
+    const { setIsFetching } = useFetchingCtx();
 
     const [form, setValues] = useState({
         email: '',
@@ -41,7 +41,6 @@ const LoginForm = ({ history }) => {
     };
 
     const handleSubmit = e => {
-        setIsLoading(true);
         e.preventDefault();
         const query = `
             mutation Login($email: String!, $password: String!) {
@@ -57,6 +56,7 @@ const LoginForm = ({ history }) => {
         };
 
         if (isFormValid()) {
+            setIsFetching(true);
             doLogin(query, variables).then(({ errors, data }) => {
                 if (data && data.login) {
                     setError(null);
@@ -67,7 +67,7 @@ const LoginForm = ({ history }) => {
                     setError("Oops, something went wrong... Let's try again.");
                     setValues({ email: form.email, password: '' });
                 }
-                setIsLoading(false);
+                setIsFetching(false);
             });
         }
     };

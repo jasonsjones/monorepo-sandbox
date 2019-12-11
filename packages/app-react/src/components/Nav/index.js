@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import styled from '@emotion/styled';
 import AuthContext from '../../context/AuthContext';
-import { useLoadingCtx } from '../../context/fetchingContext';
+import { useFetchingCtx } from '../../context/fetchingContext';
 // import ProfileMenu from '../ProfileMenu/ProfileMenu';
 
 const NavContainer = styled.nav`
@@ -114,10 +114,9 @@ const LogoutButton = styled.button`
 
 const Nav = () => {
     const authCtx = useContext(AuthContext);
-    const loadingCtx = useLoadingCtx();
+    const { isFetching } = useFetchingCtx();
 
     const isAuthed = authCtx.accessToken;
-    const isLoading = loadingCtx.isLoading;
 
     return (
         <NavContainer>
@@ -132,9 +131,9 @@ const Nav = () => {
                 </Link>
             </Logo>
             <NavLinks>
-                {!isAuthed && !isLoading && <Link to="/login">Login</Link>}
-                {!isAuthed && !isLoading && <Link to="/signup">Signup</Link>}
-                {isAuthed && !isLoading && (
+                {!isAuthed && !isFetching && <Link to="/login">Login</Link>}
+                {!isAuthed && !isFetching && <Link to="/signup">Signup</Link>}
+                {isAuthed && !isFetching && (
                     <LogoutButton onClick={() => authCtx.logout()}>Logout</LogoutButton>
                 )}
             </NavLinks>

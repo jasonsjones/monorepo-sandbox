@@ -2,24 +2,20 @@
 import React, { useContext } from 'react';
 import { css, jsx } from '@emotion/core';
 import AuthContext from '../context/AuthContext';
-import { useLoadingCtx } from '../context/fetchingContext';
+import { useFetchingCtx } from '../context/fetchingContext';
 
 const Home = () => {
     const styles = css`
         text-align: center;
     `;
 
-    const authCtx = useContext(AuthContext);
-    const loadingCtx = useLoadingCtx();
+    const { contextUser } = useContext(AuthContext);
+    const { isFetching } = useFetchingCtx();
 
     return (
         <React.Fragment>
-            {!loadingCtx.isLoading && authCtx.contextUser && (
-                <h1 css={styles}>{`Welcome, ${authCtx.contextUser.name}`}</h1>
-            )}
-            {!loadingCtx.isLoading && !authCtx.contextUser && (
-                <h1 css={styles}>Welcome to the Monorepo Sandbox</h1>
-            )}
+            {!isFetching && contextUser && <h1 css={styles}>{`Welcome, ${contextUser.name}`}</h1>}
+            {!isFetching && !contextUser && <h1 css={styles}>Welcome to the Monorepo Sandbox</h1>}
         </React.Fragment>
     );
 };

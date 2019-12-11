@@ -23,17 +23,17 @@ const getMe = (query, token) => {
 const AppProviders = ({ children }) => {
     const [accessToken, setAccessToken] = useState('');
     const [contextUser, setContextUser] = useState(null);
-    const [isLoading, setIsLoading] = useState(false);
+    const [isFetching, setIsFetching] = useState(false);
 
     useEffect(() => {
-        setIsLoading(true);
+        setIsFetching(true);
         fetch('http://localhost:3001/api/refreshtoken', {
             method: 'GET',
             credentials: 'include'
         })
             .then(res => res.json())
             .then(res => {
-                setIsLoading(false);
+                setIsFetching(false);
                 if (res.payload.accessToken) {
                     setAccessToken(res.payload.accessToken);
                 }
@@ -48,11 +48,11 @@ const AppProviders = ({ children }) => {
         }
     }`;
         if (accessToken !== '') {
-            setIsLoading(true);
+            setIsFetching(true);
             getMe(query, accessToken).then(res => {
                 if (res.data.me) {
                     setContextUser(res.data.me);
-                    setIsLoading(false);
+                    setIsFetching(false);
                 }
             });
         }
@@ -77,7 +77,7 @@ const AppProviders = ({ children }) => {
         });
     };
     return (
-        <FetchingProvider isLoading={isLoading} setIsLoading={setIsLoading}>
+        <FetchingProvider isFetching={isFetching} setIsFetching={setIsFetching}>
             <AuthContext.Provider value={{ contextUser, accessToken, login, logout }}>
                 {children}
             </AuthContext.Provider>
