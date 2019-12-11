@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import styled from '@emotion/styled';
 
+import { useLoadingCtx } from '../../context/LoadingContext';
 import TextField from '../Common/Textfield';
 import Button from '../Common/Button';
 
@@ -27,6 +28,8 @@ const SignupForm = ({ onRegister }) => {
         password: ''
     });
 
+    const { setIsLoading } = useLoadingCtx();
+
     const isFormValid = () => {
         return (
             form.firstName.length > 0 &&
@@ -37,6 +40,7 @@ const SignupForm = ({ onRegister }) => {
     };
 
     const handleSubmit = e => {
+        setIsLoading(true);
         e.preventDefault();
         const query = `
             mutation RegisterUser($input: RegisterInput!) {
@@ -69,6 +73,7 @@ const SignupForm = ({ onRegister }) => {
         if (isFormValid()) {
             doSignup(query, variables)
                 .then(({ data }) => {
+                    setIsLoading(false);
                     if (data) {
                         setValues({ firstName: '', lastName: '', email: '', password: '' });
                         onRegister();
