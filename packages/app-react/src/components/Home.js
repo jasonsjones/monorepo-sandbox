@@ -2,7 +2,7 @@
 import React, { useContext } from 'react';
 import { css, jsx } from '@emotion/core';
 import AuthContext from '../context/AuthContext';
-import { useLoadingCtx } from '../context/LoadingContext';
+import { useLoadingCtx } from '../context/fetchingContext';
 
 const Home = () => {
     const styles = css`

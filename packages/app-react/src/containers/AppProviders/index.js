@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import AuthContext from '../../context/AuthContext';
-import { LoadingProvider } from '../../context/LoadingContext';
+import { FetchingProvider } from '../../context/fetchingContext';
 
 const doLogout = query => {
     return fetch('http://localhost:3001/graphql', {
@@ -77,11 +77,11 @@ const AppProviders = ({ children }) => {
         });
     };
     return (
-        <LoadingProvider isLoading={isLoading} setIsLoading={setIsLoading}>
+        <FetchingProvider isLoading={isLoading} setIsLoading={setIsLoading}>
             <AuthContext.Provider value={{ contextUser, accessToken, login, logout }}>
                 {children}
             </AuthContext.Provider>
-        </LoadingProvider>
+        </FetchingProvider>
     );
 };
 

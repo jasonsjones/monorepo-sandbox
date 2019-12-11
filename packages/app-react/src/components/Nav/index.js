@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import styled from '@emotion/styled';
 import AuthContext from '../../context/AuthContext';
-import { useLoadingCtx } from '../../context/LoadingContext';
+import { useLoadingCtx } from '../../context/fetchingContext';
 // import ProfileMenu from '../ProfileMenu/ProfileMenu';
 
 const NavContainer = styled.nav`

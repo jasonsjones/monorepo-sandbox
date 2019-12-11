@@ -1,18 +1,18 @@
 import React, { useContext } from 'react';
 
-const LoadingContext = React.createContext({
+const FetchingContext = React.createContext({
     isLoading: false,
     setIsLoading: () => {}
 });
 
-const LoadingProvider = props => {
+const FetchingProvider = props => {
     return (
-        <LoadingContext.Provider
+        <FetchingContext.Provider
             value={{ isLoading: props.isLoading, setIsLoading: props.setIsLoading }}
             {...props}
         />
     );
 };
 
-const useLoadingCtx = () => useContext(LoadingContext);
-export { LoadingProvider, useLoadingCtx };
+const useLoadingCtx = () => useContext(FetchingContext);
+export { FetchingProvider, useLoadingCtx };

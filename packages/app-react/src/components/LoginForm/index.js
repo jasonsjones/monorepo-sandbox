@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import styled from '@emotion/styled';
 
-import { useLoadingCtx } from '../../context/LoadingContext';
+import { useLoadingCtx } from '../../context/fetchingContext';
 import AuthContext from '../../context/AuthContext';
 import TextField from '../Common/Textfield';
 import Button from '../Common/Button';
