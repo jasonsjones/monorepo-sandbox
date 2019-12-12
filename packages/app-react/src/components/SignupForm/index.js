@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import styled from '@emotion/styled';
 
-import { useFetchingCtx } from '../../context/fetchingContext';
 import TextField from '../Common/Textfield';
 import Button from '../Common/Button';
 
@@ -27,8 +26,6 @@ const SignupForm = ({ onRegister }) => {
         email: '',
         password: ''
     });
-
-    const { setIsFetching } = useFetchingCtx();
 
     const isFormValid = () => {
         return (
@@ -70,10 +67,10 @@ const SignupForm = ({ onRegister }) => {
         };
 
         if (isFormValid()) {
-            setIsFetching(true);
+            // setIsFetching(true);
             doSignup(query, variables)
                 .then(({ data }) => {
-                    setIsFetching(false);
+                    // setIsFetching(false);
                     if (data) {
                         setValues({ firstName: '', lastName: '', email: '', password: '' });
                         onRegister();

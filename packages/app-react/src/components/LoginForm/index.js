@@ -1,7 +1,6 @@
 import React, { useContext, useState } from 'react';
 import styled from '@emotion/styled';
 
-import { useFetchingCtx } from '../../context/fetchingContext';
 import AuthContext from '../../context/AuthContext';
 import TextField from '../Common/Textfield';
 import Button from '../Common/Button';
@@ -27,7 +26,6 @@ const doLogin = (query, variables) => {
 
 const LoginForm = ({ history }) => {
     const authCtx = useContext(AuthContext);
-    const { setIsFetching } = useFetchingCtx();
 
     const [form, setValues] = useState({
         email: '',
@@ -56,7 +54,7 @@ const LoginForm = ({ history }) => {
         };
 
         if (isFormValid()) {
-            setIsFetching(true);
+            // setIsFetching(true);
             doLogin(query, variables).then(({ errors, data }) => {
                 if (data && data.login) {
                     setError(null);
@@ -67,7 +65,7 @@ const LoginForm = ({ history }) => {
                     setError("Oops, something went wrong... Let's try again.");
                     setValues({ email: form.email, password: '' });
                 }
-                setIsFetching(false);
+                // setIsFetching(false);
             });
         }
     };
