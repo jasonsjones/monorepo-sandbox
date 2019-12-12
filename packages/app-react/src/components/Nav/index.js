@@ -1,7 +1,7 @@
-import React, { useContext } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled from '@emotion/styled';
-import AuthContext from '../../context/AuthContext';
+import { useAuthCtx } from '../../context/authContext';
 // import ProfileMenu from '../ProfileMenu/ProfileMenu';
 
 const NavContainer = styled.nav`
@@ -112,9 +112,7 @@ const LogoutButton = styled.button`
 `;
 
 const Nav = () => {
-    const authCtx = useContext(AuthContext);
-
-    const isAuthed = authCtx.accessToken;
+    const { isFetching, contextUser, logout } = useAuthCtx();
 
     return (
         <NavContainer>
@@ -129,9 +127,11 @@ const Nav = () => {
                 </Link>
             </Logo>
             <NavLinks>
-                {!isAuthed && <Link to="/login">Login</Link>}
-                {!isAuthed && <Link to="/signup">Signup</Link>}
-                {isAuthed && <LogoutButton onClick={() => authCtx.logout()}>Logout</LogoutButton>}
+                {!contextUser && !isFetching && <Link to="/login">Login</Link>}
+                {!contextUser && !isFetching && <Link to="/signup">Signup</Link>}
+                {contextUser && !isFetching && (
+                    <LogoutButton onClick={() => logout()}>Logout</LogoutButton>
+                )}
             </NavLinks>
         </NavContainer>
     );

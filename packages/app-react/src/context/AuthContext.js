@@ -19,6 +19,8 @@ const getMe = (query, token) => {
 };
 
 const AuthContext = React.createContext({
+    isFetching: false,
+    setIsFetching: () => {},
     contextUser: null,
     accessToken: '',
     login: () => {},
@@ -29,16 +31,17 @@ const AuthContext = React.createContext({
 const AuthProvider = props => {
     const [accessToken, setAccessToken] = useState('');
     const [contextUser, setContextUser] = useState(null);
+    const [isFetching, setIsFetching] = useState(true);
 
     useEffect(() => {
-        // setIsFetching(true);
+        setIsFetching(true);
         fetch('http://localhost:3001/api/refreshtoken', {
             method: 'GET',
             credentials: 'include'
         })
             .then(res => res.json())
             .then(res => {
-                // setIsFetching(false);
+                setIsFetching(false);
                 if (res.payload.accessToken) {
                     setAccessToken(res.payload.accessToken);
                 }
@@ -53,12 +56,12 @@ const AuthProvider = props => {
         }
     }`;
         if (accessToken !== '') {
-            // setIsFetching(true);
+            setIsFetching(true);
             getMe(query, accessToken).then(res => {
                 if (res.data.me) {
                     setContextUser(res.data.me);
-                    // setIsFetching(false);
                 }
+                setIsFetching(false);
             });
         }
     }, [accessToken]);
@@ -74,15 +77,22 @@ const AuthProvider = props => {
             }
         `;
 
+        setIsFetching(true);
         doLogout(query).then(({ data }) => {
             if (data.logout) {
                 setAccessToken('');
                 setContextUser(null);
             }
+            setIsFetching(false);
         });
     };
 
-    return <AuthContext.Provider value={{ contextUser, accessToken, login, logout }} {...props} />;
+    return (
+        <AuthContext.Provider
+            value={{ isFetching, setIsFetching, contextUser, accessToken, login, logout }}
+            {...props}
+        />
+    );
 };
 
 const useAuthCtx = () => useContext(AuthContext);
