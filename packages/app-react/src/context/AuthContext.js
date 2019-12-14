@@ -41,10 +41,13 @@ const AuthProvider = props => {
         })
             .then(res => res.json())
             .then(res => {
-                setIsFetching(false);
-                if (res.payload.accessToken) {
-                    setAccessToken(res.payload.accessToken);
-                }
+                // add a bit of a delay so the spinner sticks around a little bit
+                setTimeout(() => {
+                    setIsFetching(false);
+                    if (res.payload.accessToken) {
+                        setAccessToken(res.payload.accessToken);
+                    }
+                }, 500);
             });
     }, []);
 

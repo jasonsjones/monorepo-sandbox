@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from '@emotion/styled';
 import { useAuthCtx } from '../../context/authContext';
@@ -127,9 +127,13 @@ const Nav = () => {
                 </Link>
             </Logo>
             <NavLinks>
-                {!contextUser && !isFetching && <Link to="/login">Login</Link>}
-                {!contextUser && !isFetching && <Link to="/signup">Signup</Link>}
-                {contextUser && !isFetching && (
+                {!isFetching && !contextUser && (
+                    <React.Fragment>
+                        <Link to="/login">Login</Link>
+                        <Link to="/signup">Signup</Link>
+                    </React.Fragment>
+                )}
+                {!isFetching && contextUser && (
                     <LogoutButton onClick={() => logout()}>Logout</LogoutButton>
                 )}
             </NavLinks>

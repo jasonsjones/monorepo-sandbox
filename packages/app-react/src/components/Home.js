@@ -1,7 +1,12 @@
 /** @jsx jsx */
-import React, { useState } from 'react';
 import { css, jsx } from '@emotion/core';
+import styled from '@emotion/styled';
 import { useAuthCtx } from '../context/authContext';
+import Spinner from './Common/Spinner';
+
+const HomeContainer = styled.div`
+    margin-top: 1rem;
+`;
 
 const Home = () => {
     const styles = css`
@@ -11,10 +16,11 @@ const Home = () => {
     const { isFetching, contextUser } = useAuthCtx();
 
     return (
-        <React.Fragment>
+        <HomeContainer>
             {!isFetching && !contextUser && <h1 css={styles}>Welcome to the Monorepo Sandbox</h1>}
             {!isFetching && contextUser && <h1 css={styles}>{`Welcome, ${contextUser.name}`}</h1>}
-        </React.Fragment>
+            {isFetching && <Spinner />}
+        </HomeContainer>
     );
 };
 
