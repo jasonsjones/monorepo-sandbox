@@ -1,22 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-
-const doLogout = query => {
-    return fetch('http://localhost:3001/graphql', {
-        method: 'POST',
-        credentials: 'include',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ query })
-    }).then(res => res.json());
-};
-
-const getMe = (query, token) => {
-    return fetch('http://localhost:3001/graphql', {
-        method: 'POST',
-        credentials: 'include',
-        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
-        body: JSON.stringify({ query })
-    }).then(res => res.json());
-};
+import { executeGqlQuery, executeAuthorizedGqlQuery, refreshToken } from '../services/dataservice';
 
 const AuthContext = React.createContext({
     isFetching: false,
@@ -35,20 +18,15 @@ const AuthProvider = props => {
 
     useEffect(() => {
         setIsFetching(true);
-        fetch('http://localhost:3001/api/refreshtoken', {
-            method: 'GET',
-            credentials: 'include'
-        })
-            .then(res => res.json())
-            .then(res => {
-                // add a bit of a delay so the spinner sticks around a little bit
-                setTimeout(() => {
-                    setIsFetching(false);
-                    if (res.payload.accessToken) {
-                        setAccessToken(res.payload.accessToken);
-                    }
-                }, 500);
-            });
+        refreshToken().then(res => {
+            // add a bit of a delay so the spinner sticks around a little bit
+            setTimeout(() => {
+                setIsFetching(false);
+                if (res.payload.accessToken) {
+                    setAccessToken(res.payload.accessToken);
+                }
+            }, 500);
+        });
     }, []);
 
     useEffect(() => {
@@ -60,7 +38,7 @@ const AuthProvider = props => {
     }`;
         if (accessToken !== '') {
             setIsFetching(true);
-            getMe(query, accessToken).then(res => {
+            executeAuthorizedGqlQuery(accessToken, query).then(res => {
                 if (res.data.me) {
                     setContextUser(res.data.me);
                 }
@@ -81,7 +59,7 @@ const AuthProvider = props => {
         `;
 
         setIsFetching(true);
-        doLogout(query).then(({ data }) => {
+        executeGqlQuery(query).then(({ data }) => {
             if (data.logout) {
                 setAccessToken('');
                 setContextUser(null);
