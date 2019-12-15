@@ -1,6 +1,7 @@
 import React, { useContext, useState } from 'react';
 import styled from '@emotion/styled';
 
+import { executeGqlQuery } from '../../services/dataservice';
 import AuthContext from '../../context/authContext';
 import TextField from '../Common/Textfield';
 import Button from '../Common/Button';
@@ -15,15 +16,6 @@ const SubmitButtonContainer = styled.div`
     margin-top: 1rem;
 `;
 
-const doLogin = (query, variables) => {
-    return fetch('http://localhost:3001/graphql', {
-        method: 'POST',
-        credentials: 'include',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ query, variables })
-    }).then(res => res.json());
-};
-
 const LoginForm = ({ history }) => {
     const authCtx = useContext(AuthContext);
 
@@ -33,6 +25,7 @@ const LoginForm = ({ history }) => {
     });
 
     const [error, setError] = useState(null);
+    const [isFetching, setIsFetching] = useState(false);
 
     const isFormValid = () => {
         return form.email.length > 0 && form.password.length > 0;
@@ -54,18 +47,21 @@ const LoginForm = ({ history }) => {
         };
 
         if (isFormValid()) {
-            // setIsFetching(true);
-            doLogin(query, variables).then(({ errors, data }) => {
+            setIsFetching(true);
+            executeGqlQuery(query, variables).then(({ errors, data }) => {
                 if (data && data.login) {
                     setError(null);
                     authCtx.login(data.login.accessToken);
-                    history.push('/');
+                    setTimeout(() => {
+                        setIsFetching(false);
+                        history.push('/');
+                    }, 1000);
                 } else {
                     console.log(errors);
                     setError("Oops, something went wrong... Let's try again.");
                     setValues({ email: form.email, password: '' });
+                    setIsFetching(false);
                 }
-                // setIsFetching(false);
             });
         }
     };
@@ -99,7 +95,7 @@ const LoginForm = ({ history }) => {
                     handleChange={updateField}
                 />
                 <SubmitButtonContainer>
-                    <Button type="submit" text="Login" />
+                    <Button type="submit" text={!isFetching ? 'Login' : 'Logging in...'} />
                 </SubmitButtonContainer>
             </form>
             {error && <Error>{error}</Error>}

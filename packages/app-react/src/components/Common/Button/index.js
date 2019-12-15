@@ -2,9 +2,10 @@ import React from 'react';
 import styled from '@emotion/styled';
 
 const FormButton = styled.button`
-    height: 2.5rem;
-    width: 80px;
+    min-height: 2.5rem;
+    min-width: 80px;
     font-size: 1rem;
+    padding: 0.75rem;
     background-color: #022c43;
     color: #ccc;
     border-radius: 5px;
