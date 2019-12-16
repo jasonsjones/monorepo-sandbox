@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react';
 import styled from '@emotion/styled';
 
 import { executeGqlQuery } from '../../services/dataservice';
-import AuthContext from '../../context/authContext';
+import { useAuthCtx } from '../../context/authContext';
 import TextField from '../Common/Textfield';
 import Button from '../Common/Button';
 
@@ -17,7 +17,7 @@ const SubmitButtonContainer = styled.div`
 `;
 
 const LoginForm = ({ history }) => {
-    const authCtx = useContext(AuthContext);
+    const { login } = useAuthCtx();
 
     const [form, setValues] = useState({
         email: '',
@@ -51,7 +51,7 @@ const LoginForm = ({ history }) => {
             executeGqlQuery(query, variables).then(({ errors, data }) => {
                 if (data && data.login) {
                     setError(null);
-                    authCtx.login(data.login.accessToken);
+                    login(data.login.accessToken);
                     setTimeout(() => {
                         setIsFetching(false);
                         history.push('/');
