@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from '@emotion/styled';
 import { useAuthCtx } from '../../context/authContext';
+import { executeGqlQuery } from '../../services/dataservice';
 // import ProfileMenu from '../ProfileMenu/ProfileMenu';
 
 const NavContainer = styled.nav`
@@ -112,7 +113,22 @@ const LogoutButton = styled.button`
 `;
 
 const Nav = () => {
-    const { isFetching, contextUser, logout } = useAuthCtx();
+    const { state, dispatch } = useAuthCtx();
+    const { isFetching, contextUser } = state;
+    const handleLogout = () => {
+        const query = `
+            mutation {
+                logout
+            }
+        `;
+
+        dispatch({ type: 'USER_LOGOUT_REQUEST' });
+        executeGqlQuery(query).then(({ data }) => {
+            if (data.logout) {
+                dispatch({ type: 'USER_LOGOUT_SUCCESS' });
+            }
+        });
+    };
 
     return (
         <NavContainer>
@@ -134,7 +150,7 @@ const Nav = () => {
                     </React.Fragment>
                 )}
                 {!isFetching && contextUser && (
-                    <LogoutButton onClick={() => logout()}>Logout</LogoutButton>
+                    <LogoutButton onClick={handleLogout}>Logout</LogoutButton>
                 )}
             </NavLinks>
         </NavContainer>

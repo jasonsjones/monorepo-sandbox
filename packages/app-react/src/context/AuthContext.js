@@ -1,29 +1,87 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { executeGqlQuery, executeAuthorizedGqlQuery, refreshToken } from '../services/dataservice';
+import React, { useContext, useEffect, useReducer } from 'react';
+import { executeAuthorizedGqlQuery, refreshToken } from '../services/dataservice';
+
+const FETCH_COMPLETE = 'FETCH_COMPLETE';
+const FETCH_ACCESSSTOKEN_REQUEST = 'FETCH_ACCESSTOKEN_REQUEST';
+const FETCH_ACCESSSTOKEN_SUCCESS = 'FETCH_ACCESSTOKEN_SUCCESS';
+
+const FETCH_CONTEXTUSER_REQUEST = 'FETCH_CONTEXTUSER_REQUEST';
+const FETCH_CONTEXTUSER_SUCCESS = 'FETCH_CONTEXTUSER_SUCCESS';
+
+const USER_LOGIN_REQUEST = 'USER_LOGIN_REQUEST';
+const USER_LOGIN_SUCCESS = 'USER_LOGIN_SUCCESS';
+
+const USER_LOGOUT_REQUEST = 'USER_LOGOUT_REQUEST';
+const USER_LOGOUT_SUCCESS = 'USER_LOGOUT_SUCCESS';
+
+const initialState = {
+    isFetching: false,
+    contextUser: null,
+    accessToken: ''
+};
+
+const authCtxReducer = (state, action) => {
+    switch (action.type) {
+        case FETCH_CONTEXTUSER_REQUEST:
+        case FETCH_ACCESSSTOKEN_REQUEST:
+        case USER_LOGIN_REQUEST:
+        case USER_LOGOUT_REQUEST:
+            return {
+                ...state,
+                isFetching: true
+            };
+        case FETCH_ACCESSSTOKEN_SUCCESS:
+        case USER_LOGIN_SUCCESS:
+            return {
+                ...state,
+                isFetching: false,
+                accessToken: action.payload.token
+            };
+        case FETCH_CONTEXTUSER_SUCCESS:
+            return {
+                ...state,
+                isFetching: false,
+                contextUser: action.payload.user
+            };
+        case USER_LOGOUT_SUCCESS:
+            return {
+                ...state,
+                isFetching: false,
+                accessToken: '',
+                contextUser: null
+            };
+        case FETCH_COMPLETE:
+        case 'USER_LOGOUT_ERROR':
+            return {
+                ...state,
+                isFetching: false
+            };
+        default:
+            return state;
+    }
+};
 
 const AuthContext = React.createContext({
-    isFetching: false,
-    setIsFetching: () => {},
-    contextUser: null,
-    accessToken: '',
-    login: () => {},
-    logout: () => {},
-    updateAuthUser: () => {}
+    ...initialState,
+    login: () => {}
 });
 
 const AuthProvider = props => {
-    const [accessToken, setAccessToken] = useState('');
-    const [contextUser, setContextUser] = useState(null);
-    const [isFetching, setIsFetching] = useState(true);
+    const [state, dispatch] = useReducer(authCtxReducer, initialState);
+    const { accessToken } = state;
 
     useEffect(() => {
-        setIsFetching(true);
+        dispatch({ type: FETCH_ACCESSSTOKEN_REQUEST });
         refreshToken().then(res => {
             // add a bit of a delay so the spinner sticks around a little bit
             setTimeout(() => {
-                setIsFetching(false);
                 if (res.payload.accessToken) {
-                    setAccessToken(res.payload.accessToken);
+                    dispatch({
+                        type: FETCH_ACCESSSTOKEN_SUCCESS,
+                        payload: { token: res.payload.accessToken }
+                    });
+                } else {
+                    dispatch({ type: FETCH_COMPLETE });
                 }
             }, 500);
         });
@@ -37,43 +95,19 @@ const AuthProvider = props => {
         }
     }`;
         if (accessToken !== '') {
-            setIsFetching(true);
+            dispatch({ type: FETCH_CONTEXTUSER_REQUEST });
             executeAuthorizedGqlQuery(accessToken, query).then(res => {
                 if (res.data.me) {
-                    setContextUser(res.data.me);
+                    // setContextUser(res.data.me);
+                    dispatch({ type: FETCH_CONTEXTUSER_SUCCESS, payload: { user: res.data.me } });
+                } else {
+                    dispatch({ type: FETCH_COMPLETE });
                 }
-                setIsFetching(false);
             });
         }
     }, [accessToken]);
 
-    const login = token => {
-        setAccessToken(token);
-    };
-
-    const logout = () => {
-        const query = `
-            mutation {
-                logout
-            }
-        `;
-
-        setIsFetching(true);
-        executeGqlQuery(query).then(({ data }) => {
-            if (data.logout) {
-                setAccessToken('');
-                setContextUser(null);
-            }
-            setIsFetching(false);
-        });
-    };
-
-    return (
-        <AuthContext.Provider
-            value={{ isFetching, setIsFetching, contextUser, accessToken, login, logout }}
-            {...props}
-        />
-    );
+    return <AuthContext.Provider value={{ state, dispatch }} {...props} />;
 };
 
 const useAuthCtx = () => useContext(AuthContext);

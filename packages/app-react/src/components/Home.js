@@ -13,7 +13,8 @@ const Home = () => {
         text-align: center;
     `;
 
-    const { isFetching, contextUser } = useAuthCtx();
+    const { state } = useAuthCtx();
+    const { isFetching, contextUser } = state;
 
     return (
         <HomeContainer>
