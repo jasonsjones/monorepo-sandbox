@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from '@emotion/styled';
-import { useAuthCtx } from '../../context/authContext';
+import { useAuthState, useAuthDispatch } from '../../context/authContext';
 import { executeGqlQuery } from '../../services/dataservice';
 // import ProfileMenu from '../ProfileMenu/ProfileMenu';
 
@@ -113,7 +113,8 @@ const LogoutButton = styled.button`
 `;
 
 const Nav = () => {
-    const { state, dispatch } = useAuthCtx();
+    const state = useAuthState();
+    const dispatch = useAuthDispatch();
     const { isFetching, contextUser } = state;
     const handleLogout = () => {
         const query = `

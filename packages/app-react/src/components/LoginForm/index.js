@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styled from '@emotion/styled';
 
 import { executeGqlQuery } from '../../services/dataservice';
-import { useAuthCtx } from '../../context/authContext';
+import { useAuthState, useAuthDispatch } from '../../context/authContext';
 import TextField from '../Common/Textfield';
 import Button from '../Common/Button';
 
@@ -17,7 +17,8 @@ const SubmitButtonContainer = styled.div`
 `;
 
 const LoginForm = ({ history }) => {
-    const { state, dispatch } = useAuthCtx();
+    const state = useAuthState();
+    const dispatch = useAuthDispatch();
     const { isFetching } = state;
 
     const [form, setValues] = useState({

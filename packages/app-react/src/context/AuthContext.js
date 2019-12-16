@@ -61,12 +61,10 @@ const authCtxReducer = (state, action) => {
     }
 };
 
-const AuthContext = React.createContext({
-    ...initialState,
-    login: () => {}
-});
+const AuthStateContext = React.createContext();
+const AuthDispatchContext = React.createContext();
 
-const AuthProvider = props => {
+const AuthProvider = ({ children }) => {
     const [state, dispatch] = useReducer(authCtxReducer, initialState);
     const { accessToken } = state;
 
@@ -107,11 +105,14 @@ const AuthProvider = props => {
         }
     }, [accessToken]);
 
-    return <AuthContext.Provider value={{ state, dispatch }} {...props} />;
+    return (
+        <AuthStateContext.Provider value={state}>
+            <AuthDispatchContext.Provider value={dispatch}>{children}</AuthDispatchContext.Provider>
+        </AuthStateContext.Provider>
+    );
 };
 
-const useAuthCtx = () => useContext(AuthContext);
+const useAuthState = () => useContext(AuthStateContext);
+const useAuthDispatch = () => useContext(AuthDispatchContext);
 
-export { AuthProvider, useAuthCtx };
-
-export default AuthContext;
+export { AuthProvider, useAuthState, useAuthDispatch };

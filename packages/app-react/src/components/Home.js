@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core';
 import styled from '@emotion/styled';
-import { useAuthCtx } from '../context/authContext';
+import { useAuthState } from '../context/authContext';
 import Spinner from './Common/Spinner';
 
 const HomeContainer = styled.div`
@@ -13,7 +13,7 @@ const Home = () => {
         text-align: center;
     `;
 
-    const { state } = useAuthCtx();
+    const state = useAuthState();
     const { isFetching, contextUser } = state;
 
     return (
