@@ -17,9 +17,9 @@ const SubmitButtonContainer = styled.div`
 `;
 
 const LoginForm = ({ history }) => {
-    const state = useAuthState();
-    const dispatch = useAuthDispatch();
-    const { isFetching } = state;
+    const authState = useAuthState();
+    const authDispatch = useAuthDispatch();
+    const { isFetching } = authState;
 
     const [form, setValues] = useState({
         email: '',
@@ -27,7 +27,6 @@ const LoginForm = ({ history }) => {
     });
 
     const [error, setError] = useState(null);
-    // const [isFetching, setIsFetching] = useState(false);
 
     const isFormValid = () => {
         return form.email.length > 0 && form.password.length > 0;
@@ -49,23 +48,20 @@ const LoginForm = ({ history }) => {
         };
 
         if (isFormValid()) {
-            dispatch({ type: 'USER_LOGIN_REQUEST' });
-            // setIsFetching(true);
+            authDispatch({ type: 'USER_LOGIN_REQUEST' });
             executeGqlQuery(query, variables).then(({ errors, data }) => {
                 if (data && data.login) {
                     setError(null);
-                    dispatch({
+                    authDispatch({
                         type: 'USER_LOGIN_SUCCESS',
                         payload: { token: data.login.accessToken }
                     });
-                    // setIsFetching(false);
                     history.push('/');
                 } else {
                     console.log(errors);
                     setError("Oops, something went wrong... Let's try again.");
                     setValues({ email: form.email, password: '' });
-                    dispatch({ type: 'USER_LOGIN_ERROR', payload: { errors } });
-                    // setIsFetching(false);
+                    authDispatch({ type: 'USER_LOGIN_ERROR', payload: { errors } });
                 }
             });
         }

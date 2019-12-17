@@ -113,9 +113,9 @@ const LogoutButton = styled.button`
 `;
 
 const Nav = () => {
-    const state = useAuthState();
-    const dispatch = useAuthDispatch();
-    const { isFetching, contextUser } = state;
+    const authState = useAuthState();
+    const authDispatch = useAuthDispatch();
+    const { isFetching, contextUser } = authState;
     const handleLogout = () => {
         const query = `
             mutation {
@@ -123,10 +123,10 @@ const Nav = () => {
             }
         `;
 
-        dispatch({ type: 'USER_LOGOUT_REQUEST' });
+        authDispatch({ type: 'USER_LOGOUT_REQUEST' });
         executeGqlQuery(query).then(({ data }) => {
             if (data.logout) {
-                dispatch({ type: 'USER_LOGOUT_SUCCESS' });
+                authDispatch({ type: 'USER_LOGOUT_SUCCESS' });
             }
         });
     };
