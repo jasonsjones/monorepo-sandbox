@@ -6,6 +6,7 @@ import 'dotenv/config';
 import express, { Application, Request, Response } from 'express';
 import 'reflect-metadata';
 import { buildSchema } from 'type-graphql';
+import { getRepository } from 'typeorm';
 import { User } from '../entity/User';
 import AuthResolver from '../modules/auth/AuthResolver';
 import {
@@ -87,6 +88,44 @@ app.get(
                 accessToken: createAccessToken(user as User)
             }
         });
+    }
+);
+
+app.get(
+    '/api/confirm-email',
+    async (req: Request, res: Response): Promise<Response> => {
+        const userRepository = getRepository(User);
+        const token = req.query && req.query.token;
+        if (token) {
+            try {
+                const user = await userRepository.findOne({
+                    where: { emailVerificationToken: token }
+                });
+
+                if (user) {
+                    (user as User).isEmailVerified = true;
+                    (user as User).emailVerificationToken = '';
+                    await (user as User).save();
+                    return res.json({
+                        success: true,
+                        message: 'email confirmed.',
+                        payload: {
+                            user
+                        }
+                    });
+                } else {
+                    return res.json({
+                        success: true,
+                        message: 'user not found',
+                        payload: null
+                    });
+                }
+            } catch (e) {
+                console.log('error ', e);
+                return res.json({ success: false });
+            }
+        }
+        return res.json({ success: false });
     }
 );
 
