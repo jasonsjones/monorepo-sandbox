@@ -8,6 +8,10 @@ const HomeContainer = styled.div`
     margin-top: 1rem;
 `;
 
+const SpinnerContainer = styled.div`
+    margin-top: 4rem;
+`;
+
 const Home = () => {
     const styles = css`
         text-align: center;
@@ -20,7 +24,11 @@ const Home = () => {
         <HomeContainer>
             {!isFetching && !contextUser && <h1 css={styles}>Welcome to the Monorepo Sandbox</h1>}
             {!isFetching && contextUser && <h1 css={styles}>{`Welcome, ${contextUser.name}`}</h1>}
-            {isFetching && <Spinner />}
+            {isFetching && (
+                <SpinnerContainer>
+                    <Spinner />
+                </SpinnerContainer>
+            )}
         </HomeContainer>
     );
 };

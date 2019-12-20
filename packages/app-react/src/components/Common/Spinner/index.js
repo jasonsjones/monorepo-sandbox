@@ -11,7 +11,6 @@ const rotation = keyframes`
 `;
 
 const spinner = css`
-    height: 50vh;
     position: relative;
     transition: opacity linear 0.1s;
 
