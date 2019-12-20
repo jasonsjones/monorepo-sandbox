@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styled from '@emotion/styled';
 
 import { executeGqlQuery } from '../../services/dataservice';
-import { useAuthState, useAuthDispatch } from '../../context/authContext';
+import { useAuthDispatch } from '../../context/authContext';
 import TextField from '../Common/Textfield';
 import Button from '../Common/Button';
 
@@ -17,9 +17,7 @@ const SubmitButtonContainer = styled.div`
 `;
 
 const LoginForm = ({ history }) => {
-    const authState = useAuthState();
     const authDispatch = useAuthDispatch();
-    const { isFetching } = authState;
 
     const [form, setValues] = useState({
         email: '',
@@ -27,6 +25,7 @@ const LoginForm = ({ history }) => {
     });
 
     const [error, setError] = useState(null);
+    const [isFetching, setIsFetching] = useState(false);
 
     const isFormValid = () => {
         return form.email.length > 0 && form.password.length > 0;
@@ -48,20 +47,23 @@ const LoginForm = ({ history }) => {
         };
 
         if (isFormValid()) {
-            authDispatch({ type: 'USER_LOGIN_REQUEST' });
+            setIsFetching(true);
             executeGqlQuery(query, variables).then(({ errors, data }) => {
                 if (data && data.login) {
                     setError(null);
+                    setIsFetching(false);
                     authDispatch({
                         type: 'USER_LOGIN_SUCCESS',
                         payload: { token: data.login.accessToken }
                     });
                     history.push('/');
                 } else {
-                    console.log(errors);
-                    setError("Oops, something went wrong... Let's try again.");
-                    setValues({ email: form.email, password: '' });
-                    authDispatch({ type: 'USER_LOGIN_ERROR', payload: { errors } });
+                    setTimeout(() => {
+                        console.log(errors);
+                        setError("Oops, something went wrong... Let's try again.");
+                        setValues({ email: form.email, password: '' });
+                        setIsFetching(false);
+                    }, 1000);
                 }
             });
         }

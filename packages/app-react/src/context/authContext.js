@@ -10,9 +10,11 @@ const FETCH_CONTEXTUSER_SUCCESS = 'FETCH_CONTEXTUSER_SUCCESS';
 
 const USER_LOGIN_REQUEST = 'USER_LOGIN_REQUEST';
 const USER_LOGIN_SUCCESS = 'USER_LOGIN_SUCCESS';
+const USER_LOGIN_ERROR = 'USER_LOGIN_ERROR';
 
 const USER_LOGOUT_REQUEST = 'USER_LOGOUT_REQUEST';
 const USER_LOGOUT_SUCCESS = 'USER_LOGOUT_SUCCESS';
+const USER_LOGOUT_ERROR = 'USER_LOGOUT_ERROR';
 
 const initialState = {
     isFetching: false,
@@ -51,7 +53,8 @@ const authCtxReducer = (state, action) => {
                 contextUser: null
             };
         case FETCH_COMPLETE:
-        case 'USER_LOGOUT_ERROR':
+        case USER_LOGOUT_ERROR:
+        case USER_LOGIN_ERROR:
             return {
                 ...state,
                 isFetching: false
