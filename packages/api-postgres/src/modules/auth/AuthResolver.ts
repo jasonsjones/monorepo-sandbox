@@ -2,7 +2,8 @@ import { Resolver, Mutation, Arg, ObjectType, Field, Ctx } from 'type-graphql';
 import { compareSync } from 'bcryptjs';
 import UserService from '../../services/UserService';
 import { createAccessToken, createRefreshToken } from './authUtils';
-import { AppContext } from '../../types';
+import { AppContext, MutationResponse } from '../../types';
+import { User } from '../../entity/User';
 
 @ObjectType()
 class LoginResponse {
@@ -40,6 +41,44 @@ class AuthResolver {
     logout(@Ctx() context: AppContext): boolean {
         context.res.clearCookie('qid');
         return true;
+    }
+
+    @Mutation(() => MutationResponse)
+    async confirmEmail(@Arg('token') token: string): Promise<MutationResponse> {
+        let user: User | undefined;
+        try {
+            user = await UserService.getUserByProperty('emailVerificationToken', token);
+        } catch (e) {
+            console.log(e);
+        }
+
+        if (!user) {
+            return {
+                success: true,
+                message: 'verification token not found'
+            };
+        }
+
+        if (!user?.isEmailVerified || user?.emailVerificationToken !== '') {
+            (user as User).isEmailVerified = true;
+            (user as User).emailVerificationToken = '';
+            await user?.save();
+            return {
+                success: true,
+                message: 'user email confirmed',
+                payload: {
+                    user
+                }
+            };
+        } else {
+            return {
+                success: true,
+                message: 'user email already confirmed',
+                payload: {
+                    user
+                }
+            };
+        }
     }
 }
 

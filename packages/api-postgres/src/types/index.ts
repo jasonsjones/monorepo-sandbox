@@ -11,7 +11,7 @@ export interface AppContext {
 
 @ObjectType()
 class PayloadType {
-    @Field()
+    @Field({ nullable: true })
     user?: User;
 }
 
@@ -23,6 +23,6 @@ export class MutationResponse {
     @Field()
     message: string;
 
-    @Field()
+    @Field({ nullable: true })
     payload?: PayloadType;
 }
