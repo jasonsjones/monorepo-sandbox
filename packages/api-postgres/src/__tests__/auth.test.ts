@@ -36,60 +36,65 @@ afterAll(async () => {
 describe('Authentication resolver', () => {
     const email = 'oliver@qc.com';
     const password = '123456';
-    const query = `
-        mutation Login($email: String!, $password: String!) {
-            login(email: $email, password: $password) {
-                accessToken
-            }
-        }
-    `;
 
     beforeAll(() => {
         return UserService.createUser('Oliver', 'Queen', email, password);
     });
 
-    it('logs in a user with the correct credentials', () => {
-        const variables = {
-            email,
-            password
-        };
+    describe('login mutation', () => {
+        const query = `
+            mutation Login($email: String!, $password: String!) {
+                login(email: $email, password: $password) {
+                    accessToken
+                }
+            }
+        `;
 
-        return makeGraphQLCall(query, variables).then(res => {
-            const result = res.body.data.login;
-            expect(result).toHaveProperty('accessToken');
-            expect(typeof result.accessToken).toBe('string');
+        it('logs in a user with the correct credentials', () => {
+            const variables = {
+                email,
+                password
+            };
+
+            return makeGraphQLCall(query, variables).then(res => {
+                const result = res.body.data.login;
+                expect(result).toHaveProperty('accessToken');
+                expect(typeof result.accessToken).toBe('string');
+            });
+        });
+
+        it('does not log in a user with a bad password', () => {
+            const variables = {
+                email,
+                password: 'badpassword'
+            };
+
+            return makeGraphQLCall(query, variables).then(verifyInvalidUser);
+        });
+
+        it('does not log in a user with an unknown email', () => {
+            const variables = {
+                email: 'oliver@cityhall.gov',
+                password
+            };
+
+            return makeGraphQLCall(query, variables).then(verifyInvalidUser);
         });
     });
 
-    it('does not log in a user with a bad password', () => {
-        const variables = {
-            email,
-            password: 'badpassword'
-        };
+    describe('logout mutation', () => {
+        it('removes the refresh token cookie', async () => {
+            let refreshToken: string;
+            const client = new TestClient(app);
+            await client.login(email, password);
+            refreshToken = await client.getRefreshToken();
+            expect(refreshToken.length).toBeGreaterThan(0);
 
-        return makeGraphQLCall(query, variables).then(verifyInvalidUser);
-    });
+            await client.logout();
 
-    it('does not log in a user with an unknown email', () => {
-        const variables = {
-            email: 'oliver@cityhall.gov',
-            password
-        };
-
-        return makeGraphQLCall(query, variables).then(verifyInvalidUser);
-    });
-
-    it('logout removes the refresh token cookie', async () => {
-        let refreshToken: string;
-        const client = new TestClient(app);
-        await client.login(email, password);
-        refreshToken = await client.getRefreshToken();
-        expect(refreshToken.length).toBeGreaterThan(0);
-
-        await client.logout();
-
-        refreshToken = await client.getRefreshToken();
-        expect(refreshToken).toBe('');
+            refreshToken = await client.getRefreshToken();
+            expect(refreshToken).toBe('');
+        });
     });
 });
 
