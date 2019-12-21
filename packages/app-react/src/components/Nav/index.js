@@ -22,7 +22,7 @@ const NavContainer = styled.nav`
 `;
 
 const Logo = styled.div`
-    margin-left: 35px;
+    margin-left: 2rem;
     padding-top: 20px;
 
     & a {
@@ -32,7 +32,7 @@ const Logo = styled.div`
     }
 
     @media only screen and (min-device-width: 375px) and (max-device-width: 667px) {
-        margin-left: 1rem;
+        margin-left: 0.75rem;
         padding-top: 1rem;
     }
 `;
@@ -56,6 +56,16 @@ const LogoText = styled.div`
         font-size: 1.25rem;
         color: navy;
         border-radius: 10px;
+    }
+
+    @media only screen and (min-device-width: 375px) and (max-device-width: 667px) {
+        & h3 {
+            font-size: 1.5rem;
+        }
+        & p {
+            font-size: 1rem;
+            margin: 1px 0 0;
+        }
     }
 `;
 
@@ -90,9 +100,11 @@ const NavLinks = styled.div`
 
     @media only screen and (min-device-width: 375px) and (max-device-width: 667px) {
         margin-right: 0.5rem;
+        font-size: 1rem;
 
         & a {
             margin-right: 1rem;
+            padding: 0.75rem 1rem;
         }
     }
 `;

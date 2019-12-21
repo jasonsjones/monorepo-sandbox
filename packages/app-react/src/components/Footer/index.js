@@ -63,7 +63,7 @@ const Footer = () => {
                 <h3>About</h3>
                 <p>
                     A simple playground app to explore the technical benefits and project structure
-                    of a monorepo
+                    of a monorepo; and play around a bit with a few different core tech stacks.
                 </p>
             </About>
             <Connect>
