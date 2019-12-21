@@ -123,6 +123,36 @@ class TestClient {
         return response;
     }
 
+    public async confirmEmail(token: string): Promise<Test> {
+        const query = `
+            mutation ConfirmEmail($token: String!) {
+                confirmEmail(token: $token) {
+                    success
+                    message
+                    payload {
+                    user {
+                        id
+                        name
+                        isEmailVerified
+                        emailVerificationToken
+                    }
+                    }
+                }
+            }
+        `;
+
+        const variables = {
+            token
+        };
+
+        const response: any = await request(this.app)
+            .post('/graphql')
+            .set('Content-Type', 'application/json')
+            .send({ query, variables });
+
+        return response;
+    }
+
     public getAccessToken(): string {
         return this.accessToken;
     }

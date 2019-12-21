@@ -96,6 +96,24 @@ describe('Authentication resolver', () => {
             expect(refreshToken).toBe('');
         });
     });
+
+    describe('confirmEmail mutation', () => {
+        it('changes email verification fields for the user', async () => {
+            const client = new TestClient(app);
+            const user = await UserService.getUserByProperty('email', email);
+            const token = user?.emailVerificationToken;
+            expect((token as string).length).toBeGreaterThan(0);
+            expect(user?.isEmailVerified).toBe(false);
+
+            const res = await client.confirmEmail(token as string);
+
+            expect(res.body).toHaveProperty('data');
+            expect(res.body).not.toHaveProperty('errors');
+            const updatedUser = res.body.data.confirmEmail.payload.user;
+            expect(updatedUser.isEmailVerified).toBe(true);
+            expect(updatedUser.emailVerificationToken).toBe('');
+        });
+    });
 });
 
 describe('REST endpoint for refeshing access token', () => {
