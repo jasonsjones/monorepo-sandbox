@@ -25,7 +25,7 @@ class UserResolver {
         @Ctx() context: any
     ): Promise<MutationResponse> {
         const user = await UserService.createUser(firstName, lastName, email, password);
-        const baseUrl = `${context.req.protocol}://${context.req.get('host')}`;
+        const baseUrl = `${context.req.get('origin')}`;
         await Mailer.sendVerificationEmail(baseUrl, user);
         return {
             success: true,
