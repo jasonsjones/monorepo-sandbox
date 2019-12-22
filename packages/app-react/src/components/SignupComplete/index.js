@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from '@emotion/styled';
-import Button from '../Common/Button';
 
 const Container = styled.div`
     background-color: #fafafa;
@@ -21,16 +20,7 @@ const Container = styled.div`
     }
 `;
 
-const ButtonContainer = styled.div`
-    display: flex;
-    justify-content: center;
-`;
-
-const SignupComplete = ({ history }) => {
-    const handleLoginRoute = () => {
-        history.push('/login');
-    };
-
+const SignupComplete = () => {
     return (
         <Container>
             <h2>Thank you for creating an account.</h2>
@@ -38,9 +28,6 @@ const SignupComplete = ({ history }) => {
                 We have sent an email to the account you provided. Please verify the address and
                 then login.
             </h4>
-            <ButtonContainer>
-                <Button clickHandler={handleLoginRoute} type="button" text="Login" />
-            </ButtonContainer>
         </Container>
     );
 };

@@ -21,7 +21,7 @@ const SignupFormCompleteContainer = styled.div`
     margin: 0 2rem;
 `;
 
-const Signup = ({ history }) => {
+const Signup = () => {
     const [isSignupComplete, setIsSignupComplete] = useState(false);
     return (
         <Container>
@@ -36,7 +36,7 @@ const Signup = ({ history }) => {
 
             {isSignupComplete && (
                 <SignupFormCompleteContainer>
-                    <SignupComplete history={history} />
+                    <SignupComplete />
                 </SignupFormCompleteContainer>
             )}
         </Container>
