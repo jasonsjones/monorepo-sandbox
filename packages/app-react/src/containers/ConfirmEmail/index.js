@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import styled from '@emotion/styled';
 import { executeGqlQuery } from '../../services/dataservice';
-import Button from '../../components/Common/Button';
 
 const Container = styled.div`
     margin: 1.25rem auto;
     max-width: 760px;
     background-color: #fafafa;
-    min-height: 250px;
+    min-height: 150px;
     padding: 1.25rem 3rem;
     border-radius: 10px;
     border: 2px solid lightgray;
@@ -23,17 +23,13 @@ const Container = styled.div`
         word-break: break-word;
     }
 
+    & a {
+        text-decoration: none;
+        color: #022c43;
+    }
+
     @media only screen and (min-device-width: 375px) and (max-device-width: 667px) {
         margin: 1.25rem;
-    }
-`;
-
-const ButtonContainer = styled.div`
-    display: flex;
-    justify-content: flex-start;
-
-    @media only screen and (min-device-width: 375px) and (max-device-width: 667px) {
-        justify-content: center;
     }
 `;
 
@@ -71,10 +67,6 @@ const ConfirmEmail = ({ match, history }) => {
         });
     }, [match.params.token]);
 
-    const handleLoginRoute = () => {
-        history.push('/login');
-    };
-
     return (
         <Container>
             <h2>{message}</h2>
@@ -85,10 +77,9 @@ const ConfirmEmail = ({ match, history }) => {
                         assist us in the future should we need to send you any important
                         information.
                     </p>
-                    <p>Feel free to click on the button below to login to you account.</p>
-                    <ButtonContainer>
-                        <Button clickHandler={handleLoginRoute} type="button" text="Login" />
-                    </ButtonContainer>
+                    <p>
+                        Feel free to <Link to="/login">login</Link> to access your account.
+                    </p>
                 </React.Fragment>
             ) : (
                 ''
