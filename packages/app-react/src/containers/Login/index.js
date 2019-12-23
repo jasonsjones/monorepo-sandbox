@@ -14,18 +14,26 @@ const Container = styled.div`
 
 const LoginFormContainer = styled.div`
     max-width: 460px;
-    margin: 20px auto;
+    margin: 1.25rem auto;
+
+    @media only screen and (min-device-width: 375px) and (max-device-width: 667px) {
+        padding: 0 1.25rem;
+    }
 `;
 
 const ForgotPasswordContainer = styled.div`
-    margin-top: 20px;
+    margin: 1.25rem 0 1rem;
     border-top: 1px #ddd solid;
-    padding-top: 20px;
+    padding-top: 1.25rem;
 
     & a {
         text-decoration: none;
         color: #022c43;
         font-size: 0.9rem;
+    }
+
+    @media only screen and (min-device-width: 375px) and (max-device-width: 667px) {
+        margin: 2rem 0 1rem;
     }
 `;
 

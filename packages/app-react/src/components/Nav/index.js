@@ -78,12 +78,11 @@ const SecondaryText = styled.div`
 const NavLinks = styled.div`
     display: flex;
     align-items: center;
-    margin-right: 50px;
     color: #ccc;
     font-size: 1.25rem;
 
     & a {
-        margin-right: 45px;
+        margin-right: 2.5rem;
         text-decoration: none;
         border: 2px solid #ff8600e6;
         padding: 10px 20px;
@@ -103,7 +102,7 @@ const NavLinks = styled.div`
         font-size: 1rem;
 
         & a {
-            margin-right: 1rem;
+            margin-right: 1.25rem;
             padding: 0.75rem 1rem;
         }
     }

@@ -14,7 +14,11 @@ const Container = styled.div`
 
 const SignupFormContainer = styled.div`
     max-width: 460px;
-    margin: 20px auto;
+    margin: 1.25rem auto;
+
+    @media only screen and (min-device-width: 375px) and (max-device-width: 667px) {
+        padding: 0 1.25rem;
+    }
 `;
 
 const SignupFormCompleteContainer = styled.div`
