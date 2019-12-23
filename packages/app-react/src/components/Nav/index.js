@@ -13,9 +13,6 @@ const NavContainer = styled.nav`
     background: rgb(2, 0, 36);
     background: linear-gradient(0deg, #020024 0%, #022c43 40%, #064f77 100%);
 
-    & a {
-        text-decoration: none;
-    }
     @media only screen and (min-device-width: 375px) and (max-device-width: 667px) {
         height: 15vh;
     }
@@ -78,38 +75,33 @@ const SecondaryText = styled.div`
 const NavLinks = styled.div`
     display: flex;
     align-items: center;
-    color: #ccc;
     font-size: 1.25rem;
-
-    & a {
-        margin-right: 2.5rem;
-        text-decoration: none;
-        border: 2px solid #ff8600e6;
-        padding: 10px 20px;
-        border-radius: 10px;
-        color: #ff8600e6;
-        background-color: #022c43;
-    }
-
-    & a:hover {
-        background: #020024;
-        color: #ccc;
-        border: 2px solid #ccc;
-    }
 
     @media only screen and (min-device-width: 375px) and (max-device-width: 667px) {
         margin-right: 0.5rem;
         font-size: 1rem;
+    }
+`;
 
-        & a {
-            margin-right: 1.25rem;
-            padding: 0.75rem 1rem;
-        }
+const StyledLink = styled(Link)`
+    margin-right: 2rem;
+    text-decoration: none;
+    border: 1px solid #ff8600e6;
+    padding: 10px 20px;
+    border-radius: 10px;
+    color: #ff8600e6;
+    background-color: #022c43;
+
+    &:hover {
+        background: #020024;
+        color: #ccc;
+        border: 1px solid #ccc;
     }
 `;
 
 const LogoutButton = styled.button`
-    border: 2px solid #ff8600e6;
+    margin-right: 2rem;
+    border: 1px solid #ff8600e6;
     padding: 10px 20px;
     border-radius: 10px;
     color: #ff8600e6;
@@ -119,7 +111,7 @@ const LogoutButton = styled.button`
     &:hover {
         background: #020024;
         color: #ccc;
-        border: 2px solid #ccc;
+        border: 1px solid #ccc;
     }
 `;
 
@@ -157,8 +149,8 @@ const Nav = () => {
             <NavLinks>
                 {!isFetching && !contextUser && (
                     <React.Fragment>
-                        <Link to="/login">Login</Link>
-                        <Link to="/signup">Signup</Link>
+                        <StyledLink to="/login">Login</StyledLink>
+                        <StyledLink to="/signup">Signup</StyledLink>
                     </React.Fragment>
                 )}
                 {!isFetching && contextUser && (
