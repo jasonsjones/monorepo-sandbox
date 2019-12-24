@@ -5,13 +5,16 @@ import { useAuthState, useAuthDispatch } from '../../context/authContext';
 import { executeGqlQuery } from '../../services/dataservice';
 // import ProfileMenu from '../ProfileMenu/ProfileMenu';
 
+const primaryColor = '#ff8600e6';
+const secondaryColor = '#022c43';
+
 const NavContainer = styled.nav`
     height: 12vh;
     display: flex;
     justify-content: space-between;
     align-items: center;
     background: rgb(2, 0, 36);
-    background: linear-gradient(0deg, #020024 0%, #022c43 40%, #064f77 100%);
+    background: linear-gradient(0deg, #020024 0%, ${secondaryColor} 40%, #064f77 100%);
 
     @media only screen and (min-device-width: 375px) and (max-device-width: 667px) {
         height: 15vh;
@@ -41,7 +44,7 @@ const LogoText = styled.div`
     & h3 {
         margin: 0;
         font-size: 1.75rem;
-        color: #ff8600e6;
+        color: ${primaryColor};
         text-transform: uppercase;
         letter-spacing: 2px;
     }
@@ -51,7 +54,7 @@ const LogoText = styled.div`
         padding: 0 10px 1px 0;
         font-weight: bold;
         font-size: 1.25rem;
-        color: navy;
+        color: ${secondaryColor};
         border-radius: 10px;
     }
 
@@ -67,7 +70,7 @@ const LogoText = styled.div`
 `;
 
 const SecondaryText = styled.div`
-    background-color: #ff8600e6;
+    background-color: ${primaryColor};
     border-radius: 10px;
     margin-left: 40%;
 `;
@@ -84,34 +87,37 @@ const NavLinks = styled.div`
 `;
 
 const StyledLink = styled(Link)`
+    transition: background-color 0.25s ease;
     margin-right: 2rem;
     text-decoration: none;
-    border: 1px solid #ff8600e6;
+    border: 2px solid ${primaryColor};
     padding: 10px 20px;
     border-radius: 10px;
-    color: #ff8600e6;
-    background-color: #022c43;
+    color: ${props => (props.primary ? secondaryColor : primaryColor)};
+    background-color: ${props => (props.primary ? primaryColor : secondaryColor)};
 
     &:hover {
         background: #020024;
-        color: #ccc;
-        border: 1px solid #ccc;
+        color: #999;
+        border: 2px solid #999;
+        box-shadow: 2px 2px 5px #999;
     }
 `;
 
 const LogoutButton = styled.button`
     margin-right: 2rem;
-    border: 1px solid #ff8600e6;
+    border: 2px solid ${primaryColor};
     padding: 10px 20px;
     border-radius: 10px;
-    color: #ff8600e6;
-    background-color: #022c43;
+    color: ${primaryColor};
+    background-color: ${secondaryColor};
     font-size: 1.25rem;
 
     &:hover {
         background: #020024;
-        color: #ccc;
-        border: 1px solid #ccc;
+        color: #999;
+        border: 2px solid #999;
+        box-shadow: 2px 2px 5px #999;
     }
 `;
 
@@ -150,7 +156,9 @@ const Nav = () => {
                 {!isFetching && !contextUser && (
                     <React.Fragment>
                         <StyledLink to="/login">Login</StyledLink>
-                        <StyledLink to="/signup">Signup</StyledLink>
+                        <StyledLink to="/signup" primary="true">
+                            Signup
+                        </StyledLink>
                     </React.Fragment>
                 )}
                 {!isFetching && contextUser && (
