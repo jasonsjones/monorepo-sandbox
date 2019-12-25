@@ -5,6 +5,7 @@ import Signup from './containers/Signup';
 import Login from './containers/Login';
 import Home from './components/Home';
 import ConfirmEmail from './containers/ConfirmEmail';
+import ForgotPassword from './containers/ForgotPassword';
 
 function App() {
     return (
@@ -14,6 +15,7 @@ function App() {
                     <Route exact path="/" component={Home} />
                     <Route exact path="/signup" component={Signup} />
                     <Route exact path="/login" component={Login} />
+                    <Route exact path="/forgotpassword" component={ForgotPassword} />
                     <Route exact path="/confirm-email/:token" component={ConfirmEmail} />
                 </Switch>
             </Layout>

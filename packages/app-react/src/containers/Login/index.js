@@ -44,7 +44,7 @@ const Login = ({ history }) => {
             <LoginFormContainer>
                 <LoginForm history={history} />
                 <ForgotPasswordContainer>
-                    <Link to="/resetpassword">Forgot your password?</Link>
+                    <Link to="/forgotpassword">Forgot your password?</Link>
                 </ForgotPasswordContainer>
             </LoginFormContainer>
         </Container>
