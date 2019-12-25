@@ -1,6 +1,9 @@
 import nodemailer from 'nodemailer';
 import { User } from '../../entity/User';
-import { getEmailVerificatonTemplateHTML, getEmailVerificatonTemplateText } from './templates';
+import {
+    getEmailVerificatonTemplateHTML,
+    getEmailVerificatonTemplateText
+} from './templates/emailVerification';
 
 interface MailOptions {
     port?: number;
