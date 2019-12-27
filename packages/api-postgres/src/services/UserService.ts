@@ -29,6 +29,20 @@ class UserService {
     static getUserByEmail(email: string): Promise<User | undefined> {
         return User.findOne({ where: { email } });
     }
+
+    static async generatePasswordToken(email: string): Promise<User | undefined> {
+        const user = await User.findOne({ where: { email } });
+        if (user) {
+            const in2Hours = new Date();
+            in2Hours.setHours(in2Hours.getHours() + 2);
+
+            user.passwordResetToken = v4();
+            user.passwordResetTokenExpiresAt = in2Hours;
+
+            await user.save();
+        }
+        return user;
+    }
 }
 
 export default UserService;

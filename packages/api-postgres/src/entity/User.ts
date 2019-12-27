@@ -44,6 +44,14 @@ export class User extends BaseEntity {
     emailVerificationToken: string;
 
     @Field()
+    @Column({ nullable: true })
+    passwordResetToken: string;
+
+    @Field()
+    @Column({ nullable: true })
+    passwordResetTokenExpiresAt: Date;
+
+    @Field()
     @CreateDateColumn()
     createdAt: Date;
 

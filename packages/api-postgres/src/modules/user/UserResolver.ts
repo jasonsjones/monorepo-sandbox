@@ -35,6 +35,17 @@ class UserResolver {
             }
         };
     }
+
+    @Mutation(() => MutationResponse)
+    async resetPassword(@Arg('email') email: string): Promise<MutationResponse> {
+        const updatedUser = await UserService.generatePasswordToken(email);
+        // send password reset email here
+        return {
+            success: true,
+            message: 'password reset intructions sent to user',
+            payload: { user: updatedUser }
+        };
+    }
 }
 
 export default UserResolver;
