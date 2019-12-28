@@ -37,14 +37,26 @@ class UserResolver {
     }
 
     @Mutation(() => MutationResponse)
-    async resetPassword(@Arg('email') email: string): Promise<MutationResponse> {
+    async resetPassword(
+        @Arg('email') email: string,
+        @Ctx() context: any
+    ): Promise<MutationResponse> {
         const updatedUser = await UserService.generatePasswordToken(email);
-        // send password reset email here
-        return {
-            success: true,
-            message: 'password reset intructions sent to user',
-            payload: { user: updatedUser }
-        };
+        if (updatedUser) {
+            const baseUrl = `${context.req.get('origin')}`;
+            await Mailer.sendPasswordResetEmail(baseUrl, updatedUser as User);
+            return {
+                success: true,
+                message: 'password reset intructions sent to user',
+                payload: { user: updatedUser }
+            };
+        } else {
+            return {
+                success: false,
+                message: 'invalid email',
+                payload: { user: updatedUser }
+            };
+        }
     }
 }
 

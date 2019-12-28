@@ -4,6 +4,10 @@ import {
     getEmailVerificatonTemplateHTML,
     getEmailVerificatonTemplateText
 } from './templates/emailVerification';
+import {
+    getPasswordResetTemplateHTML,
+    getPasswordResetTemplateText
+} from './templates/passwordReset';
 
 interface MailOptions {
     port?: number;
@@ -23,6 +27,22 @@ class Mailer {
                 subject: 'Email Verification',
                 text: getEmailVerificatonTemplateText(url, user),
                 html: getEmailVerificatonTemplateHTML(url, user)
+            });
+        }
+    };
+
+    public static sendPasswordResetEmail = async (url: string, user: User): Promise<any> => {
+        const transporter = nodemailer.createTransport(Mailer.getMailOptions());
+        const verifiedTransporter =
+            process.env.NODE_ENV === 'testing' ? true : await transporter.verify();
+
+        if (verifiedTransporter) {
+            return transporter.sendMail({
+                from: 'account.reset@sandbox.com',
+                to: user.email,
+                subject: 'Password Reset',
+                text: getPasswordResetTemplateText(url, user),
+                html: getPasswordResetTemplateHTML(url, user)
             });
         }
     };
