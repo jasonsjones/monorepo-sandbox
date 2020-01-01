@@ -11,6 +11,10 @@ const Container = styled.div`
         color: #696969;
         font-size: 1.25rem;
     }
+
+    @media only screen and (min-device-width: 375px) and (max-device-width: 667px) {
+        margin: 1.25rem;
+    }
 `;
 
 const ForgotPasswordContainer = styled.div`
