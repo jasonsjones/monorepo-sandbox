@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import styled from '@emotion/styled';
 import TextField from '../Common/Textfield';
 import Button from '../Common/Button';
+import { executeGqlQuery } from '../../services/dataservice';
 
 const ButtonContainer = styled.div`
     display: flex;
@@ -38,7 +39,17 @@ const ForgotPasswordForm = () => {
         e.preventDefault();
         const query = `
             mutation ResetPassword($email: String!) {
-                resetPassword(email: $email)
+                resetPassword(email: $email) {
+                    success
+                    message
+                    payload {
+                        user {
+                            name
+                            passwordResetToken
+                            passwordResetTokenExpiresAt
+                        }
+                    }
+                }
             }
         `;
         const variables = {
@@ -46,12 +57,20 @@ const ForgotPasswordForm = () => {
         };
 
         if (email.length > 0 && /\w+@\w/.test(email)) {
-            console.log(query);
-            console.log(variables);
-            setTimeout(() => {
-                setError('<Testing Error Logic> Unable to process your request. Try again.');
-                setShowMsg(true);
-            }, 1500);
+            executeGqlQuery(query, variables).then(({ errors, data }) => {
+                if (data && data.resetPassword && data.resetPassword.success) {
+                    setError(null);
+                    setShowMsg(true);
+                }
+
+                if (errors || !data.resetPassword.success) {
+                    setError(
+                        'Unable to process your request. Please verify your email and try again.'
+                    );
+                    setShowMsg(false);
+                    setEmail('');
+                }
+            });
         }
     };
 
