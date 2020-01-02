@@ -44,11 +44,11 @@ export class User extends BaseEntity {
     emailVerificationToken: string;
 
     @Field()
-    @Column({ nullable: true })
+    @Column({ default: '' })
     passwordResetToken: string;
 
     @Field()
-    @Column({ nullable: true })
+    @Column({ default: new Date() })
     passwordResetTokenExpiresAt: Date;
 
     @Field()

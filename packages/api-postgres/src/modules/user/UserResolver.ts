@@ -58,6 +58,19 @@ class UserResolver {
             };
         }
     }
+
+    @Mutation(() => MutationResponse)
+    async changePassword(
+        @Arg('token') token: string,
+        @Arg('password') password: string
+    ): Promise<MutationResponse> {
+        const { success, message, user } = await UserService.changePassword(token, password);
+        return {
+            success,
+            message,
+            payload: { user }
+        };
+    }
 }
 
 export default UserResolver;

@@ -43,6 +43,41 @@ class UserService {
         }
         return user;
     }
+
+    static async changePassword(
+        token: string,
+        password: string
+    ): Promise<{ success: boolean; message: string; user: User | undefined }> {
+        let success: boolean;
+        let message: string;
+        const user = await this.getUserByProperty('passwordResetToken', token);
+
+        if (user) {
+            const tokenIsExpired = new Date() > user.passwordResetTokenExpiresAt;
+            if (!tokenIsExpired) {
+                user.password = await bcrypt.hash(password, 12);
+                user.passwordResetToken = '';
+                user.passwordResetTokenExpiresAt = new Date();
+
+                await user.save();
+
+                success = true;
+                message = 'password changed';
+            } else {
+                success = false;
+                message = 'reset token is expired';
+            }
+        } else {
+            success = false;
+            message = 'reset token not valid for user';
+        }
+
+        return {
+            success,
+            message,
+            user
+        };
+    }
 }
 
 export default UserService;
