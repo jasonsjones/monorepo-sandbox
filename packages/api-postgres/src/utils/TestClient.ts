@@ -153,6 +153,37 @@ class TestClient {
         return response;
     }
 
+    public async resetPassword(email: string): Promise<Test> {
+        const query = `
+            mutation PasswordReset($email: String!) {
+                resetPassword(email: $email) {
+                    success
+                    message
+                    payload {
+                    user {
+                        name
+                        email
+                        passwordResetToken
+                        passwordResetTokenExpiresAt
+                        updatedAt
+                    }
+                    }
+                }
+            }
+        `;
+
+        const variables = {
+            email
+        };
+
+        const response: any = await request(this.app)
+            .post('/graphql')
+            .set('Content-Type', 'application/json')
+            .send({ query, variables });
+
+        return response;
+    }
+
     public getAccessToken(): string {
         return this.accessToken;
     }

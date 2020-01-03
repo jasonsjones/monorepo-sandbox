@@ -225,3 +225,53 @@ describe('query for me', () => {
         expect(data.me.email).toEqual(email);
     });
 });
+
+describe('mutation to request a password reset', () => {
+    const testUserEmail = 'test-user@example.com';
+
+    beforeAll(async () => {
+        await getConnection().manager.clear(User);
+        return UserService.createUser('Test', 'User', testUserEmail, 'plaintext');
+    });
+
+    it('adds a password reset token', async () => {
+        const client = new TestClient(app);
+        const response = await client.resetPassword(testUserEmail);
+        const { data, errors } = response.body;
+        const { success, message, payload } = data.resetPassword;
+
+        expect(errors).toBeUndefined();
+        expect(data.resetPassword.success).toBe(true);
+        expect(success).toBe(true);
+        expect(message.length).toBeGreaterThan(0);
+        expect(payload.user).toHaveProperty('passwordResetToken');
+        expect(payload.user.passwordResetToken.length).toBeGreaterThan(0);
+    });
+
+    it('adds a timestamp when the password reset token expires', async () => {
+        const now = new Date();
+        const client = new TestClient(app);
+        const response = await client.resetPassword(testUserEmail);
+        const { data, errors } = response.body;
+        const { success, message, payload } = data.resetPassword;
+
+        expect(errors).toBeUndefined();
+        expect(data.resetPassword.success).toBe(true);
+        expect(success).toBe(true);
+        expect(message.length).toBeGreaterThan(0);
+        expect(payload.user).toHaveProperty('passwordResetTokenExpiresAt');
+        expect(payload.user.passwordResetTokenExpiresAt.length).toBeGreaterThan(0);
+        expect(/^2020/.test(payload.user.passwordResetTokenExpiresAt)).toBe(true);
+        expect(new Date(payload.user.passwordResetTokenExpiresAt) > now).toBe(true);
+    });
+
+    it('does NOT generate token when given an unknown email', async () => {
+        const client = new TestClient(app);
+        const response = await client.resetPassword('unknownEmail@example.com');
+        const { data } = response.body;
+        const { success, message, payload } = data.resetPassword;
+        expect(success).toBe(false);
+        expect(message).toBe('invalid email');
+        expect(payload.user).toBeNull();
+    });
+});
