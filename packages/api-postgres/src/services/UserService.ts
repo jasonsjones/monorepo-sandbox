@@ -2,6 +2,8 @@ import bcrypt from 'bcryptjs';
 import { v4 } from 'uuid';
 import { User } from '../entity/User';
 
+const ONE_MINUTE_IN_MS = 60 * 1000;
+
 class UserService {
     static EMAIL_LENGTH = 3;
     static PASSWORD_LENGTH = 3;
@@ -33,11 +35,10 @@ class UserService {
     static async generatePasswordToken(email: string): Promise<User | undefined> {
         const user = await User.findOne({ where: { email } });
         if (user) {
-            const in2Hours = new Date();
-            in2Hours.setHours(in2Hours.getHours() + 2);
+            const _2HoursFromNow = new Date(Date.now() + 120 * ONE_MINUTE_IN_MS);
 
             user.passwordResetToken = v4();
-            user.passwordResetTokenExpiresAt = in2Hours;
+            user.passwordResetTokenExpiresAt = _2HoursFromNow;
 
             await user.save();
         }
@@ -53,7 +54,7 @@ class UserService {
         const user = await this.getUserByProperty('passwordResetToken', token);
 
         if (user) {
-            const tokenIsExpired = new Date() > user.passwordResetTokenExpiresAt;
+            const tokenIsExpired = new Date(Date.now()) > user.passwordResetTokenExpiresAt;
             if (!tokenIsExpired) {
                 user.password = await bcrypt.hash(password, 12);
                 user.passwordResetToken = '';
