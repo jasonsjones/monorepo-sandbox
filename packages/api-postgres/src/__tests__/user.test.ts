@@ -256,7 +256,6 @@ describe('mutation to request a password reset', () => {
         const { success, message, payload } = data.resetPassword;
 
         expect(errors).toBeUndefined();
-        expect(data.resetPassword.success).toBe(true);
         expect(success).toBe(true);
         expect(message.length).toBeGreaterThan(0);
         expect(payload.user).toHaveProperty('passwordResetTokenExpiresAt');
@@ -273,5 +272,62 @@ describe('mutation to request a password reset', () => {
         expect(success).toBe(false);
         expect(message).toBe('invalid email');
         expect(payload.user).toBeNull();
+    });
+
+    describe('mutation to change password', () => {
+        const testUserEmail = 'test-user@example.com';
+
+        beforeAll(async () => {
+            await getConnection().manager.clear(User);
+            return UserService.createUser('Test', 'User1', testUserEmail, 'plaintext');
+        });
+
+        it("changes a user's password when provided a valid reset token", async () => {
+            const client = new TestClient(app);
+            const resetResponse = await client.resetPassword(testUserEmail);
+            const resetPayload = resetResponse.body.data.resetPassword.payload;
+            const resetToken = resetPayload.user.passwordResetToken;
+            const origUser = await User.findOne({ where: { email: testUserEmail } });
+            const origPassword = origUser?.password;
+
+            const response = await client.changePassword(resetToken, 'newPassword1234');
+
+            const { data } = response.body;
+            const { success, message } = data.changePassword;
+            const updatedUser = await User.findOne({ where: { email: testUserEmail } });
+            const newPassword = updatedUser?.password;
+
+            expect(success).toBe(true);
+            expect(message.length).toBeGreaterThan(0);
+            expect(newPassword).not.toBe(origPassword);
+        });
+
+        it("does NOT change a user's password when provided an invalid reset token", async () => {
+            const expectedMessage = 'reset token not valid for user';
+            const invalidToken = '98f90fae-9626-4077-8ca4-761e3d24aab1';
+            const client = new TestClient(app);
+            const response = await client.changePassword(invalidToken, 'newPassword1234');
+            const { data } = response.body;
+            const { success, message } = data.changePassword;
+            expect(success).toBe(false);
+            expect(message.length).toBeGreaterThan(0);
+            expect(expectedMessage).toBe(message);
+        });
+
+        it.skip("does NOT change a user's password when provided an expired reset token", async () => {
+            const client = new TestClient(app);
+            const resetResponse = await client.resetPassword(testUserEmail);
+            const resetPayload = resetResponse.body.data.resetPassword.payload;
+            const resetToken = resetPayload.user.passwordResetToken;
+
+            // need to determine how to best mock/stub the current time.  Need to fast forward 2+ hours for
+            // token to expire
+            const response = await client.changePassword(resetToken, 'newPassword1234');
+            const { data } = response.body;
+            const { success, message } = data.changePassword;
+
+            expect(success).toBe(true);
+            expect(message.length).toBeGreaterThan(0);
+        });
     });
 });

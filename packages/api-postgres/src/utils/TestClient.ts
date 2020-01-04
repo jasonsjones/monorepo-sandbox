@@ -160,13 +160,12 @@ class TestClient {
                     success
                     message
                     payload {
-                    user {
-                        name
-                        email
-                        passwordResetToken
-                        passwordResetTokenExpiresAt
-                        updatedAt
-                    }
+                        user {
+                            name
+                            email
+                            passwordResetToken
+                            passwordResetTokenExpiresAt
+                        }
                     }
                 }
             }
@@ -174,6 +173,35 @@ class TestClient {
 
         const variables = {
             email
+        };
+
+        const response: any = await request(this.app)
+            .post('/graphql')
+            .set('Content-Type', 'application/json')
+            .send({ query, variables });
+
+        return response;
+    }
+
+    public async changePassword(token: string, password: string): Promise<Test> {
+        const query = `
+            mutation ChangePassword($token: String!, $password: String!) {
+                changePassword(token: $token, password: $password) {
+                    success
+                    message
+                    payload {
+                        user {
+                            name
+                            passwordResetToken
+                        }
+                    }
+                }
+            }
+        `;
+
+        const variables = {
+            token,
+            password
         };
 
         const response: any = await request(this.app)
