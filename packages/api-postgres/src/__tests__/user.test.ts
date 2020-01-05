@@ -5,6 +5,7 @@ import { User } from '../entity/User';
 import UserService from '../services/UserService';
 import { createDbConnection } from '../utils/createDbConnection';
 import TestClient from '../utils/TestClient';
+import DateUtils from '../utils/DateUtils';
 
 const makeGraphQLCall = (query: string, variables = {}): Test => {
     return request(app)
@@ -314,20 +315,27 @@ describe('mutation to request a password reset', () => {
             expect(expectedMessage).toBe(message);
         });
 
-        it.skip("does NOT change a user's password when provided an expired reset token", async () => {
+        it("does NOT change a user's password when provided an expired reset token", async () => {
             const client = new TestClient(app);
             const resetResponse = await client.resetPassword(testUserEmail);
             const resetPayload = resetResponse.body.data.resetPassword.payload;
             const resetToken = resetPayload.user.passwordResetToken;
 
-            // need to determine how to best mock/stub the current time.  Need to fast forward 2+ hours for
-            // token to expire
+            // mock the current date/time to be 3 hours in the future to force the
+            // password reset token to expire
+            const spy = jest
+                .spyOn(DateUtils, 'getCurrentDate')
+                .mockImplementationOnce(() => new Date(Date.now() + 180 * 60 * 1000));
+
             const response = await client.changePassword(resetToken, 'newPassword1234');
             const { data } = response.body;
             const { success, message } = data.changePassword;
 
-            expect(success).toBe(true);
-            expect(message.length).toBeGreaterThan(0);
+            expect(success).toBe(false);
+            expect(message).toBe('reset token is expired');
+
+            spy.mockReset();
+            spy.mockRestore();
         });
     });
 });
