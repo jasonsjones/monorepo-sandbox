@@ -54,7 +54,7 @@ class AuthResolver {
 
         if (!user) {
             return {
-                success: true,
+                success: false,
                 message: 'verification token not found'
             };
         }

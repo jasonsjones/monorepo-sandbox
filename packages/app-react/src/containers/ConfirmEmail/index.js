@@ -43,12 +43,12 @@ const ConfirmEmail = ({ match, history }) => {
                     success
                     message
                     payload {
-                    user {
-                        id
-                        name
-                        isEmailVerified
-                        emailVerificationToken
-                    }
+                        user {
+                            id
+                            name
+                            isEmailVerified
+                            emailVerificationToken
+                        }
                     }
                 }
             }
@@ -61,7 +61,14 @@ const ConfirmEmail = ({ match, history }) => {
                     setMessage('Thanks for confirming your email');
                     setEmailConfirmed(true);
                 }, 2000);
-            } else if (errors) {
+            } else {
+                setMessage(
+                    'Sorry...  Something went wrong confirming your email.  Please try again.'
+                );
+                setEmailConfirmed(false);
+            }
+
+            if (errors) {
                 console.log(errors);
             }
         });

@@ -17,7 +17,7 @@ function App() {
                     <Route exact path="/signup" component={Signup} />
                     <Route exact path="/login" component={Login} />
                     <Route exact path="/forgotpassword" component={ForgotPassword} />
-                    <Route exact path="/confirm-email/:token" component={ConfirmEmail} />
+                    <Route exact path="/confirmemail/:token" component={ConfirmEmail} />
                     <Route exact path="/changepassword/:token" component={ChangePassword} />
                 </Switch>
             </Layout>
