@@ -5,10 +5,9 @@ import TextField from '.';
 describe('TextField component', () => {
     afterEach(cleanup);
 
-    it('with default props renders a div with class form-control', () => {
+    it('with default props renders a div', () => {
         const { container } = render(<TextField />);
         expect(container.firstChild.nodeName).toBe('DIV');
-        expect(container.firstChild.classList).toContain('form-control');
     });
 
     it('with default props renders a single label and input', () => {
