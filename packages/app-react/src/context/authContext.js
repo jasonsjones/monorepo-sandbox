@@ -118,4 +118,4 @@ const AuthProvider = ({ children }) => {
 const useAuthState = () => useContext(AuthStateContext);
 const useAuthDispatch = () => useContext(AuthDispatchContext);
 
-export { AuthProvider, useAuthState, useAuthDispatch };
+export { AuthProvider, AuthStateContext, useAuthState, useAuthDispatch };
