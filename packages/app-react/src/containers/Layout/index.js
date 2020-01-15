@@ -35,7 +35,7 @@ const Content = styled.main`
     }
 `;
 
-const PageFooter = styled.footer`
+const PageFooterContainer = styled.div`
     min-height: 20vh;
     background: linear-gradient(180deg, #020024 0%, #022c43 70%, #064f77 100%);
 
@@ -76,9 +76,9 @@ const Layout = ({ children }) => {
                 <Container>
                     <Nav />
                     <Content>{children}</Content>
-                    <PageFooter>
+                    <PageFooterContainer>
                         <Footer />
-                    </PageFooter>
+                    </PageFooterContainer>
                 </Container>
             </AppProviders>
         </React.Fragment>

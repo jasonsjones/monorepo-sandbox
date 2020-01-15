@@ -4,7 +4,7 @@ import styled from '@emotion/styled';
 const SOCIAL_ICON_COLOR = 'ccc';
 const SOCIAL_ICON_COLOR_HOVER = 'fff';
 
-const Container = styled.div`
+const Container = styled.footer`
     display: flex;
     flex-direction: column;
 `;
