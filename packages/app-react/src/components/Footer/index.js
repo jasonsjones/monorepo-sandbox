@@ -115,7 +115,7 @@ const Footer = () => {
                         <SocialAccount
                             onMouseOver={() => setTwitterIconColor(SOCIAL_ICON_COLOR_HOVER)}
                             onMouseOut={() => setTwitterIconColor(SOCIAL_ICON_COLOR)}
-                            href="https://twitter.com/jsj0nes"
+                            href="https://twitter.com/_jasonsjones"
                             target="_blank"
                             rel="noopener noreferrer"
                         >
