@@ -1,4 +1,4 @@
-import { createConnection, Connection, ConnectionOptions } from 'typeorm';
+import { createConnection, getConnectionOptions, Connection, ConnectionOptions } from 'typeorm';
 import { dbOptions } from './dbConnectionOptions';
 
 enum Env {
@@ -33,4 +33,16 @@ export const createDbConnection = async (): Promise<Connection> => {
     const env: Env = getEnvironment(process.env.NODE_ENV);
     const connectionOptions = await getConnectionOptionsForEnv(env);
     return createConnection({ ...connectionOptions, name: 'default' });
+};
+
+export const createPostgresConnection = async (): Promise<Connection> => {
+    const env = process.env.NODE_ENV;
+    if (env !== 'production') {
+        const connectionOptions = await getConnectionOptions(process.env.NODE_ENV);
+        return createConnection({ ...connectionOptions, name: 'default' });
+    }
+    return createConnection({
+        type: 'postgres',
+        url: process.env.DATABASE_URL
+    });
 };
