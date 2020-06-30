@@ -1,17 +1,17 @@
-import { getConnection, getRepository } from 'typeorm';
+import { getConnection } from 'typeorm';
 import UserService from '../services/UserService';
 import Mailer from '../services/mailer/Mailer';
 import { User } from '../entity/User';
-import { createDbConnection } from '../utils/createDbConnection';
+import { createPostgresConnection } from '../utils/createDbConnection';
+import TestUtils from '../utils/TestUtilities';
 
 beforeAll(() => {
-    return createDbConnection();
+    return createPostgresConnection();
 });
 
 afterAll(async () => {
-    const userRepository = await getRepository(User);
-    userRepository.clear();
-    getConnection().close();
+    await TestUtils.dropUsers();
+    await getConnection().close();
 });
 
 describe('Mailer', () => {

@@ -1,10 +1,10 @@
 import request, { Test } from 'supertest';
-import { getConnection, getRepository } from 'typeorm';
+import { getConnection } from 'typeorm';
 import app from '../config/app';
-import { User } from '../entity/User';
 import UserService from '../services/UserService';
-import { createDbConnection } from '../utils/createDbConnection';
+import { createPostgresConnection } from '../utils/createDbConnection';
 import TestClient from '../utils/TestClient';
+import TestUtils from '../utils/TestUtilities';
 
 const makeGraphQLCall = (query: string, variables = {}): Test => {
     return request(app)
@@ -24,13 +24,12 @@ const verifyInvalidUser = (res: request.Response): void => {
 };
 
 beforeAll(() => {
-    return createDbConnection();
+    return createPostgresConnection();
 });
 
 afterAll(async () => {
-    const userRepository = await getRepository(User);
-    userRepository.clear();
-    getConnection().close();
+    await TestUtils.dropUsers();
+    await getConnection().close();
 });
 
 describe('Authentication resolver', () => {

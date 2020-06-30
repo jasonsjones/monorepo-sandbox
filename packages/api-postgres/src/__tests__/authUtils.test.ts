@@ -1,5 +1,5 @@
 import jwt, { JsonWebTokenError, TokenExpiredError } from 'jsonwebtoken';
-import { getConnection, getRepository } from 'typeorm';
+import { getConnection } from 'typeorm';
 import { User } from '../entity/User';
 import {
     createAccessToken,
@@ -7,17 +7,17 @@ import {
     createRefreshToken,
     verifyRefreshToken
 } from '../modules/auth/authUtils';
-import { createDbConnection } from '../utils/createDbConnection';
+import { createPostgresConnection } from '../utils/createDbConnection';
 import UserService from '../services/UserService';
+import TestUtils from '../utils/TestUtilities';
 
 beforeAll(() => {
-    return createDbConnection();
+    return createPostgresConnection();
 });
 
 afterAll(async () => {
-    const userRepository = await getRepository(User);
-    userRepository.clear();
-    getConnection().close();
+    await TestUtils.dropUsers();
+    await getConnection().close();
 });
 
 describe('Auth util', () => {
