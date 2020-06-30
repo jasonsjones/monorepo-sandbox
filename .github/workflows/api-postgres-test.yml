@@ -23,4 +23,5 @@ jobs:
 
             - name: Set up test database
               run: |
-                  docker exec -i postgres bash < ./db-setup.sh
+                  pwd && ls -al
+              #docker exec -i postgres bash < ./db-setup.sh
