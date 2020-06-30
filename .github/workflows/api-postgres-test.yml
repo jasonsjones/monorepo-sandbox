@@ -6,7 +6,6 @@ on:
 jobs:
     container-job:
         runs-on: ubuntu-latest
-        container: node:12-alpine3.11
 
         services:
             postgres:
@@ -21,11 +20,13 @@ jobs:
                     --health-retries 5
 
         steps:
-            - name: Check out code
-            uses: actions/checkout@v2
+            - name: Print greeting
+            run: |
+                echo "Hello github workflows!"
 
-            #- name: Set up db
-            #run: docker exec -i postgres bash < ./db-setup.sh
-
-            #- name: Install dependencies
-            #run: yarn install
+        #- name: Check out code
+        #uses: actions/checkout@v2
+        #- name: Set up db
+        #run: docker exec -i postgres bash < ./db-setup.sh
+        #- name: Install dependencies
+        #run: yarn install
