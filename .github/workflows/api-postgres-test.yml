@@ -24,8 +24,8 @@ jobs:
             - name: Check out code
             uses: actions/checkout@v2
 
-            - name: Set up db
-            run: docker exec -i postgres bash < ./db-setup.sh
+            #- name: Set up db
+            #run: docker exec -i postgres bash < ./db-setup.sh
 
-            - name: Install dependencies
-            run: yarn Install
+            #- name: Install dependencies
+            #run: yarn install
