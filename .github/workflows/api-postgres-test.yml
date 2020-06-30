@@ -21,9 +21,9 @@ jobs:
             - name: Checkout
               uses: actions/checkout@v2
 
-            - name: Docker?
+            - name: Set up test database
               run: |
-                  which docker
+                  docker exec -i postgres bash < ./db-setup.sh
 
 #        steps:
 #            - name: Print greeting
