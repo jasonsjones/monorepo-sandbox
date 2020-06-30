@@ -1,0 +1,31 @@
+name: API Postgres test
+on:
+    push:
+        paths:
+            - 'packages/api-postgres/*'
+jobs:
+    container-job:
+        runs-on: ubuntu-latest
+        container: node:12-alpine3.11
+
+        services:
+            postgres:
+                image: postgres:latest
+                env:
+                    POSTGRES_USER: postgres
+                    POSTGRES_PASSWORD: postgres
+                options: >-
+                    --health-cmd pg_isready
+                    --health-interval 10s
+                    --health-timeout 5s
+                    --health-retries 5
+
+        steps:
+            - name: Check out code
+            uses: actions/checkout@v2
+
+            name: Set up db
+            run: docker exec -i postgres bash < ./db-setup.sh
+
+            - name: Install dependencies
+            run: yarn Install
