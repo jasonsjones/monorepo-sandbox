@@ -23,5 +23,4 @@ jobs:
 
             - name: Set up test database
               run: |
-                  docker container ls -a
-                  docker container ls -aq
+                  docker exec -i $(docker container ls -aq) bash < ./db-setup.sh
