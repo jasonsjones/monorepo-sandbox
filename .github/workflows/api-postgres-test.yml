@@ -1,8 +1,8 @@
 name: API Postgres test
 on: [push]
 jobs:
-    build-job:
-        name: Greeting
+    build:
+        name: API test
         runs-on: ubuntu-latest
 
         services:
@@ -18,12 +18,12 @@ jobs:
                     - 5432:5432
 
         steps:
-            - name: checkout
+            - name: Checkout
               uses: actions/checkout@v2
 
-            - name: Greeting
+            - name: Docker?
               run: |
-                  echo "Hello github workflows!"
+                  which docker
 
 #        steps:
 #            - name: Print greeting
