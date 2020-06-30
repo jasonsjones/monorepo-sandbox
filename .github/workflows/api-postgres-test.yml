@@ -4,14 +4,7 @@ jobs:
     build-job:
         name: Greeting
         runs-on: ubuntu-latest
-        steps:
-            - name: Print greeting
-              run: |
-                  echo "Hello github workflows!"
 
-    container-job:
-        name: Container job
-        runs-on: ubuntu-latest
         services:
             postgres:
                 image: postgres:latest
@@ -19,15 +12,14 @@ jobs:
                     POSTGRES_USER: postgres
                     POSTGRES_PASSWORD: postgres
                 options: >-
-                    --health-cmd pg_isready
-                    --health-interval 10s
-                    --health-timeout 5s
+                    --health-cmd pg_isready --health-interval 10s --health-timeout 5s
                     --health-retries 5
 
-        steps:
-           - name: Print greeting
-           run: |
-               echo "Hello github workflows from container job!"
+#        steps:
+#            - name: Print greeting
+#              run: |
+#                  echo "Hello github workflows!"
+
 #jobs:
 #    container-job:
 #        runs-on: ubuntu-latest
