@@ -1,8 +1,5 @@
 name: API Postgres test
-on:
-    push:
-        paths:
-            - 'packages/api-postgres/*'
+on: [push]
 jobs:
     build-job:
         name: Greeting
