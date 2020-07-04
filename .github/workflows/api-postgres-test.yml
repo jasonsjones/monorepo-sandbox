@@ -1,9 +1,12 @@
-name: API Postgres test
+name: API Postgres tests
 
 on:
     push:
         branches:
             - master
+        paths:
+            - 'packages/api-postgres/**'
+
     pull_request:
         branches:
             - master
