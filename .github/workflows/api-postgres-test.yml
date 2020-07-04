@@ -24,7 +24,7 @@ jobs:
 
         steps:
             - name: Check PWD
-              run: echo pwd
+              run: pwd
               
             - name: Set up test database
               run: |
