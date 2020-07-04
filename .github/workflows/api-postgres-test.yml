@@ -23,12 +23,12 @@ jobs:
                     - 5432:5432
 
         steps:
-            - name: Check PWD
-              run: pwd
               
             - name: Set up test database
+              working-directory: ./packages/api-postgres/scripts
               run: |
-                  docker exec -i $(docker container ls -aq) bash < ./packages/api-postgres/scripts/db-setup.sh
+                  pwd
+                  docker exec -i $(docker container ls -aq) bash < ./db-setup.sh
 
             - name: Checkout
               uses: actions/checkout@v2
