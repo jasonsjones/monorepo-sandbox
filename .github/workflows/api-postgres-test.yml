@@ -23,6 +23,9 @@ jobs:
                     - 5432:5432
 
         steps:
+            - name: Check PWD
+              run: echo pwd
+              
             - name: Set up test database
               run: |
                   docker exec -i $(docker container ls -aq) bash < ./packages/api-postgres/scripts/db-setup.sh
