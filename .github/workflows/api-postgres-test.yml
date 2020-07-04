@@ -1,9 +1,25 @@
-name: API Postgres test
-on: [push]
+name: API Postgres tests
+
+on:
+    push:
+        branches:
+            - master
+        paths:
+            - 'packages/api-postgres/**'
+
+    pull_request:
+        branches:
+            - master
+        paths:
+            - 'packages/api-postgres/**'
+
 jobs:
-    build:
+    runner-job:
         name: API test
         runs-on: ubuntu-latest
+        env:
+            ACCESS_TOKEN_SECRET: AccesstokenSECRETforTESTING
+            REFRESH_TOKEN_SECRET: RefreshtokenSECRETforTESTING
 
         services:
             postgres:
@@ -23,4 +39,15 @@ jobs:
 
             - name: Set up test database
               run: |
-                  docker exec -i $(docker container ls -aq) bash < ./db-setup.sh
+                  docker exec -i $(docker container ls -aq) bash < ./packages/api-postgres/scripts/db-setup.sh
+
+            - name: Install node
+              uses: actions/setup-node@v1
+              with:
+                  node-version: 12.x
+
+            - name: Install dependencies
+              run: npm install
+
+            - name: Run API tests
+              run: npm run test:api-p
