@@ -63,8 +63,6 @@ const ChangePasswordForm = ({ token, handleSuccess }) => {
         };
 
         if (isFormValid()) {
-            console.log('submitting change password form...');
-            console.log(variables);
             executeGqlQuery(query, variables).then(({ data }) => {
                 if (data && data.changePassword) {
                     const { success, message } = data.changePassword;
@@ -76,7 +74,6 @@ const ChangePasswordForm = ({ token, handleSuccess }) => {
                         setSubmitError('');
                         handleSuccess();
                     } else {
-                        console.log('message ', message);
                         setSubmitError(message);
                     }
                 }
@@ -115,7 +112,7 @@ const ChangePasswordForm = ({ token, handleSuccess }) => {
                     <Button type="submit" text="Submit" />
                 </ButtonContainer>
             </form>
-            {submitError && <Error>{submitError}</Error>}
+            {submitError && <Error data-testid="error">{submitError}</Error>}
         </React.Fragment>
     );
 };
