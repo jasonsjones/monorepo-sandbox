@@ -1,4 +1,5 @@
 import React from 'react';
+import user from '@testing-library/user-event';
 import { render, cleanup, fireEvent } from '@testing-library/react';
 import TextField from '.';
 
@@ -40,18 +41,18 @@ describe('TextField component', () => {
             type: 'email',
             value: 'oliver',
             error: 'Some error message',
-            handleChange: () => {}
+            handleChange: () => {},
         };
         const { getByText } = render(<TextField {...props} />);
         expect(getByText('Some error message')).toBeTruthy();
     });
 
-    it(`calls 'handleChange' prop when value changes`, () => {
+    it(`calls 'handleChange' prop when value changes`, async () => {
         const handleChange = jest.fn();
         const props = { label: 'Email', type: 'email', value: 'oliver', handleChange };
         const { getByLabelText } = render(<TextField {...props} />);
         const input = getByLabelText('Email');
-        fireEvent.change(input, { target: { value: 'oliver@' } });
+        await user.type(input, 'oliver@');
         expect(handleChange).toHaveBeenCalled();
     });
 });

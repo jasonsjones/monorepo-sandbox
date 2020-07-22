@@ -1,5 +1,6 @@
 import React from 'react';
-import { render, cleanup, fireEvent, act } from '@testing-library/react';
+import user from '@testing-library/user-event';
+import { render, cleanup, act } from '@testing-library/react';
 import ChangePasswordForm from '.';
 import * as Services from '../../services/dataservice';
 
@@ -7,9 +8,9 @@ const result = Promise.resolve({
     data: {
         changePassword: {
             success: true,
-            message: 'password changed'
-        }
-    }
+            message: 'password changed',
+        },
+    },
 });
 
 Services.executeGqlQuery = jest.fn(() => result);
@@ -30,19 +31,20 @@ describe('ChangePasswordForm component', () => {
     it('displays error if password is empty when submitting', () => {
         const { getByText } = render(<ChangePasswordForm />);
         const submitButton = getByText('Submit');
-        fireEvent.click(submitButton);
+        user.click(submitButton);
         const error = getByText('Please verify new password and try again.');
         expect(error).toBeTruthy();
     });
 
-    it('displays error if passwords do not match ', () => {
+    it('displays error if passwords do not match ', async () => {
         const { getByLabelText, getByText } = render(<ChangePasswordForm />);
         const pwdInput = getByLabelText('Password');
         const confirmInput = getByLabelText('Confirm Password');
         const submitButton = getByText('Submit');
-        fireEvent.change(pwdInput, { target: { value: 'secretpassword' } });
-        fireEvent.change(confirmInput, { target: { value: 'secretpassw0rd' } });
-        fireEvent.click(submitButton);
+
+        await user.type(pwdInput, 'secretpassword');
+        await user.type(confirmInput, 'secretpassw0rd');
+        user.click(submitButton);
 
         const error = getByText('Please verify new password and try again.');
         expect(error).toBeTruthy();
@@ -55,9 +57,10 @@ describe('ChangePasswordForm component', () => {
         const pwdInput = getByLabelText('Password');
         const confirmInput = getByLabelText('Confirm Password');
         const submitButton = getByText('Submit');
-        fireEvent.change(pwdInput, { target: { value: 'secretpassword' } });
-        fireEvent.change(confirmInput, { target: { value: 'secretpassword' } });
-        fireEvent.click(submitButton);
+
+        await user.type(pwdInput, 'secretpassword');
+        await user.type(confirmInput, 'secretpassword');
+        user.click(submitButton);
 
         expect(Services.executeGqlQuery).toHaveBeenCalled();
         await act(() => result);
