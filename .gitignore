@@ -16,6 +16,8 @@ packages/app/cypress/support/commands.js
 packages/app/cypress/support/index.js
 packages/app/cypress/fixtures/example.json
 
+packages/app-react/src/styles/main.css
+
 # production
 build/
 dist/
