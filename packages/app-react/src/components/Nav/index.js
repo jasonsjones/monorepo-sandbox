@@ -1,6 +1,7 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import styled from '@emotion/styled';
+import tw from 'twin.macro';
 import { useAuthState, useAuthDispatch } from '../../context/authContext';
 import { executeGqlQuery } from '../../services/dataservice';
 // import ProfileMenu from '../ProfileMenu/ProfileMenu';
@@ -9,18 +10,18 @@ const primaryColor = '#ff8600e6';
 const secondaryColor = '#022c43';
 
 const NavContainer = styled.nav`
-    height: 12vh;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: rgb(2, 0, 36);
-    background: linear-gradient(0deg, #020024 0%, ${secondaryColor} 40%, #064f77 100%);
+    ${tw`h-24 flex justify-between items-center`}
+
+    /* height: 12vh; */
+    /* background: rgb(2, 0, 36);
+    background: linear-gradient(0deg, #020024 0%, ${secondaryColor} 40%, #064f77 100%); */
 
     @media only screen and (min-device-width: 375px) and (max-device-width: 667px) {
         height: 15vh;
     }
 `;
 
+/*
 const Logo = styled.div`
     margin-left: 2rem;
     padding-top: 20px;
@@ -36,7 +37,9 @@ const Logo = styled.div`
         padding-top: 1rem;
     }
 `;
+*/
 
+/*
 const LogoText = styled.div`
     width: 100px;
     text-align: right;
@@ -68,12 +71,15 @@ const LogoText = styled.div`
         }
     }
 `;
+*/
 
+/*
 const SecondaryText = styled.div`
     background-color: ${primaryColor};
     border-radius: 10px;
     margin-left: 40%;
 `;
+*/
 
 const NavLinks = styled.div`
     display: flex;
@@ -86,6 +92,7 @@ const NavLinks = styled.div`
     }
 `;
 
+/*
 const StyledLink = styled(Link)`
     transition: background-color 0.25s ease;
     margin-right: 2rem;
@@ -93,8 +100,8 @@ const StyledLink = styled(Link)`
     border: 2px solid ${primaryColor};
     padding: 10px 20px;
     border-radius: 10px;
-    color: ${props => (props.primary ? secondaryColor : primaryColor)};
-    background-color: ${props => (props.primary ? primaryColor : secondaryColor)};
+    color: ${(props) => (props.primary ? secondaryColor : primaryColor)};
+    background-color: ${(props) => (props.primary ? primaryColor : secondaryColor)};
 
     &:hover {
         background: #020024;
@@ -103,6 +110,7 @@ const StyledLink = styled(Link)`
         box-shadow: 2px 2px 5px #999;
     }
 `;
+*/
 
 const LogoutButton = styled.button`
     margin-right: 2rem;
@@ -141,24 +149,24 @@ const Nav = () => {
     };
 
     return (
-        <NavContainer>
-            <Logo>
+        <NavContainer className="bg-purple-900 text-gray-400 px-8">
+            <div>
                 <Link to="/">
-                    <LogoText>
-                        <h3>Orion</h3>
-                        <SecondaryText>
+                    <div className="flex flex-col items-end">
+                        <h3 className="text-3xl font-bold uppercase hover:text-white">Orion</h3>
+                        <div className="-mt-2 -mr-2 px-2 text-lg text-white font-semibold bg-purple-400 rounded-full">
                             <p>labs</p>
-                        </SecondaryText>
-                    </LogoText>
+                        </div>
+                    </div>
                 </Link>
-            </Logo>
+            </div>
             <NavLinks>
                 {!isFetching && !contextUser && (
                     <React.Fragment>
-                        <StyledLink to="/login">Login</StyledLink>
-                        <StyledLink to="/signup" primary="true">
-                            Signup
-                        </StyledLink>
+                        <NavLink to="/login" className="mr-6">
+                            Login
+                        </NavLink>
+                        <NavLink to="/signup">Signup</NavLink>
                     </React.Fragment>
                 )}
                 {!isFetching && contextUser && (

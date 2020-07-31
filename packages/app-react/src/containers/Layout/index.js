@@ -1,6 +1,7 @@
 import React from 'react';
 import { Global, css } from '@emotion/core';
 import styled from '@emotion/styled';
+import tw from 'twin.macro';
 import AppProviders from '../AppProviders';
 import Nav from '../../components/Nav';
 import Footer from '../../components/Footer';
@@ -18,32 +19,25 @@ palette from https://colorhunt.co/palette/141100
 */
 
 // const primary_color = '#022c43';
-const secondary_color = '#053f53';
+// const secondary_color = '#053f53';
 
 const Container = styled.div`
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
+    ${tw`flex flex-col h-screen`}
 `;
 
 const Content = styled.main`
-    flex: 1;
-    background-color: #eee;
-
-    @media only screen and (min-device-width: 375px) and (max-device-width: 667px) {
-        padding: 0 0.5rem;
-    }
+    ${tw`flex-grow flex-shrink-0`}
 `;
+//     @media only screen and (min-device-width: 375px) and (max-device-width: 667px) {
+//         padding: 0 0.5rem;
 
 const PageFooterContainer = styled.div`
-    min-height: 20vh;
-    background: linear-gradient(180deg, #020024 0%, #022c43 70%, #064f77 100%);
-
-    @media only screen and (min-device-width: 375px) and (max-device-width: 667px) {
-        min-height: 30vh;
-        padding: 0 0.5rem;
-    }
+    ${tw`h-auto bg-purple-900`}
 `;
+// @media only screen and (min-device-width: 375px) and (max-device-width: 667px) {
+//     min-height: 30vh;
+//     padding: 0 0.5rem;
+// }
 
 const Layout = ({ children }) => {
     return (
@@ -67,7 +61,6 @@ const Layout = ({ children }) => {
                     h2 {
                         margin: 0;
                         padding: 0;
-                        color: ${secondary_color};
                     }
                 `}
             />
