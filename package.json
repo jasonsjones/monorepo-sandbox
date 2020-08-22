@@ -12,7 +12,8 @@
     },
     "scripts": {
         "bootstrap": "lerna bootstrap",
-        "clean": "lerna clean",
+        "clean": "lerna clean --yes",
+        "clean:all": "lerna clean --yes && rm -rf node_modules",
         "dev": "lerna run dev --stream",
         "dev:api-m": "lerna run dev --stream --scope @orion/api-mongo",
         "dev:api-p": "lerna run dev --stream --scope @orion/api-postgres",
