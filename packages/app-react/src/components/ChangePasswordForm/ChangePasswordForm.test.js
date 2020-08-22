@@ -8,9 +8,9 @@ const result = Promise.resolve({
     data: {
         changePassword: {
             success: true,
-            message: 'password changed',
-        },
-    },
+            message: 'password changed'
+        }
+    }
 });
 
 Services.executeGqlQuery = jest.fn(() => result);
