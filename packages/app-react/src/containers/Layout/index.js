@@ -31,14 +31,6 @@ const Content = styled.main`
 //     @media only screen and (min-device-width: 375px) and (max-device-width: 667px) {
 //         padding: 0 0.5rem;
 
-const PageFooterContainer = styled.div`
-    ${tw`h-auto bg-purple-900`}
-`;
-// @media only screen and (min-device-width: 375px) and (max-device-width: 667px) {
-//     min-height: 30vh;
-//     padding: 0 0.5rem;
-// }
-
 const Layout = ({ children }) => {
     return (
         <React.Fragment>
@@ -69,9 +61,7 @@ const Layout = ({ children }) => {
                 <Container>
                     <Nav />
                     <Content>{children}</Content>
-                    <PageFooterContainer>
-                        <Footer />
-                    </PageFooterContainer>
+                    <Footer />
                 </Container>
             </AppProviders>
         </React.Fragment>
