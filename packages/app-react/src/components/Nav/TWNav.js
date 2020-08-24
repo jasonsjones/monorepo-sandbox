@@ -1,8 +1,28 @@
 import React, { useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
+import { useAuthState, useAuthDispatch } from '../../context/authContext';
+import { executeGqlQuery } from '../../services/dataservice';
 
 function TWNav() {
     const [isMobileLinksOpen, setIsMobileLinksOpen] = useState(false);
+
+    const { isFetching, contextUser } = useAuthState();
+    const authDispatch = useAuthDispatch();
+
+    const handleLogout = () => {
+        const query = `
+            mutation {
+                logout
+            }
+        `;
+
+        authDispatch({ type: 'USER_LOGOUT_REQUEST' });
+        executeGqlQuery(query).then(({ data }) => {
+            if (data.logout) {
+                authDispatch({ type: 'USER_LOGOUT_SUCCESS' });
+            }
+        });
+    };
 
     return (
         <header className="px-8 py-4 bg-purple-900 text-gray-400">
@@ -22,7 +42,7 @@ function TWNav() {
                     </div>
                     {/* The button svg (menu or 'x') that is displayed on small screens */}
                     <button
-                        className="focus:text-gray-100 hover:text-gray-100 sm:hidden"
+                        className="focus:text-gray-100 focus:outline-none hover:text-gray-100 sm:hidden"
                         type="button"
                         onClick={() => setIsMobileLinksOpen(!isMobileLinksOpen)}
                     >
@@ -50,39 +70,66 @@ function TWNav() {
                     </button>
                     {/* The nav links that are displayed on larger screens */}
                     <div className="hidden sm:block flex items-center text-xl">
-                        <NavLink
-                            to="/login"
-                            className="mr-6 p-2 hover:text-white"
-                            activeClassName="border-purple-400 border-b-2 text-white font-semibold"
-                        >
-                            Login
-                        </NavLink>
+                        {!isFetching && !contextUser && (
+                            <>
+                                <NavLink
+                                    to="/login"
+                                    className="mr-6 p-2 hover:text-white"
+                                    activeClassName="border-purple-400 border-b-2 text-white font-semibold"
+                                >
+                                    Login
+                                </NavLink>
 
-                        <NavLink
-                            to="/signup"
-                            className="pb-2 hover:text-white"
-                            activeClassName="border-purple-400 border-b-2 text-white font-semibold"
-                        >
-                            Signup
-                        </NavLink>
+                                <NavLink
+                                    to="/signup"
+                                    className="p-2 hover:text-white"
+                                    activeClassName="border-purple-400 border-b-2 text-white font-semibold"
+                                >
+                                    Signup
+                                </NavLink>
+                            </>
+                        )}
+
+                        {!isFetching && contextUser && (
+                            <button
+                                type="button"
+                                className="px-2 py-1 hover:text-white focus:text-white"
+                                onClick={handleLogout}
+                            >
+                                Logout
+                            </button>
+                        )}
                     </div>
                 </div>
                 {/* The nav links on small screens that are displayed when the button is clicked */}
                 <div className={`${isMobileLinksOpen ? 'block' : 'hidden'} mt-4 -ml-2`}>
-                    <NavLink
-                        to="/login"
-                        activeClassName="bg-purple-800 text-gray-100"
-                        className="block px-2 py-1 font-semibold rounded hover:bg-purple-800 hover:text-gray-100"
-                    >
-                        Login
-                    </NavLink>
-                    <NavLink
-                        to="/signup"
-                        activeClassName="bg-purple-800 text-gray-100"
-                        className="block px-2 py-1 mt-1 font-semibold rounded hover:bg-purple-800 hover:text-gray-100"
-                    >
-                        Signup
-                    </NavLink>
+                    {!isFetching && !contextUser && (
+                        <>
+                            <NavLink
+                                to="/login"
+                                activeClassName="bg-purple-800 text-gray-100"
+                                className="block px-2 py-1 font-semibold rounded hover:bg-purple-800 hover:text-gray-100"
+                            >
+                                Login
+                            </NavLink>
+                            <NavLink
+                                to="/signup"
+                                activeClassName="bg-purple-800 text-gray-100"
+                                className="block px-2 py-1 mt-1 font-semibold rounded hover:bg-purple-800 hover:text-gray-100"
+                            >
+                                Signup
+                            </NavLink>
+                        </>
+                    )}
+                    {!isFetching && contextUser && (
+                        <button
+                            type="button"
+                            className="w-full text-left px-2 py-1 mt-1 font-semibold rounded focus:bg-purple-800 hover:text-gray-100"
+                            onClick={handleLogout}
+                        >
+                            Logout
+                        </button>
+                    )}
                 </div>
             </nav>
         </header>
