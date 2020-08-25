@@ -3,7 +3,7 @@ import { Global, css } from '@emotion/core';
 import styled from '@emotion/styled';
 import tw from 'twin.macro';
 import AppProviders from '../AppProviders';
-import TWNav from '../../components/Nav/TWNav';
+import Nav from '../../components/Nav';
 import Footer from '../../components/Footer';
 
 /*
@@ -59,7 +59,7 @@ const Layout = ({ children }) => {
 
             <AppProviders>
                 <Container>
-                    <TWNav />
+                    <Nav />
                     <Content>{children}</Content>
                     <Footer />
                 </Container>
