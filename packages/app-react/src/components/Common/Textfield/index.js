@@ -1,33 +1,6 @@
 import React from 'react';
-import styled from '@emotion/styled';
 
-const FormControl = styled.div`
-    display: flex;
-    flex-direction: column;
-`;
-
-const FormLabel = styled.label`
-    color: #999;
-    font-size: 0.75rem;
-    margin: 1rem 0 0.2rem;
-`;
-
-const FormInput = styled.input`
-    height: 2.5rem;
-    border: 1px solid #ccc;
-    font-size: 1rem;
-    color: #022c43;
-    border-radius: 5px;
-    padding: 0 15px;
-`;
-
-const FormError = styled.p`
-    color: #dd0000;
-    margin: 5px 0;
-    font-size: 0.75rem;
-`;
-
-const TextField = props => {
+const TextField = (props) => {
     const {
         name = 'unknown',
         type = 'text',
@@ -37,11 +10,19 @@ const TextField = props => {
         handleChange
     } = props;
     return (
-        <FormControl>
-            <FormLabel htmlFor={name}>{label}</FormLabel>
-            <FormInput type={type} id={name} onChange={handleChange} value={value} />
-            {error && <FormError className="error">{error}</FormError>}
-        </FormControl>
+        <div className="flex flex-col">
+            <label htmlFor={name} className="text-sm text-gray-600 mt-4 mb-1">
+                {label}
+            </label>
+            <input
+                type={type}
+                id={name}
+                onChange={handleChange}
+                value={value}
+                className="text-base text-purple-900 p-2 border-2 border-gray-300 rounded"
+            />
+            {error && <p className="text-red-700 text-sm mt-2">{error}</p>}
+        </div>
     );
 };
 
