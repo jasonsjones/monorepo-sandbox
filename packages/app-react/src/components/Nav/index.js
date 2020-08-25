@@ -1,138 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
-import styled from '@emotion/styled';
-import tw from 'twin.macro';
 import { useAuthState, useAuthDispatch } from '../../context/authContext';
 import { executeGqlQuery } from '../../services/dataservice';
-// import ProfileMenu from '../ProfileMenu/ProfileMenu';
 
-const primaryColor = '#ff8600e6';
-const secondaryColor = '#022c43';
+function TWNav() {
+    const [isMobileLinksOpen, setIsMobileLinksOpen] = useState(false);
 
-const NavContainer = styled.nav`
-    ${tw`h-24 flex justify-between items-center`}
-
-    /* height: 12vh; */
-    /* background: rgb(2, 0, 36);
-    background: linear-gradient(0deg, #020024 0%, ${secondaryColor} 40%, #064f77 100%); */
-
-    @media only screen and (min-device-width: 375px) and (max-device-width: 667px) {
-        height: 15vh;
-    }
-`;
-
-/*
-const Logo = styled.div`
-    margin-left: 2rem;
-    padding-top: 20px;
-
-    & a {
-        margin-right: 45px;
-        text-decoration: none;
-        color: #ccc;
-    }
-
-    @media only screen and (min-device-width: 375px) and (max-device-width: 667px) {
-        margin-left: 0.75rem;
-        padding-top: 1rem;
-    }
-`;
-*/
-
-/*
-const LogoText = styled.div`
-    width: 100px;
-    text-align: right;
-
-    & h3 {
-        margin: 0;
-        font-size: 1.75rem;
-        color: ${primaryColor};
-        text-transform: uppercase;
-        letter-spacing: 2px;
-    }
-
-    & p {
-        margin: -2px 0 0;
-        padding: 0 10px 1px 0;
-        font-weight: bold;
-        font-size: 1.25rem;
-        color: ${secondaryColor};
-        border-radius: 10px;
-    }
-
-    @media only screen and (min-device-width: 375px) and (max-device-width: 667px) {
-        & h3 {
-            font-size: 1.5rem;
-        }
-        & p {
-            font-size: 1rem;
-            margin: 1px 0 0;
-        }
-    }
-`;
-*/
-
-/*
-const SecondaryText = styled.div`
-    background-color: ${primaryColor};
-    border-radius: 10px;
-    margin-left: 40%;
-`;
-*/
-
-const NavLinks = styled.div`
-    display: flex;
-    align-items: center;
-    font-size: 1.25rem;
-
-    @media only screen and (min-device-width: 375px) and (max-device-width: 667px) {
-        margin-right: 0.5rem;
-        font-size: 1rem;
-    }
-`;
-
-/*
-const StyledLink = styled(Link)`
-    transition: background-color 0.25s ease;
-    margin-right: 2rem;
-    text-decoration: none;
-    border: 2px solid ${primaryColor};
-    padding: 10px 20px;
-    border-radius: 10px;
-    color: ${(props) => (props.primary ? secondaryColor : primaryColor)};
-    background-color: ${(props) => (props.primary ? primaryColor : secondaryColor)};
-
-    &:hover {
-        background: #020024;
-        color: #999;
-        border: 2px solid #999;
-        box-shadow: 2px 2px 5px #999;
-    }
-`;
-*/
-
-const LogoutButton = styled.button`
-    margin-right: 2rem;
-    border: 2px solid ${primaryColor};
-    padding: 10px 20px;
-    border-radius: 10px;
-    color: ${primaryColor};
-    background-color: ${secondaryColor};
-    font-size: 1.25rem;
-
-    &:hover {
-        background: #020024;
-        color: #999;
-        border: 2px solid #999;
-        box-shadow: 2px 2px 5px #999;
-    }
-`;
-
-const Nav = () => {
-    const authState = useAuthState();
+    const { isFetching, contextUser } = useAuthState();
     const authDispatch = useAuthDispatch();
-    const { isFetching, contextUser } = authState;
+
     const handleLogout = () => {
         const query = `
             mutation {
@@ -149,70 +25,118 @@ const Nav = () => {
     };
 
     return (
-        <NavContainer className="bg-purple-900 text-gray-400 px-8">
-            <div>
-                <Link to="/">
-                    <div className="flex flex-col items-end">
-                        <h3 className="text-3xl font-bold uppercase hover:text-white">Orion</h3>
-                        <div className="-mt-2 -mr-2 px-2 text-lg text-white font-semibold bg-purple-400 rounded-full">
-                            <p>labs</p>
-                        </div>
+        <header className="px-8 py-4 bg-purple-900 text-gray-400">
+            <nav data-testid="nav">
+                <div className="flex items-center justify-between">
+                    <div>
+                        <Link to="/">
+                            <div className="flex flex-col items-end">
+                                <h3 className="text-3xl font-bold uppercase hover:text-white">
+                                    Orion
+                                </h3>
+                                <div className="-mt-1 -mr-2 px-2 text-lg text-white font-semibold bg-purple-400 rounded-full">
+                                    labs
+                                </div>
+                            </div>
+                        </Link>
                     </div>
-                </Link>
-            </div>
-            <NavLinks>
-                {!isFetching && !contextUser && (
-                    <React.Fragment>
-                        <NavLink to="/login" className="mr-6">
-                            Login
-                        </NavLink>
-                        <NavLink to="/signup">Signup</NavLink>
-                    </React.Fragment>
-                )}
-                {!isFetching && contextUser && (
-                    <LogoutButton onClick={handleLogout}>Logout</LogoutButton>
-                )}
-            </NavLinks>
-        </NavContainer>
+                    {/* The button svg (menu or 'x') that is displayed on small screens */}
+                    <button
+                        className="focus:text-gray-100 focus:outline-none hover:text-gray-100 sm:hidden"
+                        type="button"
+                        onClick={() => setIsMobileLinksOpen(!isMobileLinksOpen)}
+                    >
+                        <svg
+                            viewBox="0 0 20 20"
+                            fill="currentColor"
+                            className="w-8 h-8 fill-current"
+                        >
+                            {isMobileLinksOpen ? (
+                                // The 'X' svg
+                                <path
+                                    fillRule="evenodd"
+                                    d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                                    clipRule="evenodd"
+                                ></path>
+                            ) : (
+                                // The 'menu' svg
+                                <path
+                                    fillRule="evenodd"
+                                    d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
+                                    clipRule="evenodd"
+                                ></path>
+                            )}
+                        </svg>
+                    </button>
+                    {/* The nav links that are displayed on larger screens */}
+                    <div className="hidden sm:block flex items-center text-xl">
+                        {!isFetching && !contextUser && (
+                            <>
+                                <NavLink
+                                    to="/login"
+                                    className="mr-6 p-2 hover:text-white"
+                                    activeClassName="border-purple-400 border-b-2 text-white font-semibold"
+                                    data-testid="desktop-login"
+                                >
+                                    Login
+                                </NavLink>
+
+                                <NavLink
+                                    to="/signup"
+                                    className="p-2 hover:text-white"
+                                    activeClassName="border-purple-400 border-b-2 text-white font-semibold"
+                                    data-testid="desktop-signup"
+                                >
+                                    Signup
+                                </NavLink>
+                            </>
+                        )}
+
+                        {!isFetching && contextUser && (
+                            <button
+                                type="button"
+                                className="px-2 py-1 hover:text-white focus:text-white"
+                                onClick={handleLogout}
+                                data-testid="desktop-logout"
+                            >
+                                Logout
+                            </button>
+                        )}
+                    </div>
+                </div>
+                {/* The nav links on small screens that are displayed when the button is clicked */}
+                <div className={`${isMobileLinksOpen ? 'block' : 'hidden'} mt-4 -ml-2`}>
+                    {!isFetching && !contextUser && (
+                        <>
+                            <NavLink
+                                to="/login"
+                                activeClassName="bg-purple-800 text-gray-100"
+                                className="block px-2 py-1 font-semibold rounded hover:bg-purple-800 hover:text-gray-100"
+                            >
+                                Login
+                            </NavLink>
+                            <NavLink
+                                to="/signup"
+                                activeClassName="bg-purple-800 text-gray-100"
+                                className="block px-2 py-1 mt-1 font-semibold rounded hover:bg-purple-800 hover:text-gray-100"
+                            >
+                                Signup
+                            </NavLink>
+                        </>
+                    )}
+                    {!isFetching && contextUser && (
+                        <button
+                            type="button"
+                            className="w-full text-left px-2 py-1 mt-1 font-semibold rounded focus:bg-purple-800 hover:text-gray-100"
+                            onClick={handleLogout}
+                        >
+                            Logout
+                        </button>
+                    )}
+                </div>
+            </nav>
+        </header>
     );
-};
+}
 
-export default Nav;
-
-// TODO: below ref from nextjs version
-/*
-
-const [showProfileMenu, setShowProfileMenu] = useState(false);
-const isAuthed = authCtx.authUser && authCtx.token;
-const isFetching = !authCtx.authUser && authCtx.token;
-
-<div className="nav-links">
-
-    {isAuthed && (
-        <Link href="/users">
-            <a>Users</a>
-        </Link>
-    )}
-
-    {isAuthed && (
-        <div
-            className="user-profile"
-            onClick={() => setShowProfileMenu(!showProfileMenu)}
-        >
-            <img
-                src="https:icon.now.sh/account_circle/24/cccccc"
-                alt="user account"
-            />
-            <span>
-                {authCtx.authUser.name.first} {authCtx.authUser.name.last}
-            </span>
-            <img
-                className={`${showProfileMenu ? 'open' : ''}`}
-                src="https:icon.now.sh/chevronDown/16/cccccc"
-                alt="chevron down"
-            />
-            <ProfileMenu show={showProfileMenu} onLogout={authCtx.logout} />
-        </div>
-    )}
-</div>
-*/
+export default TWNav;
