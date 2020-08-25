@@ -1,10 +1,20 @@
 import React from 'react';
 import user from '@testing-library/user-event';
-import { render, cleanup, fireEvent } from '@testing-library/react';
+import { render, cleanup } from '@testing-library/react';
+import { registerSa11yMatcher } from '@sa11y/jest';
 import TextField from '.';
 
 describe('TextField component', () => {
+    beforeAll(() => {
+        registerSa11yMatcher();
+    });
+
     afterEach(cleanup);
+
+    it('is accessible with default props', async () => {
+        const { container } = render(<TextField />);
+        expect(container).toBeAccessible();
+    });
 
     it('with default props renders a div', () => {
         const { container } = render(<TextField />);
@@ -41,7 +51,7 @@ describe('TextField component', () => {
             type: 'email',
             value: 'oliver',
             error: 'Some error message',
-            handleChange: () => {},
+            handleChange: () => {}
         };
         const { getByText } = render(<TextField {...props} />);
         expect(getByText('Some error message')).toBeTruthy();
