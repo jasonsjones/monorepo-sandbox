@@ -1,20 +1,8 @@
 import React, { useState } from 'react';
-import styled from '@emotion/styled';
-
 import { executeGqlQuery } from '../../services/dataservice';
 import { useAuthDispatch } from '../../context/authContext';
 import TextField from '../Common/Textfield';
 import Button from '../Common/Button';
-
-const Error = styled.p`
-    color: #d63939;
-`;
-
-const SubmitButtonContainer = styled.div`
-    display: flex;
-    justify-content: flex-end;
-    margin-top: 1rem;
-`;
 
 const LoginForm = ({ history }) => {
     const authDispatch = useAuthDispatch();
@@ -31,7 +19,7 @@ const LoginForm = ({ history }) => {
         return form.email.length > 0 && form.password.length > 0;
     };
 
-    const handleSubmit = e => {
+    const handleSubmit = (e) => {
         e.preventDefault();
         const query = `
             mutation Login($email: String!, $password: String!) {
@@ -69,7 +57,7 @@ const LoginForm = ({ history }) => {
         }
     };
 
-    const updateField = e => {
+    const updateField = (e) => {
         setValues({
             ...form,
             [e.target.id]: e.target.value
@@ -97,11 +85,11 @@ const LoginForm = ({ history }) => {
                     value={form.password}
                     handleChange={updateField}
                 />
-                <SubmitButtonContainer>
+                <div className="flex justify-end mt-3">
                     <Button type="submit" text={!isFetching ? 'Login' : 'Logging in...'} />
-                </SubmitButtonContainer>
+                </div>
             </form>
-            {error && <Error>{error}</Error>}
+            {error && <p className="text-red-700">{error}</p>}
         </React.Fragment>
     );
 };
