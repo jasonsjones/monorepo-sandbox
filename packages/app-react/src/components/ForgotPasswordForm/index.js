@@ -1,31 +1,14 @@
 import React, { useState } from 'react';
-import styled from '@emotion/styled';
 import TextField from '../Common/Textfield';
 import Button from '../Common/Button';
 import { executeGqlQuery } from '../../services/dataservice';
-
-const ButtonContainer = styled.div`
-    display: flex;
-    justify-content: flex-end;
-    margin-top: 1rem;
-`;
-
-const Error = styled.p`
-    color: #d63939;
-    font-size: 1.25rem;
-`;
-
-const Message = styled.div`
-    color: #696969;
-    font-size: 1.25rem;
-`;
 
 const ForgotPasswordForm = () => {
     const [email, setEmail] = useState('');
     const [showMsg, setShowMsg] = useState(false);
     const [error, setError] = useState(null);
 
-    const updateField = e => {
+    const updateField = (e) => {
         setEmail(e.target.value);
         if (showMsg) {
             setShowMsg(false);
@@ -35,7 +18,7 @@ const ForgotPasswordForm = () => {
         }
     };
 
-    const handleSubmit = e => {
+    const handleSubmit = (e) => {
         e.preventDefault();
         const query = `
             mutation ResetPassword($email: String!) {
@@ -84,15 +67,15 @@ const ForgotPasswordForm = () => {
                     value={email}
                     handleChange={updateField}
                 />
-                <ButtonContainer>
+                <div className="flex justify-end my-4">
                     <Button type="submit" text="Reset Password" />
-                </ButtonContainer>
+                </div>
             </form>
-            {error && <Error>{error}</Error>}
+            {error && <p className="text-red-700 mt-4">{error}</p>}
             {showMsg && (
-                <Message>
-                    <p>{`An email has just been sent to ${email} which contains a link to reset your password.`}</p>
-                </Message>
+                <p className="bg-purple-100 text-gray-600 p-4 border-2 border-purple-300 rounded-md mb-4">
+                    {`An email has just been sent to ${email} which contains a link to reset your password.`}
+                </p>
             )}
         </React.Fragment>
     );
