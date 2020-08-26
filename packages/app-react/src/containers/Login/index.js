@@ -5,7 +5,9 @@ import LoginForm from '../../components/LoginForm';
 const Login = ({ history }) => {
     return (
         <div className="max-w-4xl mt-6 mx-auto">
-            <h2 className="text-3xl font-semibold text-center text-purple-900">Login</h2>
+            <h2 className="text-2xl font-semibold text-center text-purple-900 sm:text-3xl">
+                Login
+            </h2>
             <div className="max-w-md mx-auto px-6 sm:px-0">
                 <LoginForm history={history} />
                 <div className="mt-4 mb-4 pt-6 border-t-2">
